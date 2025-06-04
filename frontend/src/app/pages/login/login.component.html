@@ -1,1 +1,27 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <label for="email">Correo electrónico</label>
+  <input id="email" type="email" formControlName="email" />
+
+  <div [hidden]="!showEmailRequired">
+    <span>El correo es obligatorio.</span>
+  </div>
+  <div [hidden]="!showEmailFormat">
+    <span>Formato de correo no válido.</span>
+  </div>
+
+  <label for="password">Contraseña</label>
+  <input id="password" type="password" formControlName="password" />
+
+  <div [hidden]="!showPasswordRequired">
+    <span>La contraseña es obligatoria.</span>
+  </div>
+  <div [hidden]="!showPasswordMinLength">
+    <span>Mínimo 8 caracteres.</span>
+  </div>
+  <div [hidden]="!showPasswordPattern">
+    <span>Debe contener al menos una mayúscula y un número.</span>
+  </div>
+
+  <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
+</form>
+
