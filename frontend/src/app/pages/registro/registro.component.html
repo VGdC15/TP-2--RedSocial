@@ -1,1 +1,43 @@
-<p>registro works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <label for="nombre">Nombre</label>
+  <input id="nombre" type="text" formControlName="nombre" />
+  <div [hidden]="!showNombreRequired"><span>El nombre es obligatorio.</span></div>
+
+  <label for="apellido">Apellido</label>
+  <input id="apellido" type="text" formControlName="apellido" />
+  <div [hidden]="!showApellidoRequired"><span>El apellido es obligatorio.</span></div>
+
+  <label for="correo">Correo electrónico</label>
+  <input id="correo" type="email" formControlName="correo" />
+  <div [hidden]="!showCorreoRequired"><span>El correo es obligatorio.</span></div>
+  <div [hidden]="!showCorreoFormato"><span>Formato inválido.</span></div>
+
+  <label for="usuario">Nombre de usuario</label>
+  <input id="usuario" type="text" formControlName="usuario" />
+  <div [hidden]="!showUsuarioRequired"><span>El nombre de usuario es obligatorio.</span></div>
+
+  <label for="password">Contraseña</label>
+  <input id="password" type="password" formControlName="password" />
+  <div [hidden]="!showPasswordRequired"><span>La contraseña es obligatoria.</span></div>
+  <div [hidden]="!showPasswordMin"><span>Mínimo 8 caracteres.</span></div>
+  <div [hidden]="!showPasswordPattern"><span>Debe tener mayúscula y número.</span></div>
+
+  <label for="repetir">Repetir contraseña</label>
+  <input id="repetir" type="password" formControlName="repetir" />
+  <div [hidden]="!showRepetirRequired"><span>Este campo es obligatorio.</span></div>
+  <div [hidden]="!showPasswordMatch"><span>Las contraseñas no coinciden.</span></div>
+
+  <label for="fechaNacimiento">Fecha de nacimiento</label>
+  <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" />
+  <div [hidden]="!showFechaRequired"><span>La fecha es obligatoria.</span></div>
+
+  <label for="descripcion">Descripción breve</label>
+  <textarea id="descripcion" formControlName="descripcion"></textarea>
+  <div [hidden]="!showDescripcionRequired"><span>Campo obligatorio.</span></div>
+
+  <label for="imagen">Imagen de perfil</label>
+  <input id="imagen" type="file" (change)="onFileChange($event)" />
+
+  <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
+</form>
+
