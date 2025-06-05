@@ -76,7 +76,6 @@ export class RegistroComponent {
 
   soloLetras(event: KeyboardEvent): void {
     const key = event.key;
-
     const letrasPermitidas = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]$/;
 
     if (!letrasPermitidas.test(key) && key !== 'Backspace' && key !== 'Tab' && key !== 'ArrowLeft' && key !== 'ArrowRight') {
