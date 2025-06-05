@@ -14,8 +14,14 @@ export class RegistroComponent {
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
+      nombre: ['', [
+        Validators.required,
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
+      apellido: ['', [
+        Validators.required,
+        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+      ]],
       correo: ['', [Validators.required, Validators.email]],
       usuario: ['', Validators.required],
       password: ['', [
@@ -66,6 +72,17 @@ export class RegistroComponent {
   get showPasswordMatch() { return this.registerForm.hasError('noMatch') && this.repetir?.touched; }
   get showFechaRequired() { return this.fechaNacimiento?.touched && this.fechaNacimiento?.hasError('required'); }
   get showDescripcionRequired() { return this.descripcion?.touched && this.descripcion?.hasError('required'); }
+
+
+  soloLetras(event: KeyboardEvent): void {
+    const key = event.key;
+
+    const letrasPermitidas = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]$/;
+
+    if (!letrasPermitidas.test(key) && key !== 'Backspace' && key !== 'Tab' && key !== 'ArrowLeft' && key !== 'ArrowRight') {
+      event.preventDefault();
+    }
+  }
 
   onSubmit(): void {
     if (this.registerForm.invalid) return;
