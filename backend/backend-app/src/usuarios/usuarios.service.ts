@@ -52,4 +52,11 @@ export class UsuariosService {
     const eliminado = await this.usuarioModel.deleteOne({ _id: id });
     return eliminado;
   }
+
+  async findByEmailOrUsuario(email: string, usuario: string) {
+    return await this.usuarioModel.findOne({
+      $or: [{ email }, { usuario }]
+    });
+  }
+
 }
