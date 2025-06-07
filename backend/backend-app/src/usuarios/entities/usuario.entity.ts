@@ -29,6 +29,9 @@ export class Usuario {
     descripcion: string;
 
     @Prop({ required: true })
+    imagenPerfil: string;
+
+    @Prop({ required: true })
     estado: boolean;
 
 }

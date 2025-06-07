@@ -21,6 +21,7 @@ export class UsuariosService {
       fechaNacimiento: usrDto.fechaNacimiento,
       descripcion: usrDto.descripcion,
       estado: usrDto.estado,
+      imagenPerfil: usrDto.imagenPerfil,
     });
     const guardado = await instancia.save();
 
@@ -42,7 +43,7 @@ export class UsuariosService {
       { _id: id },
       { nombre: updDto.nombre, apellido: updDto.apellido, email: updDto.email,
         usuario: updDto.usuario, password: updDto.password, fechaNacimiento: updDto.fechaNacimiento,
-        descripcion: updDto.descripcion, estado: updDto.estado
+        descripcion: updDto.descripcion, estado: updDto.estado, imagenPerfil: updDto.imagenPerfil
        },
     );
     return editado;

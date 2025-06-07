@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsDate, IsNotEmpty, IsString, IsOptional } from "class-validator";
 import { Type } from 'class-transformer';
 
 export class CreateUsuarioDto {
@@ -30,6 +30,10 @@ export class CreateUsuarioDto {
     @IsNotEmpty()
     @IsString()
     descripcion: string;
+
+    @IsOptional()
+    @IsString()
+    imagenPerfil?: string;
 
     @IsNotEmpty()
     @Type(() => Boolean)
