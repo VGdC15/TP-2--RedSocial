@@ -15,7 +15,7 @@ export class AuthService {
         );
 
         if (existente) {
-        throw new BadRequestException('El email o nombre de usuario ya está registrado');
+        throw new BadRequestException('El email ya está registrado');
         }
 
         const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10);
@@ -28,13 +28,13 @@ export class AuthService {
         const usuario = await this.usuariosService.findByEmailOrUsuario(loginDto.email, '');
 
         if (!usuario) {
-            throw new BadRequestException('Credenciales incorrectas');
+            throw new BadRequestException('Email o contraseña incorrecta');
         }
 
         const match = await bcrypt.compare(loginDto.password, usuario.password);
 
         if (!match) {
-            throw new BadRequestException('Credenciales incorrectas');
+            throw new BadRequestException('Email o contraseña incorrecta');
         }
 
         return usuario;
