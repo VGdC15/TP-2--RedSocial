@@ -1,4 +1,5 @@
-import { Body, Controller, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors, UploadedFile, Req, Get, Headers, Ip } from '@nestjs/common';
+import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
 import { LoginUsuarioDto } from '../usuarios/dto/login-usuario.dto';
@@ -6,6 +7,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage, File as MulterFile } from 'multer';
 import { extname } from 'path';
 
+ 
 @Controller()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
@@ -24,6 +26,7 @@ export class AuthController {
         })
     )
     async register(
+        @Req() request: Request,
         @Body() createUsuarioDto: CreateUsuarioDto,
         @UploadedFile() imagen: MulterFile
     ) {
@@ -31,11 +34,23 @@ export class AuthController {
         createUsuarioDto.imagenPerfil = `http://localhost:3000/uploads/${imagen.filename}`;
         }
 
-        return await this.authService.register(createUsuarioDto);
+        const ip = request.ip ?? '0.0.0.0';;
+        return await this.authService.register(createUsuarioDto, ip);
     }
 
     @Post('login')
-    async login(@Body() loginDto: LoginUsuarioDto) {
-        return await this.authService.login(loginDto);
+    async login(@Req() request: Request, @Body() loginDto: LoginUsuarioDto) {
+        const ip = request.ip ?? '0.0.0.0';;
+        return await this.authService.login(loginDto, ip);
+    }
+
+    @Get('/datos')
+    datos(@Headers('Authorization') auth: string, @Ip() ip: string) {
+        if (auth) {
+        const token = auth?.split(' ')[1];
+        return this.authService.traerDatos(token, ip);
+        } else {
+        return 'No hay header';
+        }
     }
 }
