@@ -36,7 +36,6 @@ export class AuthController {
 
         const ip = request.ip ?? '0.0.0.0';;
 
-        // Forzamos estado = true si no viene desde front
         createUsuarioDto.estado = true;
 
         return await this.authService.register(createUsuarioDto, ip);

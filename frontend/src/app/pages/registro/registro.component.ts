@@ -86,23 +86,6 @@ export class RegistroComponent {
     }
   }
 
-  // onSubmit(): void {
-  //   if (this.registerForm.invalid) return;
-
-  //   const datos = this.registerForm.value;
-
-  //   this.service.registro(datos, this.imagenSeleccionada!).subscribe({
-  //     next: (respuesta) => {
-  //       console.log('Usuario registrado:', respuesta);
-  //       // redirigir al login
-  //       this.router.navigate(['/login']);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error al registrar:', error);
-  //     }
-  //   });
-  // }
-
   onSubmit(): void {
     if (this.registerForm.invalid || !this.imagenSeleccionada) {
       console.error('Formulario inválido o imagen no seleccionada');
