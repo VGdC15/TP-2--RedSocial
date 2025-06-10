@@ -22,6 +22,9 @@ export class AuthService {
         const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10);
         createUsuarioDto.password = hashedPassword;
 
+        // estado siempre es true al registrar
+        createUsuarioDto.estado = true;
+
         const nuevoUsuario = await this.usuariosService.create(createUsuarioDto);
 
         const token = this.crearToken(nuevoUsuario.id, nuevoUsuario.nombre, ip);

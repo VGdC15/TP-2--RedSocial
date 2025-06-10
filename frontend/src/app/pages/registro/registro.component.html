@@ -7,10 +7,10 @@
     <input id="apellido" type="text" formControlName="apellido" (keydown)="soloLetras($event)" />
     <div [hidden]="!showApellidoRequired"><span>El apellido es obligatorio.</span></div>
 
-    <label for="correo">Correo electrónico</label>
-    <input id="correo" type="email" formControlName="correo" />
-    <div [hidden]="!showCorreoRequired"><span>El correo es obligatorio.</span></div>
-    <div [hidden]="!showCorreoFormato"><span>Formato inválido.</span></div>
+    <label for="email">Correo electrónico</label>
+    <input id="email" type="email" formControlName="email" />
+    <div [hidden]="!showEmailRequired"><span>El email es obligatorio.</span></div>
+    <div [hidden]="!showEmailFormato"><span>Formato inválido.</span></div>
 
     <label for="usuario">Nombre de usuario</label>
     <input id="usuario" type="text" formControlName="usuario" />
@@ -35,9 +35,9 @@
     <textarea id="descripcion" formControlName="descripcion"></textarea>
     <div [hidden]="!showDescripcionRequired"><span>Campo obligatorio.</span></div>
 
-    <label for="imagen">Imagen de perfil</label>
-    <input id="imagen" type="file" (change)="onFileChange($event)" />
+    <label for="imagenPerfil">Imagen de perfil</label>
+    <input id="imagenPerfil" type="file" (change)="onFileChange($event)" />
 
     <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
 </form>
-
+ 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ServicesService } from '../../services/services.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -12,7 +14,7 @@ export class RegistroComponent {
   registerForm: FormGroup;
   imagenSeleccionada: File | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private service: ServicesService, private router: Router) {
     this.registerForm = this.fb.group({
       nombre: ['', [
         Validators.required,
@@ -22,7 +24,7 @@ export class RegistroComponent {
         Validators.required,
         Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
       ]],
-      correo: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       usuario: ['', Validators.required],
       password: ['', [
         Validators.required,
@@ -32,7 +34,7 @@ export class RegistroComponent {
       repetir: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
       descripcion: ['', Validators.required],
-      perfil: ['usuario']
+      imagenPerfil: ['usuario']
     }, { validators: this.matchPasswords });
   }
 
@@ -52,18 +54,19 @@ export class RegistroComponent {
   // Getters
   get nombre() { return this.registerForm.get('nombre'); }
   get apellido() { return this.registerForm.get('apellido'); }
-  get correo() { return this.registerForm.get('correo'); }
+  get email() { return this.registerForm.get('correo'); }
   get usuario() { return this.registerForm.get('usuario'); }
   get password() { return this.registerForm.get('password'); }
   get repetir() { return this.registerForm.get('repetir'); }
   get fechaNacimiento() { return this.registerForm.get('fechaNacimiento'); }
   get descripcion() { return this.registerForm.get('descripcion'); }
+  get imagenPerfil() { return this.registerForm.get('imagenPerfil'); }
 
   // Errores
   get showNombreRequired() { return this.nombre?.touched && this.nombre?.hasError('required'); }
   get showApellidoRequired() { return this.apellido?.touched && this.apellido?.hasError('required'); }
-  get showCorreoRequired() { return this.correo?.touched && this.correo?.hasError('required'); }
-  get showCorreoFormato() { return this.correo?.touched && this.correo?.hasError('email'); }
+  get showEmailRequired() { return this.email?.touched && this.email?.hasError('required'); }
+  get showEmailFormato() { return this.email?.touched && this.email?.hasError('email'); }
   get showUsuarioRequired() { return this.usuario?.touched && this.usuario?.hasError('required'); }
   get showPasswordRequired() { return this.password?.touched && this.password?.hasError('required'); }
   get showPasswordMin() { return this.password?.touched && this.password?.hasError('minlength'); }
@@ -72,7 +75,7 @@ export class RegistroComponent {
   get showPasswordMatch() { return this.registerForm.hasError('noMatch') && this.repetir?.touched; }
   get showFechaRequired() { return this.fechaNacimiento?.touched && this.fechaNacimiento?.hasError('required'); }
   get showDescripcionRequired() { return this.descripcion?.touched && this.descripcion?.hasError('required'); }
-
+  get showImagenPerfilRequired() { return this.imagenPerfil?.touched && this.imagenPerfil?.hasError('required'); }
 
   soloLetras(event: KeyboardEvent): void {
     const key = event.key;
@@ -83,9 +86,43 @@ export class RegistroComponent {
     }
   }
 
+  // onSubmit(): void {
+  //   if (this.registerForm.invalid) return;
+
+  //   const datos = this.registerForm.value;
+
+  //   this.service.registro(datos, this.imagenSeleccionada!).subscribe({
+  //     next: (respuesta) => {
+  //       console.log('Usuario registrado:', respuesta);
+  //       // redirigir al login
+  //       this.router.navigate(['/login']);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error al registrar:', error);
+  //     }
+  //   });
+  // }
+
   onSubmit(): void {
-    if (this.registerForm.invalid) return;
-    const data = { ...this.registerForm.value, imagen: this.imagenSeleccionada };
-    console.log('Datos enviados:', data);
+    if (this.registerForm.invalid || !this.imagenSeleccionada) {
+      console.error('Formulario inválido o imagen no seleccionada');
+      return;
+    }
+
+    const datos = this.registerForm.value;
+    const imagen = this.imagenSeleccionada as File;
+
+    this.service.registro(datos, imagen).subscribe({
+      next: (respuesta) => {
+        console.log('Usuario registrado:', respuesta);
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Error al registrar:', error);
+      }
+    });
   }
+
+
+
 }

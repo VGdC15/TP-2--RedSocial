@@ -15,14 +15,14 @@ export class AuthController {
     @Post('registro')
     @UseInterceptors(
         FileInterceptor('imagenPerfil', {
-        storage: diskStorage({
-            destination: './uploads',
-            filename: (req, file: MulterFile, cb) => {
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-            const ext = extname(file.originalname);
-            cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-            },
-        }),
+            storage: diskStorage({
+                destination: './uploads',
+                filename: (req, file: MulterFile, cb) => {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+                const ext = extname(file.originalname);
+                cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+                },
+            }),
         })
     )
     async register(
@@ -35,6 +35,10 @@ export class AuthController {
         }
 
         const ip = request.ip ?? '0.0.0.0';;
+
+        // Forzamos estado = true si no viene desde front
+        createUsuarioDto.estado = true;
+
         return await this.authService.register(createUsuarioDto, ip);
     }
 
@@ -44,7 +48,7 @@ export class AuthController {
         return await this.authService.login(loginDto, ip);
     }
 
-    @Get('/datos')
+    @Get('datos')
     datos(@Headers('Authorization') auth: string, @Ip() ip: string) {
         if (auth) {
         const token = auth?.split(' ')[1];
