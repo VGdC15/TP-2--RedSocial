@@ -55,9 +55,9 @@ export class UsuariosService {
   }
 
   async findByEmailOrUsuario(email: string, usuario: string) {
-      return await this.usuarioModel.findOne({
-          $or: [{ email }, { usuario }]
-      });
+    return await this.usuarioModel.findOne({
+      $or: [{ email }, { usuario }]
+    });
   }
 
 }

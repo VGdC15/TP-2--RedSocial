@@ -22,9 +22,6 @@ export class AuthService {
         const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10);
         createUsuarioDto.password = hashedPassword;
 
-        // estado siempre es true al registrar
-        createUsuarioDto.estado = true;
-
         const nuevoUsuario = await this.usuariosService.create(createUsuarioDto);
 
         const token = this.crearToken(nuevoUsuario.id, nuevoUsuario.nombre, ip);
@@ -36,27 +33,28 @@ export class AuthService {
     }
 
     async login(loginDto: LoginUsuarioDto, ip: string) {
-        const usuario = await this.usuariosService.findByEmailOrUsuario(
-        loginDto.email,
-        '',
-        );
-
+        const usuario = await this.validarUsuario(loginDto.email, loginDto.password);
         if (!usuario) {
-            throw new BadRequestException('Email o contraseña incorrecta');
-        }
-
-        const match = await bcrypt.compare(loginDto.password, usuario.password);
-
-        if (!match) {
             throw new BadRequestException('Email o contraseña incorrecta');
         }
 
         const token = this.crearToken(usuario.id, usuario.nombre, ip);
 
         return {
+            mensaje: 'Login correcto',
             usuario,
             token,
         };
+    }
+
+    async validarUsuario(email: string, password: string) {
+        const usuario = await this.usuariosService.findByEmailOrUsuario(email, '');
+        if (!usuario) return null;
+
+        const match = await bcrypt.compare(password, usuario.password);
+        if (!match) return null;
+
+        return usuario;
     }
 
     traerDatos(token, ip) {

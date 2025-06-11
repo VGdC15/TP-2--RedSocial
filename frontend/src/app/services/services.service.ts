@@ -20,7 +20,7 @@ export class ServicesService {
 
     formData.append('nombre', datosRegistro.nombre);
     formData.append('apellido', datosRegistro.apellido);
-    formData.append('email', datosRegistro.correo);  
+    formData.append('email', datosRegistro.email);  
     formData.append('usuario', datosRegistro.usuario);
     formData.append('password', datosRegistro.password);
     formData.append('fechaNacimiento', datosRegistro.fechaNacimiento);

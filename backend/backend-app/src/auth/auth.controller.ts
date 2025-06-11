@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseInterceptors, UploadedFile, Req, Get, Headers, Ip } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors, UploadedFile, Req, Get, Headers, Ip, UnauthorizedException } from '@nestjs/common';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
@@ -15,14 +15,14 @@ export class AuthController {
     @Post('registro')
     @UseInterceptors(
         FileInterceptor('imagenPerfil', {
-            storage: diskStorage({
-                destination: './uploads',
-                filename: (req, file: MulterFile, cb) => {
-                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-                const ext = extname(file.originalname);
-                cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-                },
-            }),
+        storage: diskStorage({
+            destination: './uploads',
+            filename: (req, file: MulterFile, cb) => {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+            const ext = extname(file.originalname);
+            cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+            },
+        }),
         })
     )
     async register(
@@ -35,19 +35,28 @@ export class AuthController {
         }
 
         const ip = request.ip ?? '0.0.0.0';;
-
-        createUsuarioDto.estado = true;
-
         return await this.authService.register(createUsuarioDto, ip);
     }
 
     @Post('login')
     async login(@Req() request: Request, @Body() loginDto: LoginUsuarioDto) {
-        const ip = request.ip ?? '0.0.0.0';;
-        return await this.authService.login(loginDto, ip);
+        const ip = request.ip ?? '0.0.0.0';
+
+        const usuario = await this.authService.validarUsuario(loginDto.email, loginDto.password);
+        if (!usuario) {
+            throw new UnauthorizedException('Email o contraseña incorrecta');
+        }
+
+        const token = this.authService.crearToken(usuario.id, usuario.nombre, ip);
+
+        return {
+            mensaje: 'Login correcto',
+            usuario,
+            token
+        };
     }
 
-    @Get('datos')
+    @Get('/datos')
     datos(@Headers('Authorization') auth: string, @Ip() ip: string) {
         if (auth) {
         const token = auth?.split(' ')[1];

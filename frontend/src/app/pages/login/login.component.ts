@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ServicesService } from '../../services/services.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -11,7 +13,10 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private service: ServicesService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
@@ -52,7 +57,22 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) return;
-    console.log(this.loginForm.value);
+
+    const datosLogin = this.loginForm.value;
+
+    this.service.login(datosLogin).subscribe({
+      next: (res: any) => {
+        console.log('Login exitoso:', res);
+        
+        // Guarda token en localStorage 
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['/publicaciones']); 
+      },
+      error: (err) => {
+        console.error('Error en login:', err);
+        alert('Correo o contraseña incorrectos');
+      }
+    });
   }
 }
 

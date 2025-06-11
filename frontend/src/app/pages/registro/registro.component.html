@@ -37,6 +37,7 @@
 
     <label for="imagenPerfil">Imagen de perfil</label>
     <input id="imagenPerfil" type="file" (change)="onFileChange($event)" />
+    <div [hidden]="!showImagenNoSeleccionada"><span>Debes seleccionar una imagen.</span></div>
 
     <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
 </form>

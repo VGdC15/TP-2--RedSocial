@@ -54,7 +54,7 @@ export class RegistroComponent {
   // Getters
   get nombre() { return this.registerForm.get('nombre'); }
   get apellido() { return this.registerForm.get('apellido'); }
-  get email() { return this.registerForm.get('correo'); }
+  get email() { return this.registerForm.get('email'); }
   get usuario() { return this.registerForm.get('usuario'); }
   get password() { return this.registerForm.get('password'); }
   get repetir() { return this.registerForm.get('repetir'); }
@@ -75,7 +75,8 @@ export class RegistroComponent {
   get showPasswordMatch() { return this.registerForm.hasError('noMatch') && this.repetir?.touched; }
   get showFechaRequired() { return this.fechaNacimiento?.touched && this.fechaNacimiento?.hasError('required'); }
   get showDescripcionRequired() { return this.descripcion?.touched && this.descripcion?.hasError('required'); }
-  get showImagenPerfilRequired() { return this.imagenPerfil?.touched && this.imagenPerfil?.hasError('required'); }
+  get showImagenNoSeleccionada() {return this.registerForm.touched && !this.imagenSeleccionada;}
+
 
   soloLetras(event: KeyboardEvent): void {
     const key = event.key;
