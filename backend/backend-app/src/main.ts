@@ -18,6 +18,7 @@ async function bootstrap() {
     whitelist: true,
   }));
 
+  app.enableCors(); //Habilitar CORS para todas las rutas
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
