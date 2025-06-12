@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, React
 import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../services/services.service';
 import { Router } from '@angular/router';
+import { SwalService } from '../../services/swal.service';
 
 @Component({
   standalone: true,
@@ -14,7 +15,8 @@ export class RegistroComponent {
   registerForm: FormGroup;
   imagenSeleccionada: File | null = null;
 
-  constructor(private fb: FormBuilder, private service: ServicesService, private router: Router) {
+  constructor(private fb: FormBuilder, private service: ServicesService, 
+    private router: Router, private swal: SwalService) {
     this.registerForm = this.fb.group({
       nombre: ['', [
         Validators.required,
@@ -88,24 +90,33 @@ export class RegistroComponent {
   }
 
   onSubmit(): void {
-    if (this.registerForm.invalid || !this.imagenSeleccionada) {
-      console.error('Formulario inválido o imagen no seleccionada');
-      return;
-    }
-
-    const datos = this.registerForm.value;
-    const imagen = this.imagenSeleccionada as File;
-
-    this.service.registro(datos, imagen).subscribe({
-      next: (respuesta) => {
-        console.log('Usuario registrado:', respuesta);
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.error('Error al registrar:', error);
-      }
-    });
+  if (this.registerForm.invalid || !this.imagenSeleccionada) {
+    console.error('Formulario inválido o imagen no seleccionada');
+    return;
   }
+
+  const datos = this.registerForm.value;
+  const imagen = this.imagenSeleccionada as File;
+
+  this.service.registro(datos, imagen).subscribe({
+    next: (respuesta) => {
+      console.log('Usuario registrado:', respuesta);
+
+      this.swal.mostrar(
+        'Registro exitoso',
+        'Tu cuenta ha sido creada correctamente',
+        'success',
+        true,
+        2000,
+        '/login'
+      );
+    },
+    error: (error) => {
+      console.error('Error al registrar:', error);
+    }
+  });
+}
+
 
 
 

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../services/services.service';
 import { Router } from '@angular/router';
+import { SwalService } from '../../services/swal.service';
+
 
 @Component({
   standalone: true,
@@ -15,7 +17,8 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder,
     private service: ServicesService,
-    private router: Router
+    private router: Router,
+    private swal: SwalService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -62,11 +65,8 @@ export class LoginComponent {
 
     this.service.login(datosLogin).subscribe({
       next: (res: any) => {
-        console.log('Login exitoso:', res);
-        
-        // Guarda token en localStorage 
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/publicaciones']); 
+        this.swal.mostrar('Bienvenid@', 'Inicio de sesión exitoso', 'success', true, 2000, '/publicaciones');
       },
       error: (err) => {
         console.error('Error en login:', err);
