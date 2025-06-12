@@ -113,7 +113,17 @@ export class RegistroComponent {
     },
     error: (error) => {
       console.error('Error al registrar:', error);
+      const mensaje = error?.error?.mensaje || 'Ocurrió un error inesperado';
+
+      this.swal.mostrar(
+        'Usuario ya registrado',
+        mensaje,
+        'error',
+        true,
+        3000
+      );
     }
+
   });
 }
 
