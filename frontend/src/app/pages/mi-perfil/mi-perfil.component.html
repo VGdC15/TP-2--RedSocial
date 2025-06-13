@@ -1,1 +1,10 @@
-<p>mi-perfil works!</p>
+@if (usuario) {
+  <div>
+    <img [src]="usuario.imagenPerfil" alt="Foto de perfil" width="150" height="150" />
+    <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+    <p><strong>Email:</strong> {{ usuario.email }}</p>
+    <p><strong>Usuario:</strong> {{ usuario.usuario }}</p>
+    <p><strong>Descripción:</strong> {{ usuario.descripcion }}</p>
+  </div>
+}
+

@@ -70,17 +70,17 @@ export class AuthService {
         return usuario;
     }
 
-    traerDatos(token, ip) {
+    async traerDatos(token: string, ip: string) {
         const clave = process.env.CLAVE_TOKEN;
         try {
-            const payload = verify(token, ip + clave);
-            return payload;
+            const payload: any = verify(token, ip + clave);
+            const usuarioCompleto = await this.usuariosService.findOne(payload.id);
+            return usuarioCompleto;
         } catch (error) {
             console.error(error);
             throw new Error('Token inválido o expirado');
         }
     }
-
 
     crearToken(id, nombre, ip) {
         const payload = {

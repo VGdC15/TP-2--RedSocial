@@ -14,6 +14,21 @@ export class ServicesService {
     return this.httpClient.post('http://localhost:3000/login', datosLogin);
   }
 
+  // obtener datos del usuario logueado
+  obtenerDatosUsuario() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No se encontró el token');
+    }
+
+    return this.httpClient.get('http://localhost:3000/datos', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+
   // registro
   registro(datosRegistro: any, imagen: File) {
     const formData = new FormData();

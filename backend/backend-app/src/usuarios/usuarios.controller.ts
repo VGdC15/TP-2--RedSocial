@@ -24,6 +24,12 @@ export class UsuariosController {
     return this.usuariosService.findOne(id);
   }
 
+  @Get(':id')
+  async obtenerUsuario(@Param('id') id: string) {
+    const usuario = await this.usuariosService.findById(id);
+    return usuario;
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuariosService.update(id, updateUsuarioDto);

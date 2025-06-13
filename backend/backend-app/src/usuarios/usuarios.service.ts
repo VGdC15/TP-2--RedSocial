@@ -70,4 +70,9 @@ export class UsuariosService {
     return usuarioEncontrado;
   }
 
+  async findById(id: string) {
+    const usuario = await this.usuarioModel.findById(id);
+    return usuario;
+  }
+
 }
