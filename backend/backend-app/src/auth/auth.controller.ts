@@ -1,4 +1,5 @@
-import { Body, Controller, Post, UseInterceptors, UploadedFile, Req, Get, Headers, Ip, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors, UploadedFile, Req, Get, 
+    Headers, Ip, UnauthorizedException, BadRequestException, } from '@nestjs/common';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
@@ -7,36 +8,48 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage, File as MulterFile } from 'multer';
 import { extname } from 'path';
 
- 
+function imageFileFilter(req, file: MulterFile, cb: (error: Error | null, acceptFile: boolean) => void) {
+  const allowedTypes = ['image/jpeg', 'image/png'];
+  const isValid = allowedTypes.includes(file.mimetype);
+  cb(null, isValid); 
+}
+
+
+
 @Controller()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('registro')
     @UseInterceptors(
-        FileInterceptor('imagenPerfil', {
+    FileInterceptor('imagenPerfil', {
         storage: diskStorage({
-            destination: './uploads',
-            filename: (req, file: MulterFile, cb) => {
+        destination: './uploads-temp', 
+        filename: (req, file: MulterFile, cb) => {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
             const ext = extname(file.originalname);
             cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-            },
+        },
         }),
-        })
+        fileFilter: imageFileFilter,
+    }),
     )
     async register(
-        @Req() request: Request,
-        @Body() createUsuarioDto: CreateUsuarioDto,
-        @UploadedFile() imagen: MulterFile
+    @Req() request: Request,
+    @Body() createUsuarioDto: CreateUsuarioDto,
+    @UploadedFile() imagen: MulterFile
     ) {
-        if (imagen) {
-        createUsuarioDto.imagenPerfil = `http://localhost:3000/uploads/${imagen.filename}`;
-        }
+    const ip = request.ip ?? '0.0.0.0';
 
-        const ip = request.ip ?? '0.0.0.0';;
-        return await this.authService.register(createUsuarioDto, ip);
+    if (!imagen) {
+        throw new BadRequestException('Solo se permiten archivos JPG y PNG');
     }
+
+    const resultado = await this.authService.register(createUsuarioDto, ip, imagen);
+
+    return resultado;
+    }
+
 
     @Post('login')
     async login(@Req() request: Request, @Body() loginDto: LoginUsuarioDto) {

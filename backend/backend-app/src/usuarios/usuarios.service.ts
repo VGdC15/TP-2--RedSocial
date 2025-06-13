@@ -60,4 +60,14 @@ export class UsuariosService {
     });
   }
 
+  async findByEmail(email: string): Promise<Usuario | null> {
+    const usuario = await this.usuarioModel.findOne({ email }).exec();
+    return usuario;
+  }
+
+  async findByUsuario(usuario: string): Promise<Usuario | null> {
+    const usuarioEncontrado = await this.usuarioModel.findOne({ usuario }).exec();
+    return usuarioEncontrado;
+  }
+
 }

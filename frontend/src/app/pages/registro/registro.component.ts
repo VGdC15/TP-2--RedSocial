@@ -113,16 +113,29 @@ export class RegistroComponent {
     },
     error: (error) => {
       console.error('Error al registrar:', error);
-      const mensaje = error?.error?.mensaje || 'Ocurrió un error inesperado';
+
+      const mensaje = error?.error?.message || 'Ocurrió un error inesperado';
+      console.log('MENSAJE ERROR:', mensaje);
+
+
+      let titulo = 'Error';
+      if (mensaje.includes('JPG') || mensaje.includes('PNG')) {
+        titulo = 'Archivo inválido';
+      } else if (mensaje.includes('usuario')) {
+        titulo = 'Usuario ya registrado';
+      } else if (mensaje.includes('email')) {
+        titulo = 'Email ya registrado';
+      }
 
       this.swal.mostrar(
-        'Usuario ya registrado',
+        titulo,
         mensaje,
         'error',
         true,
         3000
       );
     }
+
 
   });
 }

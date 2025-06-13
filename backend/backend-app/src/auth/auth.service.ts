@@ -2,28 +2,41 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { LoginUsuarioDto } from '../usuarios/dto/login-usuario.dto';
+import { File as MulterFile } from 'multer';
 import * as bcrypt from 'bcrypt';
 import { sign, verify } from 'jsonwebtoken/index';
+import * as fs from 'fs';
+import * as path from 'path';
+import { promisify } from 'util';
 
 @Injectable()
 export class AuthService {
     constructor(private readonly usuariosService: UsuariosService) {}
 
-    async register(createUsuarioDto: CreateUsuarioDto, ip: string) {
-        const existente = await this.usuariosService.findByEmailOrUsuario(
-        createUsuarioDto.email,
-        createUsuarioDto.usuario,
-        );
-
-        if (existente) {
+    async register(createUsuarioDto: CreateUsuarioDto, ip: string, imagen: MulterFile) {
+        const rename = promisify(fs.rename);
+        const existenteEmail = await this.usuariosService.findByEmail(createUsuarioDto.email);
+        if (existenteEmail) {
+            if (imagen) fs.unlinkSync(imagen.path);
             throw new BadRequestException('El email ya está registrado');
+        }
+
+        const existenteUsuario = await this.usuariosService.findByUsuario(createUsuarioDto.usuario);
+        if (existenteUsuario) {
+            if (imagen) fs.unlinkSync(imagen.path);
+            throw new BadRequestException('El usuario ya está registrado');
         }
 
         const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10);
         createUsuarioDto.password = hashedPassword;
 
-        const nuevoUsuario = await this.usuariosService.create(createUsuarioDto);
+        if (imagen) {
+            const destino = path.join('./uploads', imagen.filename);
+            await rename(imagen.path, destino);
+            createUsuarioDto.imagenPerfil = `http://localhost:3000/uploads/${imagen.filename}`;
+        }
 
+        const nuevoUsuario = await this.usuariosService.create(createUsuarioDto);
         const token = this.crearToken(nuevoUsuario.id, nuevoUsuario.nombre, ip);
 
         return {
