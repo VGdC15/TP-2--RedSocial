@@ -14,30 +14,49 @@ import { SwalService } from '../../services/swal.service';
 export class RegistroComponent {
   registerForm: FormGroup;
   imagenSeleccionada: File | null = null;
+  maxFechaNacimiento!: string;
+  minFechaNacimiento!: string;
 
-  constructor(private fb: FormBuilder, private service: ServicesService, 
-    private router: Router, private swal: SwalService) {
-    this.registerForm = this.fb.group({
-      nombre: ['', [
-        Validators.required,
-        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
-      ]],
-      apellido: ['', [
-        Validators.required,
-        Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
-      ]],
-      email: ['', [Validators.required, Validators.email]],
-      usuario: ['', Validators.required],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/)
-      ]],
-      repetir: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      imagenPerfil: ['usuario']
-    }, { validators: this.matchPasswords });
+  constructor(
+  private fb: FormBuilder,
+  private service: ServicesService,
+  private router: Router,
+  private swal: SwalService) {
+    const today = new Date();
+    const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate()); 
+
+    this.maxFechaNacimiento = this.formatearFecha(maxDate);
+    this.minFechaNacimiento = this.formatearFecha(minDate);
+
+    this.registerForm = this.fb.group(
+      {
+        nombre: ['', [
+          Validators.required,
+          Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+        ]],
+        apellido: ['', [
+          Validators.required,
+          Validators.pattern(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/)
+        ]],
+        email: ['', [Validators.required, Validators.email]],
+        usuario: ['', Validators.required],
+        password: ['', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/)
+        ]],
+        repetir: ['', Validators.required],
+        fechaNacimiento: ['', Validators.required],
+        descripcion: ['', Validators.required],
+        imagenPerfil: ['usuario']
+      },
+      { validators: this.matchPasswords }
+    );
+  }
+
+  private formatearFecha(fecha: Date): string {
+    return fecha.toISOString().split('T')[0]; 
   }
 
   onFileChange(event: Event): void {
@@ -126,21 +145,11 @@ export class RegistroComponent {
       } else if (mensaje.includes('email')) {
         titulo = 'Email ya registrado';
       }
-
-      this.swal.mostrar(
-        titulo,
-        mensaje,
-        'error',
-        true,
-        3000
-      );
     }
 
 
   });
 }
-
-
 
 
 }

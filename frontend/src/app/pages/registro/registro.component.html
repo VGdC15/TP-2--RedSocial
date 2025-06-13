@@ -28,7 +28,13 @@
     <div [hidden]="!showPasswordMatch"><span>Las contraseñas no coinciden.</span></div>
 
     <label for="fechaNacimiento">Fecha de nacimiento</label>
-    <input id="fechaNacimiento" type="date" formControlName="fechaNacimiento" />
+    <input
+        id="fechaNacimiento"
+        type="date"
+        formControlName="fechaNacimiento"
+        [attr.max]="maxFechaNacimiento"
+        [attr.min]="minFechaNacimiento"
+        />
     <div [hidden]="!showFechaRequired"><span>La fecha es obligatoria.</span></div>
 
     <label for="descripcion">Descripción breve</label>
