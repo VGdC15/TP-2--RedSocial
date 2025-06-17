@@ -8,11 +8,11 @@ import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class PublicacionesService {
-    constructor(
-    @InjectModel(Publicacione.name)
-    private publicacionModel: Model<Publicacione>,
-    private readonly authService: AuthService
-  ) {}
+  constructor(
+  @InjectModel(Publicacione.name)
+  private publicacionModel: Model<Publicacione>,
+  private readonly authService: AuthService
+) {}
 
   async create(data: {
     imagen: string;
@@ -22,14 +22,15 @@ export class PublicacionesService {
   }) {
     const nueva = await this.publicacionModel.create({
       ...data,
-      usuarioId: new Types.ObjectId(data.usuarioId)
+      usuarioId: new Types.ObjectId(data.usuarioId) 
     });
 
     return {
       mensaje: 'Publicación creada exitosamente',
-      publicacion: nueva
+      publicacion: nueva,
     };
   }
+
 
   findAll() {
     return `This action returns all publicaciones`;
@@ -54,8 +55,6 @@ export class PublicacionesService {
     if (!usuario) throw new Error('Token inválido');
     return this.obtenerUltimasTres(usuario.id);
   }
-
-
 
   update(id: number, updatePublicacioneDto: UpdatePublicacioneDto) {
     return `This action updates a #${id} publicacione`;

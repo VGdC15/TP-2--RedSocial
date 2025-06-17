@@ -14,27 +14,33 @@
   </form>
 
   <div>
-    <h3>Mis últimas publicaciones</h3>
 
-    @if (publicaciones.length > 0) {
-      <div>
-        <img [src]="publicaciones[0]?.imagen" width="300" />
-        <p>{{ publicaciones[0]?.pieDeFoto }}</p>
-      </div>
-    }
+  @if (publicaciones.length > 0) {
+    <app-card
+      [imagen]="publicaciones[0]?.imagen"
+      [pieDeFoto]="publicaciones[0]?.pieDeFoto"
+      [fecha]="publicaciones[0]?.fecha"
+      [usuario]="usuario.usuario">
+    </app-card>
+  }
 
-    @if (publicaciones.length > 1) {
-      <div>
-        <img [src]="publicaciones[1]?.imagen" width="300" />
-        <p>{{ publicaciones[1]?.pieDeFoto }}</p>
-      </div>
-    }
+  @if (publicaciones.length > 1) {
+    <app-card
+      [imagen]="publicaciones[1]?.imagen"
+      [pieDeFoto]="publicaciones[1]?.pieDeFoto"
+      [fecha]="publicaciones[1]?.fecha"
+      [usuario]="usuario.usuario">
+    </app-card>
+  }
 
-    @if (publicaciones.length > 2) {
-      <div>
-        <img [src]="publicaciones[2]?.imagen" width="300" />
-        <p>{{ publicaciones[2]?.pieDeFoto }}</p>
-      </div>
-    }
-  </div>
+  @if (publicaciones.length > 2) {
+    <app-card
+      [imagen]="publicaciones[2]?.imagen"
+      [pieDeFoto]="publicaciones[2]?.pieDeFoto"
+      [fecha]="publicaciones[2]?.fecha"
+      [usuario]="usuario.usuario">
+    </app-card>
+  }
+</div>
+
 }

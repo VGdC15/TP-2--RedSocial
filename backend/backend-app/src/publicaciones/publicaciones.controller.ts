@@ -28,7 +28,7 @@ export class PublicacionesController {
   }))
   async crearPublicacion(
     @UploadedFile() imagen,
-    @Body() body: CreatePublicacioneDto,
+    @Body('pieDeFoto') pieDeFoto: string,
     @Headers('Authorization') auth: string,
     @Ip() ip: string
   ): Promise<any> {
@@ -40,7 +40,7 @@ export class PublicacionesController {
 
     return this.publicacionesService.create({
       imagen: `http://localhost:3000/uploads-publicaciones/${imagen.filename}`,
-      pieDeFoto: body.pieDeFoto,
+      pieDeFoto: pieDeFoto,
       usuarioId: usuario.id,
       fecha: new Date()
     });

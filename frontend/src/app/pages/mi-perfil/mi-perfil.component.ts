@@ -3,10 +3,11 @@ import { ServicesService } from '../../services/services.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CardComponent } from '../../component/card/card.component'; 
 
 @Component({
   selector: 'app-mi-perfil',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CardComponent],
   templateUrl: './mi-perfil.component.html',
   styleUrl: './mi-perfil.component.css'
 })
@@ -44,6 +45,7 @@ export class MiPerfilComponent implements OnInit {
   subirPublicacion() {
     const formData = new FormData();
     formData.append('pieDeFoto', this.formularioPublicacion.get('pieDeFoto')?.value);
+
     if (this.imagenSeleccionada) {
       formData.append('imagen', this.imagenSeleccionada);
     }

@@ -6,7 +6,7 @@ export class Publicacione extends Document {
     @Prop({ required: true })
     imagen: string;
 
-    @Prop()
+    @Prop({ required: true })
     pieDeFoto: string;
 
     @Prop({ type: Types.ObjectId, ref: 'Usuario', required: true })
