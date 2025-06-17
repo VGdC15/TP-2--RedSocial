@@ -1,1 +1,3 @@
-export class CreatePublicacioneDto {}
+export class CreatePublicacioneDto {
+    pieDeFoto: string;
+}

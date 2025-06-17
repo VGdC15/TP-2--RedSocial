@@ -7,9 +7,14 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Habilitar archivos  desde la carpeta 'uploads'
+  // Habilitar archivos  desde la carpeta 'uploads' para fotos de perfil
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads',
+  });
+
+  // carpeta 'uploads-publicaciones' para publicaciones
+  app.useStaticAssets(join(__dirname, '..', 'uploads-publicaciones'), {
+    prefix: '/uploads-publicaciones',
   });
 
   // Validación global

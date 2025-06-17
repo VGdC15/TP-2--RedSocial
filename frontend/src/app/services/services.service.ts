@@ -29,6 +29,17 @@ export class ServicesService {
     });
   }
 
+  // obtener mis publicaciones
+  obtenerMisPublicaciones() {
+    const token = localStorage.getItem('token');
+
+    if (!token) throw new Error('No se encontró el token');
+
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.httpClient.get('http://localhost:3000/publicaciones/mias', { headers });
+  }
+
+
   // registro
   registro(datosRegistro: any, imagen: File) {
     const formData = new FormData();

@@ -1,10 +1,40 @@
-@if (usuario) {
+@if (usuario; as user) {
   <div>
-    <img [src]="usuario.imagenPerfil" alt="Foto de perfil" width="150" height="150" />
-    <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
-    <p><strong>Email:</strong> {{ usuario.email }}</p>
-    <p><strong>Usuario:</strong> {{ usuario.usuario }}</p>
-    <p><strong>Descripción:</strong> {{ usuario.descripcion }}</p>
+    <img [src]="user.imagenPerfil" alt="Foto de perfil" width="150" height="150" />
+    <h2>{{ user.nombre }} {{ user.apellido }}</h2>
+    <p><strong>Usuario:</strong> {{ user.usuario }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Descripción:</strong> {{ user.descripcion }}</p>
+  </div>
+
+  <form [formGroup]="formularioPublicacion" (ngSubmit)="subirPublicacion()" enctype="multipart/form-data">
+    <input type="file" formControlName="imagen" (change)="onFileChange($event)" />
+    <input type="text" formControlName="pieDeFoto" placeholder="Escribe un pie de foto..." />
+    <button type="submit">Publicar</button>
+  </form>
+
+  <div>
+    <h3>Mis últimas publicaciones</h3>
+
+    @if (publicaciones.length > 0) {
+      <div>
+        <img [src]="publicaciones[0]?.imagen" width="300" />
+        <p>{{ publicaciones[0]?.pieDeFoto }}</p>
+      </div>
+    }
+
+    @if (publicaciones.length > 1) {
+      <div>
+        <img [src]="publicaciones[1]?.imagen" width="300" />
+        <p>{{ publicaciones[1]?.pieDeFoto }}</p>
+      </div>
+    }
+
+    @if (publicaciones.length > 2) {
+      <div>
+        <img [src]="publicaciones[2]?.imagen" width="300" />
+        <p>{{ publicaciones[2]?.pieDeFoto }}</p>
+      </div>
+    }
   </div>
 }
-
