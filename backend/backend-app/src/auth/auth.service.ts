@@ -87,7 +87,7 @@ export class AuthService {
         id: id,
         nombre: nombre,
         iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 60, 
+        exp: Math.floor(Date.now() / 1000) + 60 * 60,
         };
 
         const clave = process.env.CLAVE_TOKEN;

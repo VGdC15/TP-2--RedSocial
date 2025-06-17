@@ -17,28 +17,34 @@
 
   @if (publicaciones.length > 0) {
     <app-card
+      [id]="publicaciones[0]?._id"
       [imagen]="publicaciones[0]?.imagen"
       [pieDeFoto]="publicaciones[0]?.pieDeFoto"
       [fecha]="publicaciones[0]?.fecha"
-      [usuario]="usuario.usuario">
+      [usuario]="usuario.usuario"
+      [like]="publicaciones[0]?.like">
     </app-card>
   }
 
   @if (publicaciones.length > 1) {
     <app-card
+      [id]="publicaciones[1]?._id"
       [imagen]="publicaciones[1]?.imagen"
       [pieDeFoto]="publicaciones[1]?.pieDeFoto"
       [fecha]="publicaciones[1]?.fecha"
-      [usuario]="usuario.usuario">
+      [usuario]="usuario.usuario"
+      [like]="publicaciones[1]?.like">
     </app-card>
   }
 
   @if (publicaciones.length > 2) {
     <app-card
+      [id]="publicaciones[2]?._id"
       [imagen]="publicaciones[2]?.imagen"
       [pieDeFoto]="publicaciones[2]?.pieDeFoto"
       [fecha]="publicaciones[2]?.fecha"
-      [usuario]="usuario.usuario">
+      [usuario]="usuario.usuario"
+      [like]="publicaciones[2]?.like">
     </app-card>
   }
 </div>

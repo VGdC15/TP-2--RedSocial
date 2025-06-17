@@ -31,9 +31,60 @@ export class PublicacionesService {
     };
   }
 
+  // async listarPublicaciones(params: {
+  //   ordenarPor: 'fecha' | 'meGusta';
+  //   usuarioId?: string;
+  //   offset: number;
+  //   limit: number;
+  // }): Promise<any[]> {
+  //   const { ordenarPor, usuarioId, offset, limit } = params;
 
-  findAll() {
-    return `This action returns all publicaciones`;
+  //   const filtro: any = { activo: true };
+
+  //   if (usuarioId) {
+  //     filtro.usuarioId = usuarioId;
+  //   }
+
+  //   const orden: any = {};
+  //   orden[ordenarPor] = -1; // descendente
+
+  //   const publicaciones = await this.publicacionModel
+  //     .find(filtro)
+  //     .sort(orden)
+  //     .skip(offset)
+  //     .limit(limit)
+  //     .exec();
+
+  //   return publicaciones;
+  // }
+  async listarPublicaciones(params) {
+    const { ordenarPor, usuarioId, offset, limit } = params;
+    const filtro: any = { activo: true };
+    const orden: any = {};
+    orden[ordenarPor] = -1;
+
+    const publicaciones = await this.publicacionModel
+      .find(filtro)
+      .sort(orden)
+      .skip(offset)
+      .limit(limit)
+      .lean() // importante para que sea un objeto plano
+
+    // Si recibís el usuario logueado, marcá si dio like
+    if (usuarioId) {
+      const userObjectId = new Types.ObjectId(usuarioId);
+      publicaciones.forEach(pub => {
+        (pub as any).yaDioLike = pub.usuariosQueDieronLike?.some((uid: Types.ObjectId) =>
+          uid.equals(userObjectId)
+        );
+      });
+    }
+
+    return publicaciones;
+  }
+
+  findAll(): Promise<Publicacione[]> {
+    return this.publicacionModel.find({ activo: true }).exec();
   }
 
   findOne(id: number) {
@@ -44,7 +95,7 @@ export class PublicacionesService {
     const objectId = new Types.ObjectId(usuarioId);
 
     return await this.publicacionModel
-      .find({ usuarioId: objectId })
+      .find({ usuarioId: objectId, activo: true })
       .sort({ fecha: -1 })
       .limit(3)
       .exec();
@@ -60,7 +111,53 @@ export class PublicacionesService {
     return `This action updates a #${id} publicacione`;
   }
 
+  async bajaLogica(id: string, usuario: any) {
+    const publicacion = await this.publicacionModel.findById(id);
+
+    if (!publicacion) {
+      throw new Error('Publicación no encontrada');
+    }
+
+    const esCreador = publicacion.usuarioId.toString() === usuario.id;
+    const esAdmin = usuario.rol === 'admin'; 
+
+    if (!esCreador && !esAdmin) {
+      throw new Error('No tenés permisos para eliminar esta publicación');
+    }
+
+    publicacion.activo = false;
+    await publicacion.save();
+
+    return {
+      mensaje: 'Publicación dada de baja lógicamente',
+      id: publicacion._id,
+    };
+  }
+
   remove(id: number) {
     return `This action removes a #${id} publicacione`;
   }
+
+  async sumarLike(id: string, usuario: any) {
+    const publicacion = await this.publicacionModel.findById(id);
+    if (!publicacion) throw new Error('Publicación no encontrada');
+
+    const userId = new Types.ObjectId(usuario.id);
+    const yaDioLike = publicacion.usuariosQueDieronLike.some(uid => uid.equals(userId));
+
+    if (yaDioLike) {
+      publicacion.usuariosQueDieronLike = publicacion.usuariosQueDieronLike.filter(uid => !uid.equals(userId));
+      publicacion.like = Math.max((publicacion.like || 1) - 1, 0);
+    } else {
+      publicacion.usuariosQueDieronLike.push(userId);
+      publicacion.like = (publicacion.like || 0) + 1;
+    }
+
+    await publicacion.save();
+    return { 
+      like: publicacion.like,
+      yaDioLike: publicacion.usuariosQueDieronLike.some(uid => uid.equals(userId))
+    };
+  }
+
 }

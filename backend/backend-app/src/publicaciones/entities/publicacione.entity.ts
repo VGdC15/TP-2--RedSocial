@@ -14,6 +14,16 @@ export class Publicacione extends Document {
 
     @Prop({ default: Date.now })
     fecha: Date;
+
+    @Prop({ default: 0 })
+    like: number;
+
+    @Prop({ type: [Types.ObjectId], ref: 'Usuario', default: [] })
+    usuariosQueDieronLike: Types.ObjectId[];
+
+    @Prop({ default: true })
+    activo: boolean;
+
 }
 
 export const PublicacioneSchema = SchemaFactory.createForClass(Publicacione);

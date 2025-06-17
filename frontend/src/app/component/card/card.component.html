@@ -4,6 +4,7 @@
     <p><strong>{{ usuario }}</strong> </p>
     <p>{{ pieDeFoto }}</p>
     <p>{{ fecha | date: 'short' }}</p>
+    <button (click)="darLike()">❤️ Like ({{ like }})</button>
   </div>
 </div>
 

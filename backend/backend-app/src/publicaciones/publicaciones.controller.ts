@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards,
-  UseInterceptors, UploadedFile, Req, Headers, Ip, UnauthorizedException } from '@nestjs/common';
+  UseInterceptors, UploadedFile, Req, Headers, Ip, UnauthorizedException, Query } from '@nestjs/common';
 import { PublicacionesService } from './publicaciones.service';
 import { CreatePublicacioneDto } from './dto/create-publicacione.dto';
 import { UpdatePublicacioneDto } from './dto/update-publicacione.dto';
@@ -53,8 +53,18 @@ export class PublicacionesController {
   }
 
   @Get()
-  findAll() {
-    return this.publicacionesService.findAll();
+  findAll(
+    @Query('ordenarPor') ordenarPor: 'fecha' | 'meGusta' = 'fecha',
+    @Query('usuarioId') usuarioId?: string,
+    @Query('offset') offset: string = '0',
+    @Query('limit') limit: string = '10'
+  ) {
+    return this.publicacionesService.listarPublicaciones({
+      ordenarPor,
+      usuarioId,
+      offset: parseInt(offset),
+      limit: parseInt(limit)
+    });
   }
 
   @Get(':id')
@@ -66,6 +76,25 @@ export class PublicacionesController {
   update(@Param('id') id: string, @Body() updatePublicacioneDto: UpdatePublicacioneDto) {
     return this.publicacionesService.update(+id, updatePublicacioneDto);
   }
+
+  @Patch(':id/like')
+  @UseGuards(AuthGuard)
+  async sumarLike(@Param('id') id: string, @Req() req) {
+    return await this.publicacionesService.sumarLike(id, req.usuario);
+  }
+
+  @Patch(':id/baja')
+  darDeBaja(
+    @Param('id') id: string,
+    @Headers('Authorization') auth: string,
+    @Ip() ip: string
+  ) {
+    const token = auth?.split(' ')[1];
+    const usuario = this.authService.traerDatos(token, ip); 
+
+    return this.publicacionesService.bajaLogica(id, usuario);
+  }
+
 
   @Delete(':id')
   remove(@Param('id') id: string) {
