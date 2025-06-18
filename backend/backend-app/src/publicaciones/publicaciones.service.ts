@@ -31,46 +31,25 @@ export class PublicacionesService {
     };
   }
 
-  // async listarPublicaciones(params: {
-  //   ordenarPor: 'fecha' | 'meGusta';
-  //   usuarioId?: string;
-  //   offset: number;
-  //   limit: number;
-  // }): Promise<any[]> {
-  //   const { ordenarPor, usuarioId, offset, limit } = params;
-
-  //   const filtro: any = { activo: true };
-
-  //   if (usuarioId) {
-  //     filtro.usuarioId = usuarioId;
-  //   }
-
-  //   const orden: any = {};
-  //   orden[ordenarPor] = -1; // descendente
-
-  //   const publicaciones = await this.publicacionModel
-  //     .find(filtro)
-  //     .sort(orden)
-  //     .skip(offset)
-  //     .limit(limit)
-  //     .exec();
-
-  //   return publicaciones;
-  // }
   async listarPublicaciones(params) {
     const { ordenarPor, usuarioId, offset, limit } = params;
+
     const filtro: any = { activo: true };
+    if (usuarioId) {
+      filtro.usuarioId = new Types.ObjectId(usuarioId);
+    }
+
     const orden: any = {};
-    orden[ordenarPor] = -1;
+    const campoOrden = ordenarPor === 'meGusta' ? 'like' : 'fecha';
+    orden[campoOrden] = -1;
 
     const publicaciones = await this.publicacionModel
       .find(filtro)
       .sort(orden)
       .skip(offset)
       .limit(limit)
-      .lean() // importante para que sea un objeto plano
+      .lean();
 
-    // Si recibís el usuario logueado, marcá si dio like
     if (usuarioId) {
       const userObjectId = new Types.ObjectId(usuarioId);
       publicaciones.forEach(pub => {
@@ -82,6 +61,7 @@ export class PublicacionesService {
 
     return publicaciones;
   }
+
 
   findAll(): Promise<Publicacione[]> {
     return this.publicacionModel.find({ activo: true }).exec();
@@ -118,12 +98,12 @@ export class PublicacionesService {
       throw new Error('Publicación no encontrada');
     }
 
-    const esCreador = publicacion.usuarioId.toString() === usuario.id;
-    const esAdmin = usuario.rol === 'admin'; 
+    // const esCreador = publicacion.usuarioId.toString() === usuario.id;
+    // const esAdmin = usuario.rol === 'admin'; 
 
-    if (!esCreador && !esAdmin) {
-      throw new Error('No tenés permisos para eliminar esta publicación');
-    }
+    // if (!esCreador && !esAdmin) {
+    //   throw new Error('No tenés permisos para eliminar esta publicación');
+    // }
 
     publicacion.activo = false;
     await publicacion.save();

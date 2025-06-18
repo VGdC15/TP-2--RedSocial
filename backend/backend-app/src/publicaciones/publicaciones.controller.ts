@@ -54,7 +54,7 @@ export class PublicacionesController {
 
   @Get()
   findAll(
-    @Query('ordenarPor') ordenarPor: 'fecha' | 'meGusta' = 'fecha',
+    @Query('ordenarPor') ordenarPor: 'fecha' | 'like' = 'fecha',
     @Query('usuarioId') usuarioId?: string,
     @Query('offset') offset: string = '0',
     @Query('limit') limit: string = '10'
