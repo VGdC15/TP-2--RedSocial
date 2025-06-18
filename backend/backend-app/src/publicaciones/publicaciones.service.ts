@@ -35,12 +35,13 @@ export class PublicacionesService {
     const { ordenarPor, usuarioId, offset, limit } = params;
 
     const filtro: any = { activo: true };
-    if (usuarioId) {
+
+    if (usuarioId && Types.ObjectId.isValid(usuarioId)) {
       filtro.usuarioId = new Types.ObjectId(usuarioId);
     }
 
     const orden: any = {};
-    const campoOrden = ordenarPor === 'meGusta' ? 'like' : 'fecha';
+    const campoOrden = ordenarPor === 'like' || ordenarPor === 'fecha' ? ordenarPor : 'fecha';
     orden[campoOrden] = -1;
 
     const publicaciones = await this.publicacionModel
@@ -50,8 +51,9 @@ export class PublicacionesService {
       .limit(limit)
       .lean();
 
-    if (usuarioId) {
-      const userObjectId = new Types.ObjectId(usuarioId);
+    // Solo si usuarioId es válido y fue usado
+    if (filtro.usuarioId) {
+      const userObjectId = filtro.usuarioId;
       publicaciones.forEach(pub => {
         (pub as any).yaDioLike = pub.usuariosQueDieronLike?.some((uid: Types.ObjectId) =>
           uid.equals(userObjectId)

@@ -1,1 +1,38 @@
-<p>publicaciones works!</p>
+<div class="publicaciones-container">
+
+    <div class="filtro-usuario">
+    <label for="filtroUsuario">Filtrar por usuario</label>
+    <select [formControl]="usuarioControl" id="filtroUsuario">
+        <option [value]="null">Todos los usuarios</option>
+
+        @for (usuario of usuarios; track usuario._id) {
+        <option [value]="usuario._id">{{ usuario.nombre }}</option>
+        }
+    </select>
+    </div>
+
+    <div class="filtros">
+        <button (click)="cambiarOrden('fecha')" [class.activo]="ordenarPor === 'fecha'">Ordenar por fecha</button>
+        <button (click)="cambiarOrden('like')" [class.activo]="ordenarPor === 'like'">Ordenar por Likes</button>
+    </div>
+
+    <div class="publicaciones-listado">
+        @for (pub of publicaciones; track pub._id) {
+        <app-card
+            [id]="pub._id"
+            [imagen]="pub.imagen"
+            [pieDeFoto]="pub.pieDeFoto"
+            [fecha]="pub.fecha"
+            [usuario]="pub.usuarioId.nombre"
+            [like]="pub.like"
+            [yaDioLike]="pub.yaDioLike"
+        />
+        }
+    </div>
+
+    <div class="paginacion">
+        <button (click)="anteriorPagina()" [disabled]="offset === 0">Anterior</button>
+        <button (click)="siguientePagina()">Siguiente</button>
+    </div>
+</div>
+
