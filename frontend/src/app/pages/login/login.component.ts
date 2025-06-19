@@ -67,7 +67,8 @@ export class LoginComponent {
       next: (res: any) => {
         localStorage.setItem('token', res.token);
         localStorage.setItem('idUsuario', res.usuario.id);
-        this.swal.mostrar('Bienvenid@', 'Inicio de sesión exitoso', 'success', true, 2000, '/publicaciones');
+        this.router.navigate(['/cargando']);
+        // this.swal.mostrar('Bienvenid@', 'Inicio de sesión exitoso', 'success', true, 2000, '/publicaciones');
       },
       error: (err) => {
         console.error('Error en login:', err);

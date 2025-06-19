@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UseInterceptors, UploadedFile, Req, Get, 
-    Headers, Ip, UnauthorizedException, BadRequestException, } from '@nestjs/common';
+    Headers, Ip, UnauthorizedException, BadRequestException, UseGuards} from '@nestjs/common';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
@@ -7,6 +7,7 @@ import { LoginUsuarioDto } from '../usuarios/dto/login-usuario.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage, File as MulterFile } from 'multer';
 import { extname } from 'path';
+import { AuthGuard } from './auth.guard';
 
 function imageFileFilter(req, file: MulterFile, cb: (error: Error | null, acceptFile: boolean) => void) {
   const allowedTypes = ['image/jpeg', 'image/png'];
@@ -77,5 +78,11 @@ export class AuthController {
         } else {
         return 'No hay header';
         }
+    }
+
+    @Get('auth/autorizar')
+    @UseGuards(AuthGuard)
+    getAutorizacion(@Req() req) {
+      return { mensaje: 'Token válido' };
     }
 }
