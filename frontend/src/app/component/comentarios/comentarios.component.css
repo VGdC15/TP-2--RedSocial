@@ -1,0 +1,10 @@
+.comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comentario-form {
+  display: flex;
+  gap: 0.5rem;
+}

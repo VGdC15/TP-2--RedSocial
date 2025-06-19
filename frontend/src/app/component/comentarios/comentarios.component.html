@@ -1,0 +1,17 @@
+<div class="comentarios">
+
+    <div>
+    @for (c of comentarios; track c._id) {
+        <p>
+        <strong>{{ c.usuarioId?.usuario ?? 'Anónimo' }}:</strong> {{ c.texto }}
+        <small>{{ c.fecha | date:'short' }}</small>
+        </p>
+    }
+    </div>
+
+    <div class="comentario-form">
+        <input [formControl]="textoCtrl" placeholder="Escribí un comentario..." required />
+        <button (click)="agregar()" [disabled]="!textoCtrl.value?.trim()">Enviar</button>
+    </div>
+
+</div>
