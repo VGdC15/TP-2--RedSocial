@@ -1,0 +1,17 @@
+.detalle-publicacion {
+  padding: 2rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.imagen-grande {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.info-publicacion {
+  margin-bottom: 2rem;
+}

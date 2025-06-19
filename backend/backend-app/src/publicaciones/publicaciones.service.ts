@@ -69,10 +69,14 @@ export class PublicacionesService {
     return this.publicacionModel.find({ activo: true }).exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} publicacione`;
+  async findOne(id: string): Promise<any> {
+    const publicacion = await this.publicacionModel
+      .findById(id)
+      .populate('usuarioId', 'nombre')
+      .lean();
+    return publicacion;
   }
-  
+
   async obtenerUltimasTres(usuarioId: string) {
     const objectId = new Types.ObjectId(usuarioId);
 

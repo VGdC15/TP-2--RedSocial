@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { CardComponent } from '../../component/card/card.component';
 import { ComentariosComponent } from '../../component/comentarios/comentarios.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-publicaciones',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CardComponent, ComentariosComponent],
+  imports: [ReactiveFormsModule, CardComponent, ComentariosComponent, RouterLink],
   templateUrl: './publicaciones.component.html',
   styleUrl: './publicaciones.component.css',
 })

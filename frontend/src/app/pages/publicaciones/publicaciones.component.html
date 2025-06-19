@@ -18,16 +18,18 @@
 
     <div class="publicaciones-listado">
         @for (pub of publicaciones; track pub._id) {
-            <app-card
-                [id]="pub._id"
-                [imagen]="pub.imagen"
-                [pieDeFoto]="pub.pieDeFoto"
-                [fecha]="pub.fecha"
-                [usuario]="pub.usuarioId.nombre"
-                [like]="pub.like"
-                [yaDioLike]="pub.yaDioLike"
-            />
-            <app-comentarios [publicacionId]="pub._id"></app-comentarios>
+            <a [routerLink]="['/publicacion', pub._id]" class="card-link">
+                <app-card
+                    [id]="pub._id"
+                    [imagen]="pub.imagen"
+                    [pieDeFoto]="pub.pieDeFoto"
+                    [fecha]="pub.fecha"
+                    [usuario]="pub.usuarioId.nombre"
+                    [like]="pub.like"
+                    [yaDioLike]="pub.yaDioLike"
+                />
+                <app-comentarios [publicacionId]="pub._id"></app-comentarios>
+            </a>
         }
     </div>
 

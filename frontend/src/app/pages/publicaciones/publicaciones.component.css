@@ -2,3 +2,9 @@ button.activo {
   background-color: #333;
   color: white;
 }
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

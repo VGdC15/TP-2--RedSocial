@@ -69,7 +69,7 @@ export class PublicacionesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.publicacionesService.findOne(+id);
+    return this.publicacionesService.findOne(id);
   }
 
   @Patch(':id')

@@ -20,7 +20,6 @@ export class ComentariosController {
     }));
   }
 
-
   @Get('/publicacion/:id')
   findByPublicacion(@Param('id') id: string): Promise<any[]> {
     return this.cs.findByPublicacion(id);

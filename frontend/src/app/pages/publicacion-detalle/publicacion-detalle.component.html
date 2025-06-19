@@ -1,0 +1,17 @@
+<div class="detalle-publicacion">
+  @if (publicacion; as pub) {
+    <app-card
+      [id]="pub._id"
+      [imagen]="pub.imagen"
+      [pieDeFoto]="pub.pieDeFoto"
+      [fecha]="pub.fecha"
+      [usuario]="pub.usuarioId.nombre"
+      [like]="pub.like"
+      [yaDioLike]="pub.yaDioLike"
+    />
+
+    <app-comentarios [publicacionId]="pub._id" />
+  }
+</div>
+
+
