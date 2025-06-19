@@ -85,4 +85,15 @@ export class AuthController {
     getAutorizacion(@Req() req) {
       return { mensaje: 'Token válido' };
     }
+
+    @Get('auth/refresh-token')
+    @UseGuards(AuthGuard)
+    refrescarToken(@Headers('Authorization') auth: string, @Ip() ip: string) {
+    const token = auth?.split(' ')[1];
+    if (!token) throw new UnauthorizedException('Token faltante');
+
+    const nuevoToken = this.authService.refrescarToken(token, ip);
+    return { token: nuevoToken };
+    }
+
 }

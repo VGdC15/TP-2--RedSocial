@@ -97,6 +97,20 @@ export class AuthService {
         });
     }
 
+    refrescarToken(token: string, ip: string): string {
+        const clave = process.env.CLAVE_TOKEN;
+        try {
+            const payload: any = verify(token, ip + clave);
+            delete payload.iat;
+            delete payload.exp;
+            return this.crearToken(payload.id, payload.nombre, ip);
+        } catch (error) {
+            console.error('Token inválido o expirado');
+            throw new Error('Token inválido o expirado');
+        }
+    }
+
+
     // refrescarToken(token){
     //     try{
     //         const payload = verify(token,"asd");

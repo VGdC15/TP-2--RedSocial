@@ -62,4 +62,17 @@ export class ServicesService {
 
     return this.httpClient.post('http://localhost:3000/registro', formData);
   }
+
+  refrescarToken() {
+    const tokenGuardado = localStorage.getItem('token');
+    if (!tokenGuardado) throw new Error('No se encontró el token');
+
+    const url = 'http://localhost:3000/auth/refresh-token';
+    const headers = {
+      Authorization: `Bearer ${tokenGuardado}`
+    };
+
+    return this.httpClient.get<{ token: string }>(url, { headers });
+  }
+
 }
