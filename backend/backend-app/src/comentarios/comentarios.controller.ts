@@ -5,7 +5,7 @@ import { UpdateComentarioDto } from './dto/update-comentario.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { AuthService } from 'src/auth/auth.service';
 
-@Controller('comentarios')
+@Controller('comentarios') 
 @UseGuards(AuthGuard)
 export class ComentariosController {
   constructor(private readonly cs: ComentariosService, private readonly auth: AuthService) {}
@@ -21,8 +21,19 @@ export class ComentariosController {
   }
 
   @Get('/publicacion/:id')
-  findByPublicacion(@Param('id') id: string): Promise<any[]> {
-    return this.cs.findByPublicacion(id);
+  async findByPublicacion(
+    @Param('id') id: string,
+    @Req() req
+  ): Promise<{ comentarios: any[] }> {
+    const rawOffset = req.query.offset;
+    const rawLimit = req.query.limit;
+
+    const offset = Number.isInteger(+rawOffset) ? parseInt(rawOffset) : 0;
+    const limit = Number.isInteger(+rawLimit) ? parseInt(rawLimit) : 2;
+
+    const comentarios = await this.cs.findByPublicacion(id, offset, limit);
+
+    return { comentarios };
   }
 
   @Patch(':id')

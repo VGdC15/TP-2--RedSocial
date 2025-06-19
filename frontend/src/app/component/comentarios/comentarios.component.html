@@ -1,7 +1,6 @@
 <div class="comentarios">
-
     <div>
-    @for (c of comentarios; track c._id) {
+    @for (c of this.comentariosMostrados; track c._id) {
         <p>
         <strong>{{ c.usuarioId?.usuario ?? 'Anónimo' }}:</strong> {{ c.texto }}
         <small>{{ c.fecha | date:'short' }}</small>
@@ -9,9 +8,14 @@
     }
     </div>
 
-    <div class="comentario-form">
-        <input [formControl]="textoCtrl" placeholder="Escribí un comentario..." required />
-        <button (click)="agregar()" [disabled]="!textoCtrl.value?.trim()">Enviar</button>
-    </div>
+    @if (this.mostrarToggle) {
+    <a (click)="verMas()" class="ver-mas">
+        {{ verTodo ? 'Ver menos' : 'Ver más' }}
+    </a>
+    }
 
+  <div class="comentario-form">
+    <input [formControl]="textoCtrl" placeholder="Escribí un comentario..." required />
+    <button (click)="agregar()" [disabled]="!textoCtrl.value?.trim()">Enviar</button>
+  </div>
 </div>

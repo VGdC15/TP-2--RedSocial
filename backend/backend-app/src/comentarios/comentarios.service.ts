@@ -5,7 +5,7 @@ import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
 import { Comentario } from './entities/comentario.entity';
 
-@Injectable()
+@Injectable() 
 export class ComentariosService {
   constructor(
     @InjectModel(Comentario.name)
@@ -23,13 +23,15 @@ export class ComentariosService {
     return nueva;
   }
 
-  async findByPublicacion(publicacionId: string): Promise<Comentario[]> {
+  async findByPublicacion(publicacionId: string, offset = 0, limit = 2): Promise<Comentario[]> {
     const comentarios = await this.comentariosModel
       .find({ publicacionId: new Types.ObjectId(publicacionId) })
       .sort({ fecha: 1 })
+      .skip(offset)
+      .limit(limit)
       .populate('usuarioId', 'nombre apellido usuario')
       .lean();
-    console.log('Comentarios encontrados en la DB:', comentarios);
+
     return comentarios;
   }
 
