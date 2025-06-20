@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-@Schema()
+@Schema() 
 export class Comentario extends Document {
   @Prop({ required: true })
   texto: string;
@@ -14,6 +14,9 @@ export class Comentario extends Document {
 
   @Prop({ default: Date.now })
   fecha: Date;
+
+  @Prop({ default: false })
+  modificado: boolean;
 }
 
 export const ComentarioSchema = SchemaFactory.createForClass(Comentario);

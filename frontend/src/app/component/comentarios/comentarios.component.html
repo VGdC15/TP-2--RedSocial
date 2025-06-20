@@ -1,18 +1,33 @@
 <div class="comentarios">
-    <div>
+  <div>
     @for (c of this.comentariosMostrados; track c._id) {
-        <p>
-        <strong>{{ c.usuarioId?.usuario ?? 'Anónimo' }}:</strong> {{ c.texto }}
-        <small>{{ c.fecha | date:'short' }}</small>
-        </p>
+      <div>
+        @if (!this.modoEdicion[c._id]) {
+          <p>
+            <strong>{{ c.usuarioId?.usuario ?? 'Anónimo' }}:</strong> {{ c.texto }}
+            @if (c.modificado) {
+              <span>(Editado)</span>
+            }
+            <small>{{ c.fecha | date: 'short' }}</small>
+          </p>
+          <button (click)="activarEdicion(c)">Editar</button>
+        } @else {
+          <textarea
+            [ngModel]="textoEditado[c._id]"
+            (ngModelChange)="textoEditado[c._id] = $event"
+          ></textarea>
+          <button (click)="guardarEdicion(c)">Guardar</button>
+          <button (click)="modoEdicion[c._id] = false">Cancelar</button>
+        }
+      </div>
     }
-    </div>
+  </div>
 
-    @if (this.mostrarToggle) {
+  @if (this.mostrarToggle) {
     <a (click)="verMas()" class="ver-mas">
-        {{ verTodo ? 'Ver menos' : 'Ver más' }}
+      {{ verTodo ? 'Ver menos' : 'Ver más' }}
     </a>
-    }
+  }
 
   <div class="comentario-form">
     <input [formControl]="textoCtrl" placeholder="Escribí un comentario..." required />

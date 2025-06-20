@@ -21,7 +21,7 @@ export class ComentariosService {
       fecha: new Date(),
     });
     return nueva;
-  }
+  } 
 
   async findByPublicacion(publicacionId: string, offset = 0, limit = 2): Promise<Comentario[]> {
     const comentarios = await this.comentariosModel
@@ -41,10 +41,22 @@ export class ComentariosService {
     if (comentario.usuarioId.toString() !== usuarioId) {
       throw new Error('No tenés permisos para editar este comentario');
     }
-    comentario.texto = dto.texto ?? comentario.texto;
+
+    let modificado = false;
+
+    if (dto.texto && dto.texto !== comentario.texto) {
+      comentario.texto = dto.texto;
+      modificado = true;
+    }
+
+    if (modificado) {
+      comentario.modificado = true;
+    }
+
     await comentario.save();
     return comentario;
   }
+
 
   async remove(id: string, usuarioId: string): Promise<{ mensaje: string }> {
     const comentario = await this.comentariosModel.findById(id);

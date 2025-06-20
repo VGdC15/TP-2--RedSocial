@@ -69,6 +69,18 @@ export class ServicesService {
     return this.httpClient.post('http://localhost:3000/registro', formData);
   }
 
+  editarComentario(id: string, texto: string) {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No se encontró el token');
+
+    const headers = { Authorization: `Bearer ${token}` };
+    const body = { texto }; 
+
+    const peticion = this.httpClient.patch(`http://localhost:3000/comentarios/${id}`, body, { headers });
+    return peticion.pipe(this.manejarError401());
+  }
+
+
   refrescarToken(): Observable<{ token: string }> {
     const tokenGuardado = localStorage.getItem('token');
     if (!tokenGuardado) throw new Error('No se encontró el token');

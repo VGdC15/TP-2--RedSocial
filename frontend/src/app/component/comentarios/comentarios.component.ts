@@ -1,12 +1,13 @@
 import { Component, Input, inject, OnChanges, SimpleChanges } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ServicesService } from '../../services/services.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-comentarios',
   standalone: true, 
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, DatePipe],
   templateUrl: './comentarios.component.html', 
 })
 export class ComentariosComponent implements OnChanges {
@@ -20,6 +21,10 @@ export class ComentariosComponent implements OnChanges {
   verTodo = false;
 
   private http = inject(HttpClient);
+  service = inject(ServicesService);
+
+  modoEdicion: { [idComentario: string]: boolean } = {};
+  textoEditado: { [idComentario: string]: string } = {};
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['publicacionId'] && this.publicacionId) {
@@ -74,6 +79,33 @@ export class ComentariosComponent implements OnChanges {
         this.hayMas = true;
         this.cargar();
       });
+  }
+
+  activarEdicion(comentario: any) {
+    this.modoEdicion[comentario._id] = true;
+    this.textoEditado[comentario._id] = comentario.texto;
+  }
+
+  cancelarEdicion(id: string) {
+    this.modoEdicion[id] = false;
+    this.textoEditado[id] = '';
+  }
+
+  guardarEdicion(comentario: any) {
+    const textoNuevo = this.textoEditado[comentario._id];
+
+    if (textoNuevo.trim() === '') return;
+
+    this.service.editarComentario(comentario._id, textoNuevo).subscribe({
+      next: (res: any) => {
+        comentario.texto = res.comentario.texto;
+        comentario.modificado = res.comentario.modificado;
+        this.modoEdicion[comentario._id] = false;
+      },
+      error: (err) => {
+        console.error('Error al editar comentario', err);
+      }
+    });
   }
 
   trackById(index: number, item: any) {
