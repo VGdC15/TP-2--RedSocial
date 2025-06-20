@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
 
       if (resultado.isConfirmed) {
         this.service.refrescarToken().subscribe({
-          next: res => {
+          next: (res: { token: string }) => {
             localStorage.setItem('token', res.token);
             this.iniciarContadorSesion(); // reiniciamos el contador
             Swal.fire('¡Sesión renovada!', '', 'success');

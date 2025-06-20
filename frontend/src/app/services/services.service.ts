@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
+import { MonoTypeOperatorFunction } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicesService {
   httpClient = inject(HttpClient);
+  private router = inject(Router);
 
   constructor() { }
 
@@ -17,26 +22,23 @@ export class ServicesService {
   // obtener datos del usuario logueado
   obtenerDatosUsuario() {
     const token = localStorage.getItem('token');
+    if (!token) throw new Error('No se encontró el token');
 
-    if (!token) {
-      throw new Error('No se encontró el token');
-    }
+    const headers = { Authorization: `Bearer ${token}` };
+    const peticion = this.httpClient.get('http://localhost:3000/datos', { headers });
 
-    return this.httpClient.get('http://localhost:3000/datos', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    return peticion.pipe(this.manejarError401());
   }
 
   // obtener mis publicaciones
   obtenerMisPublicaciones() {
     const token = localStorage.getItem('token');
-
     if (!token) throw new Error('No se encontró el token');
 
     const headers = { Authorization: `Bearer ${token}` };
-    return this.httpClient.get('http://localhost:3000/publicaciones/mias', { headers });
+    const peticion = this.httpClient.get('http://localhost:3000/publicaciones/mias', { headers });
+
+    return peticion.pipe(this.manejarError401());
   }
 
 
@@ -63,16 +65,29 @@ export class ServicesService {
     return this.httpClient.post('http://localhost:3000/registro', formData);
   }
 
-  refrescarToken() {
+  refrescarToken(): Observable<{ token: string }> {
     const tokenGuardado = localStorage.getItem('token');
     if (!tokenGuardado) throw new Error('No se encontró el token');
 
-    const url = 'http://localhost:3000/auth/refresh-token';
-    const headers = {
-      Authorization: `Bearer ${tokenGuardado}`
-    };
+    const headers = { Authorization: `Bearer ${tokenGuardado}` };
+    const peticion = this.httpClient.get<{ token: string }>(
+      'http://localhost:3000/auth/refresh-token',
+      { headers }
+    );
 
-    return this.httpClient.get<{ token: string }>(url, { headers });
+    return peticion.pipe(this.manejarError401<{ token: string }>());
   }
+
+
+  manejarError401<T>(): MonoTypeOperatorFunction<T> {
+    return catchError((err) => {
+      if (err.status === 401) {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
+      return throwError(() => err);
+    });
+  }
+
 
 }
