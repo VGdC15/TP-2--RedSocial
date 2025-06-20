@@ -22,7 +22,7 @@ export class PantallaCargandoComponent implements OnInit {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get('http://localhost:3000/auth/autorizar', { headers }).subscribe({
+  this.http.post('http://localhost:3000/auth/autorizar', {}, { headers }).subscribe({
       next: () => {
         setTimeout(() => {
           import('sweetalert2').then(Swal => {
@@ -38,7 +38,9 @@ export class PantallaCargandoComponent implements OnInit {
           });
         }, 1000); 
       },
-      error: () => this.router.navigate(['/login']),
+      error: () => {
+        this.router.navigate(['/login']);
+      },
     });
   }
 }

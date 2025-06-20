@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { LoginUsuarioDto } from '../usuarios/dto/login-usuario.dto';
@@ -78,7 +78,7 @@ export class AuthService {
             return usuarioCompleto;
         } catch (error) {
             console.error(error);
-            throw new Error('Token inválido o expirado');
+            throw new UnauthorizedException('Token inválido o expirado');
         }
     }
 
@@ -109,15 +109,5 @@ export class AuthService {
             throw new Error('Token inválido o expirado');
         }
     }
-
-
-    // refrescarToken(token){
-    //     try{
-    //         const payload = verify(token,"asd");
-    //         payload.exp = Date.now() / 1000 * 15 * 60;
-    //         const token = sing(payload)
-    //     } catch(e){}
-        
-    // }
 
 }

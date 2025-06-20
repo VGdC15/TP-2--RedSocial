@@ -32,15 +32,18 @@ export class ServicesService {
   }
 
   // obtener mis publicaciones
-  obtenerMisPublicaciones() {
+  obtenerPublicaciones(params: any) {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No se encontró el token');
 
+    const url = 'http://localhost:3000/publicaciones';
     const headers = { Authorization: `Bearer ${token}` };
-    const peticion = this.httpClient.get('http://localhost:3000/publicaciones/mias', { headers });
+    const opciones = { headers, params };
+    const peticion = this.httpClient.get<any[]>(url, opciones).pipe(this.manejarError401());
 
-    return peticion.pipe(this.manejarError401());
+    return peticion;
   }
+
 
 
   // registro

@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../../component/card/card.component';
 import { ComentariosComponent } from '../../component/comentarios/comentarios.component';
 import { RouterLink } from '@angular/router';
+import { ServicesService } from '../../services/services.service';
 
 @Component({
   selector: 'app-publicaciones',
@@ -14,6 +15,7 @@ import { RouterLink } from '@angular/router';
 })
 export class PublicacionesComponent implements OnInit {
   private http = inject(HttpClient);
+  services = inject(ServicesService);
 
   publicaciones: any[] = [];
   usuarios: any[] = [];
@@ -54,13 +56,18 @@ export class PublicacionesComponent implements OnInit {
       limit: this.limit,
     };
     if (usuarioId) {
-      params.usuarioId = usuarioId;
+      params.usuarioId = usuarioId; 
     }
 
-    this.http.get<any[]>('http://localhost:3000/publicaciones', { headers, params }).subscribe({
-      next: (res) => (this.publicaciones = res),
-      error: (err) => console.error('Error al cargar publicaciones', err),
-    });
+  this.services.obtenerPublicaciones(params).subscribe({
+    next: (res: any[]) => {
+      this.publicaciones = res;
+    },
+    error: (err: any) => {
+      console.error('Error al cargar publicaciones', err);
+    }
+  });
+
   }
 
   cambiarOrden(orden: 'fecha' | 'like') {

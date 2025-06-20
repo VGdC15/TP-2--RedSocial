@@ -80,11 +80,18 @@ export class AuthController {
         }
     }
 
-    @Get('auth/autorizar')
-    @UseGuards(AuthGuard)
-    getAutorizacion(@Req() req) {
-      return { mensaje: 'Token válido' };
+    @Post('auth/autorizar') 
+    autorizar(@Headers('Authorization') auth: string, @Ip() ip: string) {
+        const token = auth?.split(' ')[1];
+        if (!token) throw new UnauthorizedException('Token no proporcionado');
+
+        try {
+            return this.authService.traerDatos(token, ip);
+        } catch (err) {
+            throw new UnauthorizedException('Token inválido o expirado');
+        }
     }
+
 
     @Get('auth/refresh-token')
     @UseGuards(AuthGuard)
