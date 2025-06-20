@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
-import { MonoTypeOperatorFunction } from 'rxjs';
+import { of, MonoTypeOperatorFunction } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -80,14 +81,26 @@ export class ServicesService {
 
 
   manejarError401<T>(): MonoTypeOperatorFunction<T> {
-    return catchError((err) => {
-      if (err.status === 401) {
-        localStorage.removeItem('token');
-        this.router.navigate(['/login']);
-      }
-      return throwError(() => err);
-    });
+    return (source) =>
+      source.pipe(
+        tap({
+          error: (err) => {
+            if (err.status === 401) {
+              Swal.fire({
+                title: 'Sesión expirada',
+                text: 'Tu sesión ha expirado o el token no es válido.',
+                icon: 'warning',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+              }).then(() => {
+                localStorage.removeItem('token');
+                this.router.navigate(['/login']);
+              });
+            }
+          }
+        }),
+        catchError((err) => throwError(() => err))
+      );
   }
-
 
 }
