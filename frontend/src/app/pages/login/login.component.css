@@ -1,0 +1,273 @@
+* {
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+.login-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: black;
+    overflow: hidden;
+}
+
+.login-container {
+    display: flex;
+    width: 800px;
+    max-width: 100%;
+    height: 500px;
+    box-shadow: 0 0 20px #ff1493, 0 0 3px #ff66b2;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Parte izquierda con imagen */
+.login-img {
+    flex: 1;
+    background-image: url('../../../../public/fondo-login.jpg'); 
+    background-size: cover;
+    background-position: center;
+}
+
+/* Parte derecha con el formulario */
+.login-formulario {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: white;
+    padding: 2rem;
+}
+
+.login-formulario form {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-formulario h1 {
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 0 8px #ff66b2, 0 0 12px #ff1493;
+    margin-bottom: 1rem;
+}
+
+.login-formulario label {
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 6px #ff1493;
+}
+
+.login-formulario input {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #111;
+    color: white;
+    outline: none;
+    box-shadow: 0 0 5px #ff3399 inset;
+    transition: 0.3s ease;
+}
+
+.login-formulario input:focus {
+    box-shadow: 0 0 10px #ff1493 inset;
+}
+
+.login-formulario span {
+    color: #ffb6c1;
+    font-size: 0.85rem;
+}
+
+.login-formulario h6 {
+  text-align: center;
+  color: #ccc;
+  margin-top: 1rem;
+  font-weight: normal;
+  font-size: 0.95rem;
+}
+
+.link-registro {
+  color: #ff66b2;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 4px;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.link-registro:hover {
+  color: #ff1493;
+  text-shadow: 0 0 6px #ff1493;
+  cursor: pointer;
+}
+
+/*Boton de inicio de sesión*/
+.glitch-btn,
+.glitch-btn::after {
+  padding: 10px 50px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: transparent;
+  position: relative;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: inherit;
+}
+
+.glitch-btn::after {
+  --move1: inset(50% 50% 50% 50%);
+  --move2: inset(31% 0 40% 0);
+  --move3: inset(39% 0 15% 0);
+  --move4: inset(45% 0 40% 0);
+  --move5: inset(45% 0 6% 0);
+  --move6: inset(14% 0 61% 0);
+  clip-path: var(--move1);
+  content: 'Iniciar sesión';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  color: white;
+}
+
+.glitch-btn:hover::after {
+  animation: glitch_4011 1s;
+  animation-timing-function: steps(2, end);
+  text-shadow: -3px -3px 0px #ff66b2, 3px 3px 0px #ff1493;
+  border: 3px solid #ff1493;
+}
+
+.glitch-btn:hover {
+  text-shadow: -1px -1px 0px #ff66b2, 1px 1px 0px #ff1493;
+  background-color: transparent;
+  border: 1px solid #ff66b2;
+  box-shadow: 0px 10px 10px -10px #ff66b2;
+}
+
+@keyframes glitch_4011 {
+  0% {
+    clip-path: var(--move1);
+    transform: translate(0px,-10px);
+  }
+
+  10% {
+    clip-path: var(--move2);
+    transform: translate(-10px,10px);
+  }
+
+  20% {
+    clip-path: var(--move3);
+    transform: translate(10px,0px);
+  }
+
+  30% {
+    clip-path: var(--move4);
+    transform: translate(-10px,10px);
+  }
+
+  40% {
+    clip-path: var(--move5);
+    transform: translate(10px,-10px);
+  }
+
+  50% {
+    clip-path: var(--move6);
+    transform: translate(-10px,10px);
+  }
+
+  60% {
+    clip-path: var(--move1);
+    transform: translate(10px,-10px);
+  }
+
+  70% {
+    clip-path: var(--move3);
+    transform: translate(-10px,10px);
+  }
+
+  80% {
+    clip-path: var(--move2);
+    transform: translate(10px,-10px);
+  }
+
+  90% {
+    clip-path: var(--move4);
+    transform: translate(-10px,10px);
+  }
+
+  100% {
+    clip-path: var(--move1);
+    transform: translate(0);
+  }
+}
+
+
+/* Breakpoints para pantallas medianas y pequeñas */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    min-height: 600px;
+  }
+
+  .login-img {
+    height: 250px;
+    width: 100%;
+  }
+
+  .login-formulario {
+    padding: 2rem 1rem;
+    flex: none;
+    width: 100%;
+  }
+
+  .login-formulario form {
+    max-width: 100%;
+  }
+
+  .glitch-btn,
+  .glitch-btn::after {
+    font-size: 16px;
+    padding: 10px 30px;
+  }
+
+  .login-formulario h6 {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-img {
+    height: 200px;
+  }
+
+  .glitch-btn,
+  .glitch-btn::after {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .login-formulario h1 {
+    font-size: 1.5rem;
+  }
+}

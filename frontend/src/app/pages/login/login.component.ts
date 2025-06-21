@@ -2,15 +2,16 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../services/services.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SwalService } from '../../services/swal.service';
 
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -68,7 +69,6 @@ export class LoginComponent {
         localStorage.setItem('token', res.token);
         localStorage.setItem('idUsuario', res.usuario.id);
         this.router.navigate(['/cargando']);
-        // this.swal.mostrar('Bienvenid@', 'Inicio de sesión exitoso', 'success', true, 2000, '/publicaciones');
       },
       error: (err) => {
         console.error('Error en login:', err);

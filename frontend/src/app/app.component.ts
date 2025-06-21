@@ -18,8 +18,14 @@ export class AppComponent implements OnInit {
   private contador: any;
   private modalActivo = false;
 
+  rutasSinNavbar = ['/login', '/registro', '/cargando'];
+
   ngOnInit() {
     this.iniciarContadorSesion();
+  }
+
+  mostrarNavbar(): boolean {
+    return !this.rutasSinNavbar.includes(this.router.url);
   }
 
   iniciarContadorSesion() {
