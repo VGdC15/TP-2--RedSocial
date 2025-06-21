@@ -2,20 +2,24 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../services/services.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SwalService } from '../../services/swal.service';
 
 @Component({
   standalone: true,
   selector: 'app-registro',
   templateUrl: './registro.component.html',
-  imports: [CommonModule, ReactiveFormsModule]
+  styleUrls: ['./registro.component.css'],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink]
 })
 export class RegistroComponent {
   registerForm: FormGroup;
   imagenSeleccionada: File | null = null;
   maxFechaNacimiento!: string;
   minFechaNacimiento!: string;
+
+  showPassword = false;
+  showRepetir = false;
 
   constructor(
   private fb: FormBuilder,

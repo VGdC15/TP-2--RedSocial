@@ -1,50 +1,75 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <label for="nombre">Nombre</label>
-    <input id="nombre" type="text" formControlName="nombre" (keydown)="soloLetras($event)" />
-    <div [hidden]="!showNombreRequired"><span>El nombre es obligatorio.</span></div>
+<nav class="navbar">
+  <div class="navbar-content">
+    <a class="nav-link" routerLink="/login">Login</a>
+  </div>
+</nav>
 
-    <label for="apellido">Apellido</label>
-    <input id="apellido" type="text" formControlName="apellido" (keydown)="soloLetras($event)" />
-    <div [hidden]="!showApellidoRequired"><span>El apellido es obligatorio.</span></div>
+<div class="register-wrapper">
+    <div class="register-container">
+            <h3>Completá tus datos</h3>
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-    <label for="email">Correo electrónico</label>
-    <input id="email" type="email" formControlName="email" />
-    <div [hidden]="!showEmailRequired"><span>El email es obligatorio.</span></div>
-    <div [hidden]="!showEmailFormato"><span>Formato inválido.</span></div>
+            <label for="nombre">Nombre</label>
+            <input id="nombre" type="text" formControlName="nombre" (keydown)="soloLetras($event)" />
+            <div [hidden]="!showNombreRequired"><span>El nombre es obligatorio.</span></div>
 
-    <label for="usuario">Nombre de usuario</label>
-    <input id="usuario" type="text" formControlName="usuario" />
-    <div [hidden]="!showUsuarioRequired"><span>El nombre de usuario es obligatorio.</span></div>
+            <label for="apellido">Apellido</label>
+            <input id="apellido" type="text" formControlName="apellido" (keydown)="soloLetras($event)" />
+            <div [hidden]="!showApellidoRequired"><span>El apellido es obligatorio.</span></div>
 
-    <label for="password">Contraseña</label>
-    <input id="password" type="password" formControlName="password" />
-    <div [hidden]="!showPasswordRequired"><span>La contraseña es obligatoria.</span></div>
-    <div [hidden]="!showPasswordMin"><span>Mínimo 8 caracteres.</span></div>
-    <div [hidden]="!showPasswordPattern"><span>Debe tener mayúscula y número.</span></div>
+            <label for="email">Correo electrónico</label>
+            <input id="email" type="email" formControlName="email" />
+            <div [hidden]="!showEmailRequired"><span>El email es obligatorio.</span></div>
+            <div [hidden]="!showEmailFormato"><span>Formato inválido.</span></div>
 
-    <label for="repetir">Repetir contraseña</label>
-    <input id="repetir" type="password" formControlName="repetir" />
-    <div [hidden]="!showRepetirRequired"><span>Este campo es obligatorio.</span></div>
-    <div [hidden]="!showPasswordMatch"><span>Las contraseñas no coinciden.</span></div>
+            <label for="usuario">Nombre de usuario</label>
+            <input id="usuario" type="text" formControlName="usuario" />
+            <div [hidden]="!showUsuarioRequired"><span>El nombre de usuario es obligatorio.</span></div>
 
-    <label for="fechaNacimiento">Fecha de nacimiento</label>
-    <input
-        id="fechaNacimiento"
-        type="date"
-        formControlName="fechaNacimiento"
-        [attr.max]="maxFechaNacimiento"
-        [attr.min]="minFechaNacimiento"
-        />
-    <div [hidden]="!showFechaRequired"><span>La fecha es obligatoria.</span></div>
+            <label for="password">Contraseña</label>
+            <div class="input-with-icon">
+            <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+            />
+            <span class="toggle-eye" (click)="showPassword = !showPassword">👁️</span>
+            </div>
+            <div [hidden]="!showPasswordRequired"><span>La contraseña es obligatoria.</span></div>
+            <div [hidden]="!showPasswordMin"><span>Mínimo 8 caracteres.</span></div>
+            <div [hidden]="!showPasswordPattern"><span>Debe tener mayúscula y número.</span></div>
 
-    <label for="descripcion">Descripción breve</label>
-    <textarea id="descripcion" formControlName="descripcion"></textarea>
-    <div [hidden]="!showDescripcionRequired"><span>Campo obligatorio.</span></div>
+            <label for="repetir">Repetir contraseña</label>
+            <div class="input-with-icon">
+            <input
+                id="repetir"
+                [type]="showRepetir ? 'text' : 'password'"
+                formControlName="repetir"
+            />
+            <span class="toggle-eye" (click)="showRepetir = !showRepetir">👁️</span>
+            </div>
+            <div [hidden]="!showRepetirRequired"><span>Este campo es obligatorio.</span></div>
+            <div [hidden]="!showPasswordMatch"><span>Las contraseñas no coinciden.</span></div>
 
-    <label for="imagenPerfil">Imagen de perfil</label>
-    <input id="imagenPerfil" type="file" (change)="onFileChange($event)" />
-    <div [hidden]="!showImagenNoSeleccionada"><span>Debes seleccionar una imagen.</span></div>
+            <label for="fechaNacimiento">Fecha de nacimiento</label>
+            <input
+                id="fechaNacimiento"
+                type="date"
+                formControlName="fechaNacimiento"
+                [attr.max]="maxFechaNacimiento"
+                [attr.min]="minFechaNacimiento"
+            />
+            <div [hidden]="!showFechaRequired"><span>La fecha es obligatoria.</span></div>
 
-    <button type="submit" [disabled]="registerForm.invalid">Registrarse</button>
-</form>
- 
+            <label for="descripcion">Descripción breve</label>
+            <textarea id="descripcion" formControlName="descripcion" rows="4"></textarea>
+            <div [hidden]="!showDescripcionRequired"><span>Campo obligatorio.</span></div>
+
+            <label for="imagenPerfil">Imagen de perfil</label>
+            <input id="imagenPerfil" type="file" (change)="onFileChange($event)" />
+            <div [hidden]="!showImagenNoSeleccionada"><span>Debes seleccionar una imagen.</span></div>
+
+            <button type="submit" [disabled]="registerForm.invalid">Registrate</button>
+        </form>
+    </div>
+</div>
