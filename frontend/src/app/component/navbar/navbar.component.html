@@ -1,7 +1,22 @@
-<nav style="background: #333; padding: 1rem;">
-  <button  routerLink="/login">Login</button>
-  <button routerLink="/registro" >Registro</button>
-  <button routerLink="/publicaciones">Publicaciones</button>
-  <button routerLink="/perfil">Mi Perfil</button>
-</nav>
+<nav class="navbar">
+  <div class="navbar-content">
+    <div class="menu-container">
+      <button 
+        class="setting-btn menu-toggle" 
+        (click)="toggleMenu()" 
+        aria-label="Menú"
+        type="button"
+      >
+        <span class="bar bar1"></span>
+        <span class="bar bar2"></span>
+        <span class="bar bar1"></span>
+      </button>
 
+      <ul [class.active]="menuOpen" class="menu-dropdown">
+        <li><button routerLink="/publicaciones" (click)="closeMenu()">Publicaciones</button></li>
+        <li><button routerLink="/perfil" (click)="closeMenu()">Mi Perfil</button></li>
+        <li><button (click)="cerrarSesion(); closeMenu()">Cerrar sesión</button></li>
+      </ul>
+    </div>
+  </div>
+</nav>

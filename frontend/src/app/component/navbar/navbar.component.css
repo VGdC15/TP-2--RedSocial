@@ -1,0 +1,120 @@
+.navbar {
+  width: 100%;
+  background-color: #000;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.navbar-content {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Contenedor del menú hamburguesa */
+.menu-container {
+  position: relative;
+}
+
+/* Botón personalizado con barras */
+.setting-btn {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: #ff66b2;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  padding: 0;
+}
+
+/* Barras dentro del botón */
+.bar {
+  width: 50%;
+  height: 2px;
+  background-color: rgb(229, 229, 229);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 2px;
+}
+
+.bar::before {
+  content: "";
+  width: 2px;
+  height: 2px;
+  background-color: rgb(126, 117, 255);
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: all 0.3s;
+  box-shadow: 0px 0px 5px white;
+}
+
+.bar1::before {
+  transform: translateX(-4px);
+}
+
+.bar2::before {
+  transform: translateX(4px);
+}
+
+.setting-btn:hover .bar1::before {
+  transform: translateX(4px);
+}
+
+.setting-btn:hover .bar2::before {
+  transform: translateX(-4px);
+}
+
+
+/* Lista desplegable oculta por defecto */
+.menu-dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  background-color: #111;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 160px;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  z-index: 20;
+}
+
+/* Mostrar menú cuando está activo */
+.menu-dropdown.active {
+  display: flex;
+}
+
+/* Botones dentro del menú */
+.menu-dropdown li button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.menu-dropdown li button:hover {
+  color: #ff66b2;
+}
