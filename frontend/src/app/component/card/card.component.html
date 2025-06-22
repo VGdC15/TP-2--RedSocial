@@ -1,10 +1,29 @@
-<div class="card">
-  <img [src]="imagen" alt="Imagen de la publicación" width="300" />
-  <div>
-    <p><strong>{{ usuario }}</strong> </p>
-    <p>{{ pieDeFoto }}</p>
-    <p>{{ fecha | date: 'short' }}</p>
-    <button (click)="darLike()">❤️ Like ({{ like }})</button>
+<main>
+  <div class="card-container">
+    <section class="card-wrapper">
+      <div class="card">
+        <div class="card-image-container">
+          <img class="card-image" [src]="imagen" alt="Imagen de la publicación" />
+          <div class="card-overlay">
+            <button class="card-btn" (click)="darLike()">
+              ❤️ Like ({{ like }})
+            </button>
+          </div>
+        </div>
+
+        <div class="card-info">
+          <h3 class="card-album">{{ usuario }}</h3>
+          <p class="card-caption">
+            {{ pieDeFoto }}
+            <span class="card-fecha">{{ fecha | date: 'short' }}</span>
+          </p>
+        </div>
+        <!-- Componente de comentarios -->
+        <app-comentarios [publicacionId]="id"></app-comentarios>
+      </div>
+          
+    </section>
   </div>
-</div>
+</main>
+
 

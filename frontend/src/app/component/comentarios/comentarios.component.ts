@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
   standalone: true, 
   imports: [FormsModule, ReactiveFormsModule, DatePipe],
   templateUrl: './comentarios.component.html', 
+  styleUrls: ['./comentarios.component.css'],
 })
 export class ComentariosComponent implements OnChanges {
   @Input() publicacionId!: string;
@@ -45,7 +46,7 @@ export class ComentariosComponent implements OnChanges {
   }
 
   get mostrarToggle(): boolean {
-    return this.comentarios.length > 2 || this.hayMas;
+    return this.comentarios.length >= 2 && (this.hayMas || this.comentarios.length > 2);
   }
 
 
@@ -63,7 +64,17 @@ export class ComentariosComponent implements OnChanges {
 
   verMas() {
     if (!this.todosCargados) {
-      this.cargar();
+      this.http.get<{ comentarios: any[] }>(
+        `http://localhost:3000/comentarios/publicacion/${this.publicacionId}?offset=${this.offset}&limit=${this.limit}`,
+        { headers: this.headers }
+      ).subscribe(res => {
+        this.comentarios.push(...res.comentarios);
+        this.offset += this.limit;
+        this.hayMas = res.comentarios.length === this.limit;
+        if (!this.hayMas) this.todosCargados = true;
+
+        this.verTodo = true;
+      });
     } else {
       this.verTodo = !this.verTodo;
     }

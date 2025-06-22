@@ -1,7 +1,7 @@
 <div class="comentarios">
-  <div>
+  <div class="comentarios-lista">
     @for (c of this.comentariosMostrados; track c._id) {
-      <div>
+      <div class="comentario-item">
         @if (!this.modoEdicion[c._id]) {
           <p>
             <strong>{{ c.usuarioId?.usuario ?? 'Anónimo' }}:</strong> {{ c.texto }}
@@ -9,15 +9,17 @@
               <span>(Editado)</span>
             }
             <small>{{ c.fecha | date: 'short' }}</small>
+            <a class="link-editar" (click)="activarEdicion(c)">Editar</a>
           </p>
-          <button (click)="activarEdicion(c)">Editar</button>
         } @else {
           <textarea
             [ngModel]="textoEditado[c._id]"
             (ngModelChange)="textoEditado[c._id] = $event"
           ></textarea>
-          <button (click)="guardarEdicion(c)">Guardar</button>
-          <button (click)="modoEdicion[c._id] = false">Cancelar</button>
+          <div class="acciones-edicion comentario-form">
+            <button (click)="guardarEdicion(c)">Guardar</button>
+            <button (click)="modoEdicion[c._id] = false">Cancelar</button>
+          </div>
         }
       </div>
     }
