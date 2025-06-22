@@ -76,6 +76,7 @@
 .comentario-form input {
   flex: 1;
   padding: 8px;
+  padding-left: 0;
   background-color: #111;
   border: 1px solid #ff66b2;
   border-radius: 4px;
@@ -97,6 +98,7 @@
   color: #ff66b2;
   font-weight: bold;
   cursor: pointer;
+
 }
 
 .comentario-form button:hover {

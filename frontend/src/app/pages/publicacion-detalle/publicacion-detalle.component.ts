@@ -2,12 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CardComponent } from '../../component/card/card.component';
-import { ComentariosComponent } from '../../component/comentarios/comentarios.component';
 
 @Component({
   selector: 'app-publicacion-detalle',
   standalone: true,
-  imports: [CardComponent, ComentariosComponent],
+  imports: [CardComponent],
   templateUrl: './publicacion-detalle.component.html',
   styleUrl: './publicacion-detalle.component.css',
 })

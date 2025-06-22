@@ -1,20 +1,21 @@
 <div class="publicaciones-container">
 
-    <div class="filtro-usuario">
-    <label for="filtroUsuario">Filtrar por usuario</label>
-    <select [formControl]="usuarioControl" id="filtroUsuario">
-        <option [value]="null">Todos los usuarios</option>
+    <div class="filtros-contenedor">
+        <div class="filtro-usuario">
+            <select [formControl]="usuarioControl" id="filtroUsuario">
+            <option [value]="null">Filtrar Usuarios</option>
+            @for (usuario of usuarios; track usuario._id) {
+                <option [value]="usuario._id">{{ usuario.nombre }}</option>
+            }
+            </select>
+        </div>
 
-        @for (usuario of usuarios; track usuario._id) {
-        <option [value]="usuario._id">{{ usuario.nombre }}</option>
-        }
-    </select>
+        <div class="filtros">
+            <button (click)="cambiarOrden('fecha')" [class.activo]="ordenarPor === 'fecha'">Ordenar por fecha</button>
+            <button (click)="cambiarOrden('like')" [class.activo]="ordenarPor === 'like'">Ordenar por Likes</button>
+        </div>
     </div>
 
-    <div class="filtros">
-        <button (click)="cambiarOrden('fecha')" [class.activo]="ordenarPor === 'fecha'">Ordenar por fecha</button>
-        <button (click)="cambiarOrden('like')" [class.activo]="ordenarPor === 'like'">Ordenar por Likes</button>
-    </div>
 
     <div class="publicaciones-listado">
         @for (pub of publicaciones; track pub._id) {
@@ -33,8 +34,9 @@
     </div>
 
     <div class="paginacion">
-        <button (click)="anteriorPagina()" [disabled]="offset === 0">Anterior</button>
-        <button (click)="siguientePagina()">Siguiente</button>
+    <button class="btn-estilo" (click)="anteriorPagina()" [disabled]="offset === 0">Anterior</button>
+    <button class="btn-estilo" (click)="siguientePagina()">Siguiente</button>
     </div>
+
 </div>
 

@@ -1,7 +1,8 @@
 <main>
   <div class="card-container">
     <section class="card-wrapper">
-      <div class="card">
+      <div class="card"> <!-- ⬅️ TODO lo que esté adentro, está dentro de la tarjeta -->
+
         <div class="card-image-container">
           <img class="card-image" [src]="imagen" alt="Imagen de la publicación" />
           <div class="card-overlay">
@@ -18,12 +19,13 @@
             <span class="card-fecha">{{ fecha | date: 'short' }}</span>
           </p>
         </div>
-        <!-- Componente de comentarios -->
-        <app-comentarios [publicacionId]="id"></app-comentarios>
+
+        <!-- ✅ ASEGURATE de que esté dentro de la card -->
+        <div class="card-comentarios">
+          <app-comentarios [publicacionId]="id"></app-comentarios>
+        </div>
+
       </div>
-          
     </section>
   </div>
 </main>
-
-
