@@ -1,5 +1,14 @@
 <nav class="navbar">
   <div class="navbar-content">
+    <!-- Foto y nombre -->
+    @if (usuario; as user) {
+      <div class="usuario-info">
+        <img [src]="user.foto" alt="Foto de perfil" class="foto-usuario" />
+        <span class="usuario-nombre">{{ user.nombre }}</span>
+      </div>
+    }
+
+    <!-- Menú hamburguesa -->
     <div class="menu-container">
       <button 
         class="setting-btn menu-toggle" 

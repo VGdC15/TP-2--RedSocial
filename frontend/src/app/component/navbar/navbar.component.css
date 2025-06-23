@@ -118,3 +118,32 @@
 .menu-dropdown li button:hover {
   color: #ff66b2;
 }
+
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-right: auto;
+}
+
+.usuario-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #ff66b2;
+  object-fit: cover;
+}
+
+.foto-usuario {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff66b2;
+}
+
+.usuario-nombre {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}

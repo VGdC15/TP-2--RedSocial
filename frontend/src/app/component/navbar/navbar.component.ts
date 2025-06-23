@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { ServicesService } from '../../services/services.service'; 
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +9,25 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
-  constructor(private router: Router) {}
-
+export class NavbarComponent implements OnInit {
+  usuario: { nombre: string, foto: string } | null = null;
   menuOpen = false;
+
+  constructor(private router: Router, private servicesService: ServicesService) {}
+
+  ngOnInit(): void {
+    this.servicesService.obtenerDatosUsuario().subscribe({
+      next: (data: any) => {
+        this.usuario = {
+          nombre: data.nombre,
+          foto: data.foto
+        };
+      },
+      error: (err) => {
+        console.error('Error al obtener los datos del usuario', err);
+      }
+    });
+  }
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
