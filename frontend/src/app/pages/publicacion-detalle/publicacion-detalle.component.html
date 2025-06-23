@@ -1,5 +1,8 @@
 <div class="detalle-publicacion">
   <div class="contenido">
+      <button class="volver-glow" (click)="router.navigate(['/publicaciones'])">
+        ← Volver a publicaciones
+      </button>
     @if (publicacion; as pub) {
       <app-card
         [id]="pub._id"

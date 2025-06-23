@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CardComponent } from '../../component/card/card.component';
 
 @Component({
@@ -13,6 +13,7 @@ import { CardComponent } from '../../component/card/card.component';
 export class PublicacionDetalleComponent implements OnInit {
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
+  router = inject(Router);
 
   publicacion: any = null;
 

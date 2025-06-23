@@ -25,6 +25,7 @@ app-root {
   box-shadow: 0 0 10px #ff3399; 
   display: flex;
   justify-content: center; 
+  margin-top: 2rem;
 }
 
 .detalle-publicacion .contenido {
@@ -45,4 +46,29 @@ app-card img {
   width: 100%;
   object-fit: cover;
   border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.volver-glow {
+  position: absolute;
+  top: 10%;              
+  left: 50%;              
+  transform: translateX(-50%); 
+  padding: 0.5rem 1.25rem;
+  background: transparent;
+  border: 1px solid #ff66b2;
+  color: #ff66b2;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  text-shadow: 0 0 4px #ff66b2;
+}
+
+.volver-glow:hover {
+  background-color: #ff1493;
+  color: white;
+  box-shadow: 0 0 10px #ff1493;
+  text-shadow: none;
 }
