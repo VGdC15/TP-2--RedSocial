@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+/* === Estética general === */
+.swal2-popup {
+  background-color: #111 !important;
+  color: white !important;
+  border: 1px solid #ff3399 !important;
+  box-shadow: 0 0 20px #ff3399;
+  border-radius: 12px;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 2rem !important;
+}
+
+/* === Título === */
+.swal2-title {
+  color: #ff66b2 !important;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* === Texto === */
+.swal2-html-container {
+  font-size: 1rem;
+  color: white !important;
+}
+
+/* === Iconos === */
+.swal2-icon {
+  border-color: #ff3399 !important;
+  color: #ff3399 !important;
+}
+
+/* === Botones === */
+.swal2-confirm, .swal2-cancel {
+  background-color: #111 !important;
+  color: white !important;
+  border: 1px solid #ff3399 !important;
+  box-shadow: 0 0 6px #ff3399 inset;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 0.5rem 1.5rem;
+  margin: 0 0.25rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.swal2-confirm:hover, .swal2-cancel:hover {
+  background-color: #ff66b2 !important;
+  color: white !important;
+}
+
+/* === Barra de progreso (si usás timer) === */
+.swal2-timer-progress-bar {
+  background: #ff3399 !important;
+}
+

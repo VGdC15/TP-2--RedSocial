@@ -15,7 +15,14 @@ export class SwalService {
       showConfirmButton: !autoCerrar,
       showCloseButton: !autoCerrar,
       timerProgressBar: autoCerrar,
-      buttonsStyling: true
+      buttonsStyling: false, 
+      customClass: {
+        popup: 'swal2-popup',
+        title: 'swal2-title',
+        htmlContainer: 'swal2-html-container',
+        confirmButton: 'swal2-confirm',
+        cancelButton: 'swal2-cancel'
+      }
     }).then(() => {
       if (redireccion) {
         this.router.navigate([redireccion]);
