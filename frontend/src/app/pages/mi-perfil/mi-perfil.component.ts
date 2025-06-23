@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../../component/card/card.component'; 
 
+
 @Component({
   selector: 'app-mi-perfil',
   imports: [ReactiveFormsModule, CardComponent],

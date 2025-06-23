@@ -1,52 +1,68 @@
-@if (usuario; as user) {
-  <div>
-    <img [src]="user.imagenPerfil" alt="Foto de perfil" width="150" height="150" />
-    <h2>{{ user.nombre }} {{ user.apellido }}</h2>
-    <p><strong>Usuario:</strong> {{ user.usuario }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Descripción:</strong> {{ user.descripcion }}</p>
-  </div>
+<div class="perfil-container">
+  @if (usuario; as user) {
+    <div class="perfil-header">
+      <div class="datos-usuario">
+        <div class="foto-perfil">
+          <img [src]="user.imagenPerfil" alt="Foto de perfil" />
+        </div>
 
-  <form [formGroup]="formularioPublicacion" (ngSubmit)="subirPublicacion()" enctype="multipart/form-data">
-    <input type="file" formControlName="imagen" (change)="onFileChange($event)" />
-    <input type="text" formControlName="pieDeFoto" placeholder="Escribe un pie de foto..." />
-    <button type="submit">Publicar</button>
-  </form>
+        <div class="info-perfil">
+          <h2>{{ user.nombre }} {{ user.apellido }}</h2>
+          <p><strong>Usuario:</strong> {{ user.usuario }}</p>
+          <p>{{ user.email }}</p>
+          <p>{{ user.descripcion }}</p>
+        </div>
+      </div>
 
-  <div>
+      <div class="box-publicacion">
+        <h5>Última Party...</h5>
+        <form [formGroup]="formularioPublicacion" (ngSubmit)="subirPublicacion()" enctype="multipart/form-data" class="form-publicacion">
+          <input type="file" formControlName="imagen" (change)="onFileChange($event)" />
+          
+          <div class="input-boton-row">
+            <input type="text" formControlName="pieDeFoto" placeholder="Escribe un pie de foto..." />
+            <button type="submit" class="btn-estilo">Publicar</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-  @if (publicaciones.length > 0) {
-    <app-card
-      [id]="publicaciones[0]?._id"
-      [imagen]="publicaciones[0]?.imagen"
-      [pieDeFoto]="publicaciones[0]?.pieDeFoto"
-      [fecha]="publicaciones[0]?.fecha"
-      [usuario]="usuario.usuario"
-      [like]="publicaciones[0]?.like">
-    </app-card>
-  }
+    <div class="publicaciones-listado">
+      @if (publicaciones.length > 0) {
+        <app-card
+          [id]="publicaciones[0]?._id"
+          [imagen]="publicaciones[0]?.imagen"
+          [pieDeFoto]="publicaciones[0]?.pieDeFoto"
+          [fecha]="publicaciones[0]?.fecha"
+          [usuario]="usuario.usuario"
+          [like]="publicaciones[0]?.like"
+          [yaDioLike]="publicaciones[0]?.yaDioLike"
+        />
+      }
 
-  @if (publicaciones.length > 1) {
-    <app-card
-      [id]="publicaciones[1]?._id"
-      [imagen]="publicaciones[1]?.imagen"
-      [pieDeFoto]="publicaciones[1]?.pieDeFoto"
-      [fecha]="publicaciones[1]?.fecha"
-      [usuario]="usuario.usuario"
-      [like]="publicaciones[1]?.like">
-    </app-card>
-  }
+      @if (publicaciones.length > 1) {
+        <app-card
+          [id]="publicaciones[1]?._id"
+          [imagen]="publicaciones[1]?.imagen"
+          [pieDeFoto]="publicaciones[1]?.pieDeFoto"
+          [fecha]="publicaciones[1]?.fecha"
+          [usuario]="usuario.usuario"
+          [like]="publicaciones[1]?.like"
+          [yaDioLike]="publicaciones[1]?.yaDioLike"
+        />
+      }
 
-  @if (publicaciones.length > 2) {
-    <app-card
-      [id]="publicaciones[2]?._id"
-      [imagen]="publicaciones[2]?.imagen"
-      [pieDeFoto]="publicaciones[2]?.pieDeFoto"
-      [fecha]="publicaciones[2]?.fecha"
-      [usuario]="usuario.usuario"
-      [like]="publicaciones[2]?.like">
-    </app-card>
+      @if (publicaciones.length > 2) {
+        <app-card
+          [id]="publicaciones[2]?._id"
+          [imagen]="publicaciones[2]?.imagen"
+          [pieDeFoto]="publicaciones[2]?.pieDeFoto"
+          [fecha]="publicaciones[2]?.fecha"
+          [usuario]="usuario.usuario"
+          [like]="publicaciones[2]?.like"
+          [yaDioLike]="publicaciones[2]?.yaDioLike"
+        />
+      }
+    </div>
   }
 </div>
-
-}
