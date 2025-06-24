@@ -10,9 +10,15 @@
         <input id="email" type="email" formControlName="email" />
         <div [hidden]="!showEmailRequired"><span>El correo es obligatorio.</span></div>
         <div [hidden]="!showEmailFormat"><span>Formato de correo no válido.</span></div>
-
         <label for="password">Contraseña</label>
-        <input id="password" type="password" formControlName="password" />
+        <div class="input-with-icon">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+          />
+          <span class="toggle-eye" (click)="showPassword = !showPassword">👁️</span>
+        </div>
         <div [hidden]="!showPasswordRequired"><span>La contraseña es obligatoria.</span></div>
         <div [hidden]="!showPasswordMinLength"><span>Mínimo 8 caracteres.</span></div>
         <div [hidden]="!showPasswordPattern"><span>Debe contener al menos una mayúscula y un número.</span></div>

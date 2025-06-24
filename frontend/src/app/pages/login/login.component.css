@@ -115,6 +115,26 @@ html, body {
   cursor: pointer;
 }
 
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  flex: 1;
+  padding-right: 2rem; 
+}
+
+.toggle-eye { 
+  position: absolute;
+  right: 0.75rem;
+  color: white;
+  cursor: pointer;
+  font-size: 1.1rem;
+  user-select: none;
+}
+
 /*Boton de inicio de sesión*/
 .glitch-btn,
 .glitch-btn::after {

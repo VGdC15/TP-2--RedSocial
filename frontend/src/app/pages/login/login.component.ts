@@ -15,6 +15,7 @@ import { SwalService } from '../../services/swal.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  showPassword = false;
 
   constructor(private fb: FormBuilder,
     private service: ServicesService,
