@@ -48,7 +48,6 @@
 .link-editar:hover {
   color: #ff1493;
   text-shadow: 0 0 6px #ff1493;
-  background-color: #f5f4f4;
 }
 
 .comentarios textarea {
@@ -62,9 +61,31 @@
 
 .acciones-edicion {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.4rem;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.3rem;
 }
+
+.acciones-edicion button {
+  padding: 2px 6px;
+  font-size: 0.6rem;
+  max-width: 70px;
+  white-space: nowrap;
+  border: 1px solid #ff66b2;
+  border-radius: 3px;
+  background-color: transparent;
+  color: #ff66b2;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.acciones-edicion button:hover {
+  background-color: #ff1493;
+  color: white;
+  box-shadow: 0 0 3px #ff1493;
+}
+
 
 .comentario-form {
   display: flex;
@@ -95,7 +116,7 @@
   background-color: transparent;
   border: 1px solid #ff66b2;
   border-radius: 4px;
-  color: #ff66b2;
+  color: #ff66b2; 
   font-weight: bold;
   cursor: pointer;
 

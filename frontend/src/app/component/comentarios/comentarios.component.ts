@@ -3,6 +3,7 @@ import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ServicesService } from '../../services/services.service';
 import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-comentarios',
@@ -121,6 +122,33 @@ export class ComentariosComponent implements OnChanges {
 
   trackById(index: number, item: any) {
     return item._id;
+  }
+
+  eliminarComentario(id: string) {
+    Swal.fire({
+      title: '¿Eliminar comentario?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#888',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete(`http://localhost:3000/comentarios/${id}`, { headers: this.headers })
+          .subscribe({
+            next: () => {
+              this.comentarios = this.comentarios.filter(c => c._id !== id);
+              Swal.fire('Eliminado', 'El comentario fue eliminado.', 'success');
+            },
+            error: (err) => {
+              console.error('Error al eliminar comentario', err);
+              Swal.fire('Error', 'No se pudo eliminar el comentario.', 'error');
+            }
+          });
+      }
+    });
   }
 
 
