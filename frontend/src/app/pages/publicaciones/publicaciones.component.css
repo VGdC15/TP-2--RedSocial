@@ -116,6 +116,191 @@ button.activo {
   margin-top: 2rem;
 }
 
+.top-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  gap: 2rem;
+}
+
+/*card de musica*/
+.player-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  margin-bottom: 2rem;
+  margin-left: 5%;
+}
+
+.player-disc {
+  position: relative;
+  width: 96px; 
+  height: 96px;
+  animation: spin 3s linear infinite;
+  transform-origin: center center; 
+  border: 4px solid #ff3399;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 12px #ff66b2;
+  margin-bottom: 0; 
+  background-color: #ff1493;
+}
+
+.disc-svg {
+  width: 96px; 
+  height: 96px;
+}
+
+.disc-center {
+  position: absolute;
+  top: 32px; 
+  left: 32px;
+  width: 24px; 
+  height: 24px;
+  background-color: #000000;
+  border: 4px solid #ff1493;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.player-card {
+  width: 280px;
+  background-color: #272627; 
+  border-radius: 20px;
+  box-shadow: 0 6px 14px #ff66b2; 
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+}
+
+.player-info-left {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  animation: spin 3s linear infinite;
+  margin-right: 12px;
+}
+
+.disc-mini-svg {
+  width: 96px;
+  height: 96px;
+  border: 4px solid #ff65b7;
+  border-radius: 50%;
+  background-color: #000000;
+}
+
+.disc-mini-center {
+  position: absolute;
+  top: 36px;
+  left: 36px;
+  width: 24px;
+  height: 24px;
+  background-color: #000000;
+  border: 4px solid #ff87c7;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.track-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.track-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0;
+  color: #ffffff; 
+}
+
+.track-artist {
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-bar span {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.progress-bar input[type="range"] {
+  flex-grow: 1;
+  appearance: none;
+  height: 4px;
+  background: #e0e7ff;
+  border-radius: 999px;
+}
+
+.progress-bar input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #fdf4ff;
+  border: 2px solid #a78bfa;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 4px #ff1493;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.2);
+  color: #ff1493;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+/*BREAKPONITS*/
+@media (min-width: 768px) {
+  .top-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .player-wrapper {
+    align-items: flex-start;
+  }
+
+  .filtros-contenedor {
+    align-items: flex-end;
+  }
+}
 
 @media (min-width: 640px) and (max-width: 899px) {
   .publicaciones-listado {
@@ -134,4 +319,5 @@ button.activo {
     column-count: 4;
   }
 }
+
 

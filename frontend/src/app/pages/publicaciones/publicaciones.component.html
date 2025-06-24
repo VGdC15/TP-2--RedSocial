@@ -1,18 +1,68 @@
 <div class="publicaciones-container">
+    <div class="top-bar">
+        <div class="player-wrapper">
+            <div class="player-card">
+                <div class="player-info">
+                    <div class="player-info-left">
+                        <div class="player-disc">
+                            <svg viewBox="0 0 128 128" class="disc-svg">
+                                <rect width="128" height="128" fill="black"></rect>
+                                <circle cx="20" cy="20" r="2" fill="white"></circle>
+                                <circle cx="40" cy="30" r="2" fill="white"></circle>
+                                <circle cx="60" cy="10" r="2" fill="white"></circle>
+                                <circle cx="80" cy="40" r="2" fill="white"></circle>
+                                <circle cx="100" cy="20" r="2" fill="white"></circle>
+                                <circle cx="120" cy="50" r="2" fill="white"></circle>
+                                <circle cx="90" cy="30" r="10" fill="white" fill-opacity="0.5"></circle>
+                                <circle cx="90" cy="30" r="8" fill="white"></circle>
+                                <path d="M0 128 Q32 64 64 128 T128 128" fill="purple" stroke="black" stroke-width="1"></path>
+                                <path d="M0 128 Q32 48 64 128 T128 128" fill="mediumpurple" stroke="black" stroke-width="1"></path>
+                                <path d="M0 128 Q32 32 64 128 T128 128" fill="rebeccapurple" stroke="black" stroke-width="1"></path>
+                                <path d="M0 128 Q16 64 32 128 T64 128" fill="purple" stroke="black" stroke-width="1"></path>
+                                <path d="M64 128 Q80 64 96 128 T128 128" fill="mediumpurple" stroke="black" stroke-width="1"></path>
+                            </svg>
+                        <div class="disc-center"></div>
+                    </div>
 
-    <div class="filtros-contenedor">
-        <div class="filtro-usuario">
-            <select [formControl]="usuarioControl" id="filtroUsuario">
-            <option [value]="null">Filtrar Usuarios</option>
-            @for (usuario of usuarios; track usuario._id) {
-                <option [value]="usuario._id">{{ usuario.nombre }}</option>
-            }
-            </select>
+                </div>
+
+                <div class="track-info">
+                    <p class="track-title">Music Name</p>
+                    <p class="track-artist">Singer &amp; Artist</p>
+                </div>
+                </div>
+
+                <div class="progress-bar">
+                    <span>0:00</span>
+                    <input type="range" min="0" max="100" value="0" />
+                    <span>3:45</span>
+                </div>
+
+                <div class="controls">
+                    <button class="btn repeat">&#10227;</button>
+                    <button class="btn skip-back">&#9198;</button>
+                    <button class="btn play">&#9654;</button>
+                    <button class="btn skip-forward">&#9197;</button>
+                    <button class="btn list">&#9776;</button>
+                </div>
+            </div>
         </div>
 
-        <div class="filtros">
-            <button (click)="cambiarOrden('fecha')" [class.activo]="ordenarPor === 'fecha'">Ordenar por fecha</button>
-            <button (click)="cambiarOrden('like')" [class.activo]="ordenarPor === 'like'">Ordenar por Likes</button>
+
+        <div class="filtros-contenedor">
+            <div class="filtro-usuario">
+                <select [formControl]="usuarioControl" id="filtroUsuario">
+                <option [value]="null">Filtrar Usuarios</option>
+                @for (usuario of usuarios; track usuario._id) {
+                    <option [value]="usuario._id">{{ usuario.nombre }}</option>
+                }
+                </select>
+            </div>
+
+            <div class="filtros">
+                <button (click)="cambiarOrden('fecha')" [class.activo]="ordenarPor === 'fecha'">Ordenar por fecha</button>
+                <button (click)="cambiarOrden('like')" [class.activo]="ordenarPor === 'like'">Ordenar por Likes</button>
+            </div>
         </div>
     </div>
 
