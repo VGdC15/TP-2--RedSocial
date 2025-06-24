@@ -35,7 +35,7 @@
 
     <div class="paginacion">
     <button class="btn-estilo" (click)="anteriorPagina()" [disabled]="offset === 0">Anterior</button>
-    <button class="btn-estilo" (click)="siguientePagina()">Siguiente</button>
+    <button class="btn-estilo" (click)="siguientePagina()" [disabled]="!hayMasPublicaciones">Siguiente</button>
     </div>
 
 </div>

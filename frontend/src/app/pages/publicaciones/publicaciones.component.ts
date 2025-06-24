@@ -24,6 +24,7 @@ export class PublicacionesComponent implements OnInit {
   offset = 0;
   limit = 10;
   ordenarPor: 'fecha' | 'like' = 'fecha';
+  hayMasPublicaciones = false;
 
   ngOnInit(): void {
     this.cargarUsuarios();
@@ -58,14 +59,16 @@ export class PublicacionesComponent implements OnInit {
       params.usuarioId = usuarioId; 
     }
 
-  this.services.obtenerPublicaciones(params).subscribe({
-    next: (res: any[]) => {
-      this.publicaciones = res;
-    },
-    error: (err: any) => {
-      console.error('Error al cargar publicaciones', err);
-    }
-  });
+    this.services.obtenerPublicaciones(params).subscribe({
+      next: (res: any[]) => {
+        this.publicaciones = res;
+        this.hayMasPublicaciones = res.length === this.limit;
+
+      },
+      error: (err: any) => {
+        console.error('Error al cargar publicaciones', err);
+      }
+    });
 
   }
 
