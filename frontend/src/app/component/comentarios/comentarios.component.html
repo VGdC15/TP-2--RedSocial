@@ -9,9 +9,11 @@
               <span>(Editado)</span>
             }
             <small>{{ c.fecha | date: 'short' }}</small>
-            <a class="link-editar" (click)="activarEdicion(c)">Editar</a>
+            @if (c.usuarioId?._id === this.usuarioLogueadoId) {
+              <a class="link-editar" (click)="activarEdicion(c)">Editar</a>
+            }
           </p>
-        } @else {
+        } @else if (c.usuarioId?._id === this.usuarioLogueadoId) {
           <textarea
             [ngModel]="textoEditado[c._id]"
             (ngModelChange)="textoEditado[c._id] = $event"

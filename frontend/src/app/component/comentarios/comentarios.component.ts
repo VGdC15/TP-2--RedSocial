@@ -27,6 +27,11 @@ export class ComentariosComponent implements OnChanges {
 
   modoEdicion: { [idComentario: string]: boolean } = {};
   textoEditado: { [idComentario: string]: string } = {};
+  usuarioLogueadoId: string | null = null;
+
+  constructor() {
+    this.usuarioLogueadoId = this.obtenerIdDesdeToken();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['publicacionId'] && this.publicacionId) {
@@ -151,6 +156,17 @@ export class ComentariosComponent implements OnChanges {
     });
   }
 
+  private obtenerIdDesdeToken(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload._id || payload.id || null; 
+    } catch {
+      return null;
+    }
+  }
 
 
 }
