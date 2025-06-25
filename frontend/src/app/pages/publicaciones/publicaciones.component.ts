@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../../component/card/card.component';
@@ -13,6 +13,7 @@ import { ServicesService } from '../../services/services.service';
   styleUrl: './publicaciones.component.css',
 })
 export class PublicacionesComponent implements OnInit {
+  @ViewChild('audioPlayer', { static: true }) audioPlayer!: ElementRef<HTMLAudioElement>;
   private http = inject(HttpClient);
   services = inject(ServicesService);
 
@@ -26,7 +27,23 @@ export class PublicacionesComponent implements OnInit {
   ordenarPor: 'fecha' | 'like' = 'fecha';
   hayMasPublicaciones = false;
 
+  currentSongIndex = 0;
+  isPlaying = false;
+  audio = new Audio();
+  progress = 0;
+  currentTime = '0:00';
+  duration = '0:00';
+
+
   ngOnInit(): void {
+    this.loadSong();
+    this.audioPlayer.nativeElement.addEventListener('timeupdate', () => {
+      this.updateProgress();
+    });
+    this.audioPlayer.nativeElement.addEventListener('loadedmetadata', () => {
+      this.updateProgress();
+    });
+
     this.cargarUsuarios();
     this.usuarioControl.valueChanges.subscribe(() => {
       this.offset = 0;
@@ -94,5 +111,78 @@ export class PublicacionesComponent implements OnInit {
     this.offset = 0;
     this.cargarPublicaciones();
   }
+
+  songs = [
+    {
+      title: 'Distance',
+      artist: 'Eelke Kleijn',
+      url: 'assets/audio/Distance.mp3'
+    },
+    {
+      title: 'Heaven Scent',
+      artist: 'John Digweed',
+      url: 'assets/audio/HeavenScent.mp3'
+    }
+  ];
+
+  loadSong() {
+    const song = this.songs[this.currentSongIndex];
+    this.audioPlayer.nativeElement.src = song.url;
+    this.audioPlayer.nativeElement.load();
+    this.updateTrackInfo();
+  }
+
+  togglePlay() {
+    if (this.isPlaying) {
+      this.audioPlayer.nativeElement.pause();
+    } else {
+      this.audioPlayer.nativeElement.play();
+    }
+    this.isPlaying = !this.isPlaying;
+  }
+
+  nextSong() {
+    this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+    this.loadSong();
+    this.audioPlayer.nativeElement.play();
+    this.isPlaying = true;
+  }
+
+  prevSong() {
+    this.currentSongIndex =
+      (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
+    this.loadSong();
+    this.audioPlayer.nativeElement.play();
+    this.isPlaying = true;
+  }
+
+  updateTrackInfo() {
+    const song = this.songs[this.currentSongIndex];
+
+  }
+
+  updateProgress() {
+    const audio = this.audioPlayer.nativeElement;
+    const current = audio.currentTime;
+    const total = audio.duration || 0;
+
+    this.progress = total ? (current / total) * 100 : 0;
+    this.currentTime = this.formatTime(current);
+    this.duration = this.formatTime(total);
+  }
+
+  formatTime(seconds: number): string {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60).toString().padStart(2, '0');
+    return `${min}:${sec}`;
+  }
+
+  seekTo(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = parseFloat(input.value);
+    const duration = this.audioPlayer.nativeElement.duration || 0;
+    this.audioPlayer.nativeElement.currentTime = (value / 100) * duration;
+  }
+
 
 }

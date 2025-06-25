@@ -27,24 +27,30 @@
                 </div>
 
                 <div class="track-info">
-                    <p class="track-title">Music Name</p>
-                    <p class="track-artist">Singer &amp; Artist</p>
+                    <p class="track-title">{{ songs[currentSongIndex].title }}</p>
+                    <p class="track-artist">{{ songs[currentSongIndex].artist }}</p>
                 </div>
                 </div>
 
                 <div class="progress-bar">
-                    <span>0:00</span>
-                    <input type="range" min="0" max="100" value="0" />
-                    <span>3:45</span>
+                    <span>{{ currentTime }}</span>
+                    <input
+                        type="range"
+                        [value]="progress"
+                        (input)="seekTo($event)"
+                        min="0"
+                        max="100"
+                    />
+                    <span>{{ duration }}</span>
                 </div>
 
                 <div class="controls">
-                    <button class="btn repeat">&#10227;</button>
-                    <button class="btn skip-back">&#9198;</button>
-                    <button class="btn play">&#9654;</button>
-                    <button class="btn skip-forward">&#9197;</button>
-                    <button class="btn list">&#9776;</button>
+                    <button class="btn skip-back" (click)="prevSong()">&#9198;</button>
+                    <button class="btn play" (click)="togglePlay()">&#9654;</button>
+                    <button class="btn skip-forward" (click)="nextSong()">&#9197;</button>
                 </div>
+                <!-- AUDIO OCULTO -->
+                <audio #audioPlayer hidden></audio>
             </div>
         </div>
 
