@@ -45,10 +45,59 @@
                 </div>
 
                 <div class="controls">
-                    <button class="btn skip-back" (click)="prevSong()">&#9198;</button>
-                    <button class="btn play" (click)="togglePlay()">&#9654;</button>
-                    <button class="btn skip-forward" (click)="nextSong()">&#9197;</button>
+                <!-- Botón Retroceder -->
+                <button class="btn skip-back" (click)="prevSong()" aria-label="Retroceder">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                    <line x1="5" y1="4" x2="5" y2="20"></line>
+                    </svg>
+                </button>
+
+                <!-- Botón Play/Pause -->
+                <button class="btn play" (click)="togglePlay()" aria-label="Play/Pause">
+                    <!-- Ícono PLAY -->
+                    <svg
+                    [hidden]="isPlaying"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    >
+                    <polygon points="6 4 20 12 6 20 6 4"></polygon>
+                    </svg>
+
+                    <!-- Ícono PAUSE -->
+                    <svg
+                    [hidden]="!isPlaying"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    >
+                    <rect x="6" y="4" width="4" height="16"></rect>
+                    <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+
+                <!-- Botón Avanzar -->
+                <button class="btn skip-forward" (click)="nextSong()" aria-label="Avanzar">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                    <line x1="19" y1="4" x2="19" y2="20"></line>
+                    </svg>
+                </button>
                 </div>
+
                 <!-- AUDIO OCULTO -->
                 <audio #audioPlayer hidden></audio>
             </div>
