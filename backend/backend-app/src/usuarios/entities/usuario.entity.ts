@@ -34,6 +34,9 @@ export class Usuario {
     @Prop({ required: true })
     estado: boolean;
 
+    @Prop({ default: 'usuario' })
+    rol: 'usuario' | 'admin';
+
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);

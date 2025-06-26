@@ -147,3 +147,21 @@
   font-weight: bold;
   font-size: 1rem;
 }
+
+
+.dashboard-btn {
+  background-color: #111;
+  color: #fff;
+  border: 1px solid #ff3399;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-right: 2%;
+}
+
+.dashboard-btn:hover {
+  background-color: #ff3399;
+  color: #ffffff;
+}

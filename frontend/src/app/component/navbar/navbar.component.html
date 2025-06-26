@@ -8,6 +8,11 @@
       </div>
     }
 
+    <!-- Solo visible si el usuario es admin -->
+    @if (usuario?.rol === 'admin') {
+      <button routerLink="/admin/dashboard" class="dashboard-btn" (click)="closeMenu()">Dashboard</button>
+    }
+
     <!-- Menú hamburguesa -->
     <div class="menu-container">
       <button 

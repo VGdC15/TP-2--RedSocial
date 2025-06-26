@@ -9,7 +9,7 @@ import { Model, Types } from 'mongoose';
 export class UsuariosService {
   constructor(
     @InjectModel(Usuario.name) private usuarioModel: Model<Usuario>,
-  ) {}
+  ) {} 
 
   async create(usrDto: CreateUsuarioDto) {
     const instancia: UsuarioDocument = new this.usuarioModel({
@@ -22,6 +22,7 @@ export class UsuariosService {
       descripcion: usrDto.descripcion,
       estado: usrDto.estado,
       imagenPerfil: usrDto.imagenPerfil,
+      rol: usrDto.rol,
     });
     const guardado = await instancia.save();
 

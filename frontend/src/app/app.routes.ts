@@ -6,6 +6,7 @@ import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { authGuard } from './guards/auth.guard';
 import { PublicacionDetalleComponent } from './pages/publicacion-detalle/publicacion-detalle.component';
 import { PantallaCargandoComponent } from './component/pantalla-cargando/pantalla-cargando.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
     { path: 'cargando', component: PantallaCargandoComponent },
@@ -14,6 +15,7 @@ export const routes: Routes = [
     { path: 'publicaciones', component: PublicacionesComponent, canActivate: [authGuard] },
     { path: 'publicacion/:id', component: PublicacionDetalleComponent, canActivate: [authGuard] },
     { path: 'perfil', component: MiPerfilComponent, canActivate: [authGuard] },
+    { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard] },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' }
 ];

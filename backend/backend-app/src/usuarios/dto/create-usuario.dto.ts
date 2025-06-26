@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsNotEmpty, IsString, IsOptional } from "class-validator";
+import { IsBoolean, IsDate, IsNotEmpty, IsString, IsOptional, IsIn } from "class-validator";
 import { Type } from 'class-transformer';
 
 export class CreateUsuarioDto {
@@ -39,5 +39,10 @@ export class CreateUsuarioDto {
     @Type(() => Boolean)
     @IsBoolean()
     estado: boolean;
+
+    @IsNotEmpty()
+    @IsString()
+    @IsIn(['usuario', 'admin'])
+    rol: 'usuario' | 'admin';
     
 }
