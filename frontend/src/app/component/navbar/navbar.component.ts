@@ -10,7 +10,7 @@ import { ServicesService } from '../../services/services.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  usuario: { nombre: string, foto: string } | null = null;
+  usuario: any = null;
   menuOpen = false;
 
   constructor(private router: Router, private servicesService: ServicesService) {}
@@ -18,16 +18,14 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.servicesService.obtenerDatosUsuario().subscribe({
       next: (data: any) => {
-        this.usuario = {
-          nombre: data.nombre,
-          foto: data.foto
-        };
+        this.usuario = data; 
       },
       error: (err) => {
         console.error('Error al obtener los datos del usuario', err);
       }
     });
   }
+
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
