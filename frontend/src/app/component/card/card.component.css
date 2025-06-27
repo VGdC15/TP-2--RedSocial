@@ -160,3 +160,29 @@
   opacity: 1;
   top: 105%;
 }
+
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+}
+
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.icon {
+  fill: #ff4d6d; 
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .icon {
+  transform: scale(1.1);
+}
+
+.delete-btn .icon {
+  fill: #ff4d6d; 
+}

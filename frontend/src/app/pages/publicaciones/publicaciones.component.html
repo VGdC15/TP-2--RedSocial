@@ -133,6 +133,7 @@
                     [usuario]="pub.usuarioId.nombre"
                     [like]="pub.like"
                     [yaDioLike]="pub.yaDioLike"
+                    [esAdmin]="usuarioLogueado?.rol === 'admin'"
                 />
             </a>
         }

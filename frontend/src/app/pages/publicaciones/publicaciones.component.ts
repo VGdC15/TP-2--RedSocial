@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../../component/card/card.component';
 import { RouterLink } from '@angular/router';
-import { ServicesService } from '../../services/services.service';
+import { ServicesService } from '../../services/services.service'; 
 
 @Component({
   selector: 'app-publicaciones',
@@ -21,6 +21,7 @@ export class PublicacionesComponent implements OnInit {
   usuarios: any[] = [];
 
   usuarioControl = new FormControl<string | null>(null);
+  usuarioLogueado: any = null;
 
   offset = 0;
   limit = 10;
@@ -36,6 +37,13 @@ export class PublicacionesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.services.obtenerDatosUsuario().subscribe({
+      next: (data) => {
+        this.usuarioLogueado = data;
+      },
+      error: (err) => console.error('Error al obtener usuario logueado', err)
+    });
+
     this.loadSong();
     this.audioPlayer.nativeElement.addEventListener('timeupdate', () => {
       this.updateProgress();

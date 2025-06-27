@@ -6,7 +6,7 @@ import { ComentariosComponent } from '../comentarios/comentarios.component';
 @Component({
   selector: 'app-card',
   imports: [CommonModule, ComentariosComponent],
-  templateUrl: './card.component.html',
+  templateUrl: './card.component.html', 
   styleUrl: './card.component.css'
 })
 export class CardComponent {
@@ -19,6 +19,7 @@ export class CardComponent {
   @Input() id: string = '';
   @Input() like: number = 0;
   @Input() yaDioLike: boolean = false;
+  @Input() esAdmin: boolean = false;
 
 
   darLike() {
@@ -36,6 +37,19 @@ export class CardComponent {
       },
       error: (err) => console.error('Error al dar me gusta', err)
     });
+  }
+
+  eliminarPublicacion() {
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.patch(`http://localhost:3000/publicaciones/${this.id}/baja`, {}, { headers })
+      .subscribe({
+        next: () => {
+          alert('Publicación eliminada correctamente');
+        },
+        error: (err) => console.error('Error al eliminar la publicación', err)
+      });
   }
 
 
