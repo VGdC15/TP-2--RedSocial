@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { ComentariosComponent } from '../comentarios/comentarios.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-card',
@@ -20,6 +21,7 @@ export class CardComponent {
   @Input() like: number = 0;
   @Input() yaDioLike: boolean = false;
   @Input() esAdmin: boolean = false;
+  @Input() activo!: boolean;
 
 
   darLike() {
@@ -40,17 +42,36 @@ export class CardComponent {
   }
 
   eliminarPublicacion() {
-    const token = localStorage.getItem('token') || '';
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    Swal.fire({
+      title: '¿Estás segura?',
+      text: 'Esta acción marcará la publicación como eliminada.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'No',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const token = localStorage.getItem('token') || '';
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.patch(`http://localhost:3000/publicaciones/${this.id}/baja`, {}, { headers })
-      .subscribe({
-        next: () => {
-          alert('Publicación eliminada correctamente');
-        },
-        error: (err) => console.error('Error al eliminar la publicación', err)
-      });
+        this.http.patch(`http://localhost:3000/publicaciones/${this.id}/baja`, {}, { headers })
+          .subscribe({
+            next: () => {
+              Swal.fire({
+                title: '¡Hecho!',
+                text: 'La publicación fue eliminada.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+              });    
+            },
+            error: (err) => console.error('Error al eliminar la publicación', err)
+          });
+      }
+    });
   }
+
 
 
 }

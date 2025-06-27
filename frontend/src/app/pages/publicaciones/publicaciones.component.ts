@@ -86,9 +86,10 @@ export class PublicacionesComponent implements OnInit {
 
     this.services.obtenerPublicaciones(params).subscribe({
       next: (res: any[]) => {
-        this.publicaciones = res;
-        this.hayMasPublicaciones = res.length === this.limit;
-
+        this.publicaciones = res.filter(pub => {
+          return this.usuarioLogueado?.rol === 'admin' || pub.activo !== false;
+        });
+        this.hayMasPublicaciones = this.publicaciones.length === this.limit;
       },
       error: (err: any) => {
         console.error('Error al cargar publicaciones', err);

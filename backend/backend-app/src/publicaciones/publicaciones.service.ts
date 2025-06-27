@@ -63,7 +63,7 @@ export class PublicacionesService {
 
     return publicaciones;
   }
-
+ 
 
   findAll(): Promise<Publicacione[]> {
     return this.publicacionModel.find({ activo: true }).exec();
