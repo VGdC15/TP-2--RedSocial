@@ -104,13 +104,6 @@ export class PublicacionesService {
       throw new Error('Publicación no encontrada');
     }
 
-    // const esCreador = publicacion.usuarioId.toString() === usuario.id;
-    // const esAdmin = usuario.rol === 'admin'; 
-
-    // if (!esCreador && !esAdmin) {
-    //   throw new Error('No tenés permisos para eliminar esta publicación');
-    // }
-
     publicacion.activo = false;
     await publicacion.save();
 

@@ -43,7 +43,7 @@ export class CardComponent {
 
   eliminarPublicacion() {
     Swal.fire({
-      title: '¿Estás segura?',
+      title: '¿Estás segur@?',
       text: 'Esta acción marcará la publicación como eliminada.',
       icon: 'warning',
       showCancelButton: true,
@@ -51,27 +51,32 @@ export class CardComponent {
       cancelButtonText: 'No',
       reverseButtons: true
     }).then((result) => {
+      // Solo si el usuario confirmó
       if (result.isConfirmed) {
         const token = localStorage.getItem('token') || '';
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-        this.http.patch(`http://localhost:3000/publicaciones/${this.id}/baja`, {}, { headers })
-          .subscribe({
-            next: () => {
-              Swal.fire({
-                title: '¡Hecho!',
-                text: 'La publicación fue eliminada.',
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
-              });    
-            },
-            error: (err) => console.error('Error al eliminar la publicación', err)
-          });
+        this.http.patch(
+          `http://localhost:3000/publicaciones/${this.id}/baja`,
+          {},
+          { headers }
+        ).subscribe({
+          next: () => {
+            Swal.fire({
+              title: '¡Hecho!',
+              text: 'La publicación fue eliminada.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          },
+          error: (err) => {
+            console.error('Error al eliminar la publicación', err);
+            Swal.fire('Error', 'No se pudo eliminar la publicación.', 'error');
+          }
+        });
       }
     });
   }
-
-
 
 }
