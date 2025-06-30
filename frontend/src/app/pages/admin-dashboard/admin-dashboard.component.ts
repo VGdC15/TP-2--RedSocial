@@ -44,4 +44,23 @@ export class AdminDashboardComponent implements OnInit {
       error: (err) => console.error('Error al cargar usuarios', err),
     });
   }
+
+  darDeBajaUsuario(usuarioId: string) {
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const body = { estado: false };
+
+    this.http.patch(`http://localhost:3000/usuarios/${usuarioId}`, body, { headers })
+      .subscribe({
+        next: () => {
+          const usuario = this.usuarioFiltrado.find(u => u._id === usuarioId);
+          if (usuario) usuario.estado = false;
+
+          const index = this.usuarios.findIndex(u => u._id === usuarioId);
+          if (index !== -1) this.usuarios[index].estado = false;
+        },
+        error: err => console.error('Error al dar de baja el usuario', err)
+      });
+  }
+
 }

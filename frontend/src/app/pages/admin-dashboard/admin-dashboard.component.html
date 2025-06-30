@@ -16,6 +16,12 @@
       <p><strong>Email:</strong> {{ usuario.email }}</p>
       <p><strong>Rol:</strong> {{ usuario.rol }}</p>
       <p><strong>Estado:</strong> {{ usuario.estado ? 'Activo' : 'Inactivo' }}</p>
+
+      @if (usuario.estado) {
+        <button (click)="darDeBajaUsuario(usuario._id)" class="btn-baja">
+          Dar de baja
+        </button>
+      }
     </div>
   }
 </div>
