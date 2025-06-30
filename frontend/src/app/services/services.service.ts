@@ -7,7 +7,7 @@ import { of, MonoTypeOperatorFunction } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class ServicesService {
   httpClient = inject(HttpClient);

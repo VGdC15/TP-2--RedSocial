@@ -37,7 +37,7 @@ export class PublicacionesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.services.obtenerDatosUsuario().subscribe({
+    this.services.obtenerDatosUsuario().subscribe({ 
       next: (data) => {
         this.usuarioLogueado = data;
       },

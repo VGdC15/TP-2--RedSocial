@@ -1,1 +1,21 @@
-<p>admin-dashboard works!</p>
+<form>
+  <div class="filtro-usuario">
+    <select [formControl]="usuarioControl" id="filtroUsuario">
+      <option [value]="null">Filtrar Usuarios</option>
+      @for (usuario of usuarios; track usuario._id) {
+        <option [value]="usuario._id">{{ usuario.nombre }}</option>
+      }
+    </select>
+  </div>
+</form>
+
+<div class="listado-usuarios">
+  @for (usuario of usuarioFiltrado; track usuario._id) {
+    <div class="usuario-card">
+      <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+      <p><strong>Rol:</strong> {{ usuario.rol }}</p>
+      <p><strong>Estado:</strong> {{ usuario.estado ? 'Activo' : 'Inactivo' }}</p>
+    </div>
+  }
+</div>
