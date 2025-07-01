@@ -4,12 +4,13 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
+import { CardComponent } from '../../component/card/card.component';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, CardComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css',
 })
@@ -20,6 +21,9 @@ export class AdminDashboardComponent implements OnInit {
   usuarios: any[] = [];
   usuarioFiltrado: any[] = [];
   usuarioControl = new FormControl<string | null>(null);
+  publicacionesDadosDeBaja: any[] = [];
+  mostrarPublicacionesDadosDeBaja = false;
+
 
   ngOnInit(): void {
     this.cargarUsuarios(); 
@@ -132,6 +136,23 @@ export class AdminDashboardComponent implements OnInit {
               });
             }
           });
+      }
+    });
+  }
+
+  cargarPublicacionesDadosDeBaja(): void {
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get<any[]>('http://localhost:3000/publicaciones?estado=false', { headers }).subscribe({
+      next: (res) => {
+        this.publicacionesDadosDeBaja = res;
+        this.mostrarPublicacionesDadosDeBaja = true; 
+        console.log('Publicaciones dadas de baja actualmente:', res);
+      },
+      error: (err) => {
+        console.error('Error al cargar publicaciones dadas de baja', err);
+        Swal.fire('Error', 'No se pudieron obtener las publicaciones inactivas.', 'error');
       }
     });
   }

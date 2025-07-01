@@ -40,8 +40,8 @@
 .datos-container {
   padding: 20px;
   display: flex;
-  justify-content: space-between; /* separa info del botón */
-  align-items: center; /* centra verticalmente */
+  justify-content: space-between; 
+  align-items: center; 
   flex-grow: 1;
   box-sizing: border-box;
   gap: 12px;
@@ -78,4 +78,30 @@
 
 .datos-container button:hover {
   background-color: #0056b3;
+}
+
+.publicacion-inactiva{
+  margin-top: 15%;
+}
+
+/*animacion de publicaciones inactivas*/
+.animate-fadein {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mensaje-vacio {
+  margin-top: 1rem;
+  color: #666;
+  font-style: italic;
 }

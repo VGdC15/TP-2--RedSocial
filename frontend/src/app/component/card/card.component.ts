@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { ComentariosComponent } from '../comentarios/comentarios.component';
 import Swal from 'sweetalert2';
 
@@ -22,6 +22,8 @@ export class CardComponent {
   @Input() yaDioLike: boolean = false;
   @Input() esAdmin: boolean = false;
   @Input() activo!: boolean;
+  @Input() publicacion: any;
+  @Input() inactiva: boolean = false;
 
 
   darLike() {
@@ -78,5 +80,21 @@ export class CardComponent {
       }
     });
   }
+
+  reactivarPublicacion() {
+    const token = localStorage.getItem('token') || '';
+    fetch(`http://localhost:3000/publicaciones/${this.id}/alta`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(() => {
+        this.activo = true; // para que vuelva a su color y botones normales
+      })
+      .catch(err => console.error('Error al reactivar publicación', err));
+  }
+
 
 }

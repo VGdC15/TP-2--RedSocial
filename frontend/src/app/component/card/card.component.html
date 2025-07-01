@@ -6,34 +6,41 @@
           <img class="card-image" [src]="imagen" alt="Imagen de la publicación" />
           <div class="card-overlay">
             <div class="like-container">
-              <button class="btn" (click)="darLike()" [attr.data-like]="'like (' + like + ')'">
-                <svg
-                  class="icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20.503"
-                  height="20.625"
-                  viewBox="0 0 17.503 15.625"
-                >
-                  <path
-                    id="Fill"
-                    d="M8.752,15.625h0L1.383,8.162a4.824,4.824,0,0,1,0-6.762,4.679,4.679,0,0,1,6.674,0l.694.7.694-.7a4.678,4.678,0,0,1,6.675,0,4.825,4.825,0,0,1,0,6.762L8.752,15.624ZM4.72,1.25A3.442,3.442,0,0,0,2.277,2.275a3.562,3.562,0,0,0,0,5l6.475,6.556,6.475-6.556a3.563,3.563,0,0,0,0-5A3.443,3.443,0,0,0,12.786,1.25h-.01a3.415,3.415,0,0,0-2.443,1.038L8.752,3.9,7.164,2.275A3.442,3.442,0,0,0,4.72,1.25Z"
-                    transform="translate(0 0)"
-                  ></path>
-                </svg>
-              </button>
-
-              <!-- Botón Eliminar (solo visible si es admin) -->
-              <button class="btn delete-btn" (click)="eliminarPublicacion()" title="Eliminar publicación" [hidden]="!esAdmin">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                  viewBox="0 0 16 16">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0V6h-3v6.5a.5.5 0 0 1-1 0v-7z" />
-                  <path fill-rule="evenodd"
-                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h2.5a1 1 0 0 1 1 1zM6 1v1h4V1H6zm-3 3v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4H3z" />
-                </svg>
-              </button>
+              @if (esAdmin && !activo) {
+                <button class="btn reactivar-btn" (click)="reactivarPublicacion()">
+                  Reactivar publicación
+                </button>
+              } @else {
+                <button class="btn" (click)="darLike()" [attr.data-like]="'like (' + like + ')'">
+                  <svg
+                    class="icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20.503"
+                    height="20.625"
+                    viewBox="0 0 17.503 15.625"
+                  >
+                    <path
+                      id="Fill"
+                      d="M8.752,15.625h0L1.383,8.162a4.824,4.824,0,0,1,0-6.762,4.679,4.679,0,0,1,6.674,0l.694.7.694-.7a4.678,4.678,0,0,1,6.675,0,4.825,4.825,0,0,1,0,6.762L8.752,15.624ZM4.72,1.25A3.442,3.442,0,0,0,2.277,2.275a3.562,3.562,0,0,0,0,5l6.475,6.556,6.475-6.556a3.563,3.563,0,0,0,0-5A3.443,3.443,0,0,0,12.786,1.25h-.01a3.415,3.415,0,0,0-2.443,1.038L8.752,3.9,7.164,2.275A3.442,3.442,0,0,0,4.72,1.25Z"
+                      transform="translate(0 0)"
+                    ></path>
+                  </svg>
+                </button>
+                }
             </div>
+            <!-- Botón Eliminar (solo visible si es admin) -->
+            <button class="btn delete-btn" (click)="eliminarPublicacion()" title="Eliminar publicación" [hidden]="!esAdmin">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0V6h-3v6.5a.5.5 0 0 1-1 0v-7z" />
+                <path fill-rule="evenodd"
+                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h2.5a1 1 0 0 1 1 1zM6 1v1h4V1H6zm-3 3v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4H3z" />
+              </svg>
+            </button>
+            
           </div>
         </div>
+
         <div class="card-info">
           <h3 class="card-album">{{ usuario }}</h3>
           <p class="card-caption">
@@ -45,6 +52,7 @@
         <div class="card-comentarios">
           <app-comentarios [publicacionId]="id"></app-comentarios>
         </div>
+      
       </div>
     </section>
   </div>

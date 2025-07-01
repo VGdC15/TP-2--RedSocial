@@ -32,9 +32,12 @@ export class PublicacionesService {
   }
 
   async listarPublicaciones(params) {
-    const { ordenarPor, usuarioId, offset, limit } = params;
+    const { ordenarPor, usuarioId, offset = 0, limit = 100, estado } = params;
+    const filtro: any = {};
 
-    const filtro: any = { activo: true };
+    if (estado !== undefined) {
+      filtro.activo = estado === 'true';
+    }
 
     if (usuarioId && Types.ObjectId.isValid(usuarioId)) {
       filtro.usuarioId = new Types.ObjectId(usuarioId);
@@ -112,6 +115,20 @@ export class PublicacionesService {
       id: publicacion._id,
     };
   }
+
+  async darDeAlta(id: string, usuario: any) {
+    const publicacion = await this.publicacionModel.findById(id);
+    if (!publicacion) throw new Error('Publicación no encontrada');
+
+    publicacion.activo = true;
+    await publicacion.save();
+
+    return {
+      mensaje: 'Publicación reactivada',
+      id: publicacion._id
+    };
+  }
+
 
   remove(id: number) {
     return `This action removes a #${id} publicacione`;

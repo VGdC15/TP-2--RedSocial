@@ -53,18 +53,20 @@ export class PublicacionesController {
   }
 
   @Get()
-  findAll(
-    @Query('ordenarPor') ordenarPor: 'fecha' | 'like' = 'fecha',
-    @Query('usuarioId') usuarioId?: string,
-    @Query('offset') offset: string = '0',
-    @Query('limit') limit: string = '10'
-  ) {
-    return this.publicacionesService.listarPublicaciones({
-      ordenarPor,
-      usuarioId,
-      offset: parseInt(offset),
-      limit: parseInt(limit)
-    });
+    findAll(
+      @Query('ordenarPor') ordenarPor: 'fecha' | 'like' = 'fecha',
+      @Query('usuarioId') usuarioId?: string,
+      @Query('offset') offset: string = '0',
+      @Query('limit') limit: string = '10',
+      @Query('estado') estado?: string
+    ) {
+      return this.publicacionesService.listarPublicaciones({
+        ordenarPor,
+        usuarioId,
+        offset: parseInt(offset),
+        limit: parseInt(limit),
+        estado
+      });
   }
 
   @Get(':id')
@@ -94,6 +96,18 @@ export class PublicacionesController {
 
     return this.publicacionesService.bajaLogica(id, usuario);
   }
+
+  @Patch(':id/alta')
+  darDeAlta(
+    @Param('id') id: string,
+    @Headers('Authorization') auth: string,
+    @Ip() ip: string
+  ) {
+    const token = auth?.split(' ')[1];
+    const usuario = this.authService.traerDatos(token, ip); 
+    return this.publicacionesService.darDeAlta(id, usuario);
+  }
+
 
 
   @Delete(':id')
