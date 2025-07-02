@@ -64,6 +64,7 @@ export class CardComponent {
           { headers }
         ).subscribe({
           next: () => {
+            this.activo = false;
             Swal.fire({
               title: '¡Hecho!',
               text: 'La publicación fue eliminada.',
@@ -82,19 +83,44 @@ export class CardComponent {
   }
 
   reactivarPublicacion() {
-    const token = localStorage.getItem('token') || '';
-    fetch(`http://localhost:3000/publicaciones/${this.id}/alta`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${token}`
+    Swal.fire({
+      title: '¿Reactivar publicación?',
+      text: 'Esta acción volverá a activar la publicación para que sea visible nuevamente.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, reactivar',
+      cancelButtonText: 'No',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const token = localStorage.getItem('token') || '';
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+        this.http.patch(
+          `http://localhost:3000/publicaciones/${this.id}/alta`,
+          {},
+          { headers }
+        ).subscribe({
+          next: () => {
+            this.activo = true;
+
+            Swal.fire({
+              title: '¡Publicación reactivada!',
+              text: 'La publicación ahora está activa nuevamente.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          },
+          error: (err) => {
+            console.error('Error al reactivar publicación', err);
+            Swal.fire('Error', 'No se pudo reactivar la publicación.', 'error');
+          }
+        });
       }
-    })
-      .then(res => res.json())
-      .then(() => {
-        this.activo = true; // para que vuelva a su color y botones normales
-      })
-      .catch(err => console.error('Error al reactivar publicación', err));
+    });
   }
+
 
 
 }

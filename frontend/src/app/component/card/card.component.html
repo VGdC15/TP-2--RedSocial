@@ -27,17 +27,19 @@
                   </svg>
                 </button>
                 }
-            </div>
-            <!-- Botón Eliminar (solo visible si es admin) -->
-            <button class="btn delete-btn" (click)="eliminarPublicacion()" title="Eliminar publicación" [hidden]="!esAdmin">
-              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                viewBox="0 0 16 16">
-                <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0V6h-3v6.5a.5.5 0 0 1-1 0v-7z" />
-                <path fill-rule="evenodd"
-                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h2.5a1 1 0 0 1 1 1zM6 1v1h4V1H6zm-3 3v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4H3z" />
-              </svg>
-            </button>
             
+              <!-- Botón Eliminar (solo visible si es admin) -->
+              @if (esAdmin && activo) {
+                <button class="btn delete-btn" (click)="eliminarPublicacion()" title="Eliminar publicación" [hidden]="!esAdmin">
+                  <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0V6h-3v6.5a.5.5 0 0 1-1 0v-7z" />
+                    <path fill-rule="evenodd"
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h2.5a1 1 0 0 1 1 1zM6 1v1h4V1H6zm-3 3v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4H3z" />
+                  </svg>
+                </button>
+              }
+            </div>
           </div>
         </div>
 
