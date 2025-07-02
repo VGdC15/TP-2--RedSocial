@@ -50,10 +50,14 @@
     </div>
 
     <div class="publicacion-inactiva">
-      @if (mostrarPublicacionesDadosDeBaja && publicacionesDadosDeBaja.length > 0) {
+      @if (!mostrarPublicacionesDadosDeBaja) {
+        <div class="mensaje-vacio">
+          <p>Aún no se seleccionaron publicaciones inactivas.</p>
+        </div>
+      } @else if (mostrarPublicacionesDadosDeBaja && publicacionesDadosDeBaja.length > 0) {
         <div class="publicaciones-baja animate-fadein">
-          <h3>Publicaciones dadas de baja:</h3>
-          @for (pub of publicacionesDadosDeBaja; track pub._id) {
+          <h3>Publicaciones Inactivas</h3>
+          @for (pub of publicacionesDadosDeBaja.slice(offset, offset + limit); track pub._id) {
             <div class="card-wrapper">
               <app-card
                 [id]="pub._id"
@@ -69,9 +73,9 @@
             </div>
           }
         </div>
-      } @else if (mostrarPublicacionesDadosDeBaja) {
+      } @else {
         <div class="mensaje-vacio">
-          <p>No hay publicaciones dadas de baja en este momento.</p>
+          <p>No hay publicaciones dadas de baja en este momento</p>
         </div>
       }
 
@@ -92,7 +96,5 @@
         </button>
       </div>
     </div>
-  </div>
-
 
 </div>

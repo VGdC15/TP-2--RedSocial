@@ -3,6 +3,15 @@
   background-color: #000 !important;
   padding-left: 1rem;
   padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bloque-usuarios,
+.bloque-publicaciones {
+  width: 100%;
+  max-width: 900px; 
 }
 
 /* Card */
@@ -174,7 +183,6 @@
   background-color: #1a1a1a;
   padding: 1.5rem;
   border-radius: 20px;
-  box-shadow: 0 0 12px #ff66b2;
   border: 1px solid #ff3399;
   margin-bottom: 2rem;
 }
@@ -235,7 +243,6 @@
   background-color: #1a1a1a;
   padding: 1.5rem;
   border-radius: 20px;
-  box-shadow: 0 0 12px #ff66b2;
   border: 1px solid #ff3399;
   margin-bottom: 2rem;
 }
@@ -255,4 +262,5 @@
   border: none;
   padding: 0;
 }
+
 

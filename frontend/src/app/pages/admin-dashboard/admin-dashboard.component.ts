@@ -26,9 +26,8 @@ export class AdminDashboardComponent implements OnInit {
 
   publicacionesInactivas: any[] = [];
   offset = 0;
-  limit = 10;
+  limit = 2;
   hayMasInactivas = false;
-
 
   ngOnInit(): void {
     this.cargarUsuarios(); 
@@ -153,10 +152,9 @@ export class AdminDashboardComponent implements OnInit {
       next: (res) => {
         this.publicacionesDadosDeBaja = res;
         this.mostrarPublicacionesDadosDeBaja = true; 
-        console.log('Publicaciones dadas de baja actualmente:', res);
+        this.hayMasInactivas = this.offset + this.limit < res.length;
       },
       error: (err) => {
-        console.error('Error al cargar publicaciones dadas de baja', err);
         Swal.fire('Error', 'No se pudieron obtener las publicaciones inactivas.', 'error');
       }
     });
