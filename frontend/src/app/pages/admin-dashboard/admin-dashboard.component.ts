@@ -24,6 +24,11 @@ export class AdminDashboardComponent implements OnInit {
   publicacionesDadosDeBaja: any[] = [];
   mostrarPublicacionesDadosDeBaja = false;
 
+  publicacionesInactivas: any[] = [];
+  offset = 0;
+  limit = 10;
+  hayMasInactivas = false;
+
 
   ngOnInit(): void {
     this.cargarUsuarios(); 
@@ -157,6 +162,15 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
+  siguientePagina() {
+    this.offset += this.limit;
+    this.cargarPublicacionesDadosDeBaja();
+  }
+
+  anteriorPagina() {
+    this.offset = Math.max(this.offset - this.limit, 0);
+    this.cargarPublicacionesDadosDeBaja();
+  }
 
 
 }

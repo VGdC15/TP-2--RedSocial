@@ -64,6 +64,23 @@
         <p>No hay publicaciones dadas de baja en este momento.</p>
       </div>
     }
+
+    <div class="paginacion">
+      <button
+        class="btn-estilo"
+        (click)="anteriorPagina()"
+        [disabled]="offset === 0"
+      >
+        Anterior
+      </button>
+      <button
+        class="btn-estilo"
+        (click)="siguientePagina()"
+        [disabled]="!hayMasInactivas"
+      >
+        Siguiente
+      </button>
+    </div>
   </div>
 
 </div>

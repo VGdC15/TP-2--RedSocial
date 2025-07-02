@@ -79,6 +79,7 @@ export class PublicacionesComponent implements OnInit {
       ordenarPor: this.ordenarPor,
       offset: this.offset,
       limit: this.limit,
+      estado: 'true'
     };
     if (usuarioId) {
       params.usuarioId = usuarioId; 
