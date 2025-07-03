@@ -75,12 +75,18 @@ export class AuthService {
         try {
             const payload: any = verify(token, ip + clave);
             const usuarioCompleto = await this.usuariosService.findOne(payload.id);
+
+            if (!usuarioCompleto || usuarioCompleto.rol !== 'admin') {
+            throw new UnauthorizedException('Acceso restringido a administradores');
+            }
+
             return usuarioCompleto;
         } catch (error) {
             console.error(error);
             throw new UnauthorizedException('Token inválido o expirado');
         }
     }
+
 
     crearToken(id, nombre, ip) {
         const payload = {
