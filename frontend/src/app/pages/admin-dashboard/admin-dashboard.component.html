@@ -2,6 +2,7 @@
 
   <div class="bloque-usuarios">
     <form>
+      <h4>Bloque de Usuarios</h4>
       <div class="filtro-usuario">
         <p class="titulo-filtro">Seleccioná Usuario</p>
         <select [formControl]="usuarioControl" id="filtroUsuario">
@@ -46,7 +47,9 @@
 
   <div class="bloque-publicaciones">
     <div class="acciones-dashboard">
+      <h4>Bloque de Publicaciones</h4>
       <button (click)="cargarPublicacionesDadosDeBaja()">Publicaciones inactivas</button>
+      <button (click)="irAEstadisticas()">Ver estadísticas</button>
     </div>
 
     <div class="publicacion-inactiva">

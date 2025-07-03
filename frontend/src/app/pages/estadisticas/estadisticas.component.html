@@ -1,0 +1,17 @@
+<div class="estadisticas-wrapper">
+  <h2>Estadísticas</h2>
+
+  <div class="filtro-fechas">
+    <label>Desde:
+      <input type="date" [(ngModel)]="fechaInicio" />
+    </label>
+    <label>Hasta:
+      <input type="date" [(ngModel)]="fechaFin" />
+    </label>
+    <button (click)="cargarEstadisticas()">Actualizar</button>
+  </div>
+
+  <div id="graficoPublicaciones" #graficoPublicaciones style="height: 400px; width: 100%;"></div>
+  <div id="graficoComentarios" #graficoComentarios style="height: 400px; width: 100%;"></div>
+  <div id="graficoComentariosPorPub" #graficoComentariosPorPub style="height: 400px; width: 100%;"></div>
+</div>

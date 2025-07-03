@@ -9,12 +9,18 @@ import { AuthModule } from './auth/auth.module';
 import { Comentario, ComentarioSchema } from './comentarios/entities/comentario.entity';
 import { ComentariosService } from './comentarios/comentarios.service';
 import { ComentariosController } from './comentarios/comentarios.controller';
+import { EstadisticasModule } from './estadisticas/estadisticas.module';
 
 @Module({
-  imports: [PublicacionesModule, AuthModule, UsuariosModule, ConfigModule.forRoot(),
+  imports: [
+    PublicacionesModule,
+    AuthModule,
+    UsuariosModule,
+    ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_URI!),
     MongooseModule.forFeature([{ name: Comentario.name, schema: ComentarioSchema }]),
-    AuthModule],
+    EstadisticasModule
+  ],
   controllers: [AppController, ComentariosController],
   providers: [AppService, ComentariosService],
 })

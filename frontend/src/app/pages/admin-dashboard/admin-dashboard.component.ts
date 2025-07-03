@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 import { CardComponent } from '../../component/card/card.component';
 import { RegistroComponent } from '../registro/registro.component';
@@ -31,6 +31,8 @@ export class AdminDashboardComponent implements OnInit {
   hayMasInactivas = false;
   mostrarRegistro = false;
 
+  constructor(private router: Router) {}
+
 
   ngOnInit(): void {
     this.cargarUsuarios(); 
@@ -43,6 +45,10 @@ export class AdminDashboardComponent implements OnInit {
         this.usuarioFiltrado = usuario ? [usuario] : [];
       }
     });
+  }
+
+  irAEstadisticas() {
+    this.router.navigate(['/admin/estadisticas']);
   }
 
   cargarUsuarios(): void {

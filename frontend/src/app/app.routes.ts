@@ -7,6 +7,7 @@ import { authGuard } from './guards/auth.guard';
 import { PublicacionDetalleComponent } from './pages/publicacion-detalle/publicacion-detalle.component';
 import { PantallaCargandoComponent } from './component/pantalla-cargando/pantalla-cargando.component';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { EstadisticasComponent } from './pages/estadisticas/estadisticas.component';
 
 export const routes: Routes = [
     { path: 'cargando', component: PantallaCargandoComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'publicacion/:id', component: PublicacionDetalleComponent, canActivate: [authGuard] },
     { path: 'perfil', component: MiPerfilComponent, canActivate: [authGuard] },
     { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard] },
+    { path: 'admin/estadisticas', component: EstadisticasComponent, canActivate: [authGuard] },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' }
 ];

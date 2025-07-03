@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { of, MonoTypeOperatorFunction } from 'rxjs';
 import Swal from 'sweetalert2';
+
 
 @Injectable({
   providedIn: 'root' 
@@ -43,7 +44,6 @@ export class ServicesService {
 
     return peticion;
   }
-
 
 
   // registro
@@ -116,6 +116,55 @@ export class ServicesService {
         }),
         catchError((err) => throwError(() => err))
       );
+  }
+
+  getEstadisticasPublicaciones(fechaInicio: string, fechaFin: string): Observable<{ nombre: string; cantidad: number }[]> {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No se encontró el token');
+
+    const options = {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { fechaInicio, fechaFin }
+    };
+
+    const url = 'http://localhost:3000/estadisticas/publicaciones';
+    const peticion = this.httpClient.get<{ nombre: string; cantidad: number }[]>(url, options);
+
+    return peticion.pipe(this.manejarError401<{ nombre: string; cantidad: number }[]>());
+  }
+
+  getEstadisticasComentarios(
+    fechaInicio: string,
+    fechaFin: string
+  ): Observable<{ fecha: string; cantidad: number }[]> {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No se encontró el token');
+
+    const options = {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { fechaInicio, fechaFin }
+    };
+
+    const url = 'http://localhost:3000/estadisticas/comentarios';
+    const peticion = this.httpClient.get<{ fecha: string; cantidad: number }[]>(url, options);
+
+    return peticion.pipe(this.manejarError401<{ fecha: string; cantidad: number }[]>());
+  }
+
+
+  getComentariosPorPublicacion(fechaInicio: string, fechaFin: string): Observable<{ pieDeFoto: string; cantidad: number }[]> {
+    const token = localStorage.getItem('token');
+    if (!token) throw new Error('No se encontró el token');
+
+    const options = {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { fechaInicio, fechaFin }
+    };
+
+    const url = 'http://localhost:3000/estadisticas/comentarios-por-publicacion';
+    const peticion = this.httpClient.get<{ pieDeFoto: string; cantidad: number }[]>(url, options);
+
+    return peticion.pipe(this.manejarError401<{ pieDeFoto: string; cantidad: number }[]>());
   }
 
 }
