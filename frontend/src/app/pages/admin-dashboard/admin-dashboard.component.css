@@ -277,6 +277,11 @@ h4{
   box-shadow: 0 0 12px #ff66b2;
   border: 1px solid #ff3399;
   margin-bottom: 2rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .bloque-registro h3 {
@@ -287,11 +292,13 @@ h4{
 
 .registro-centrado {
   width: 100%;
-  max-width: 600px; 
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem; 
   box-sizing: border-box;
+  display: block;
 }
+
 
 
 button {
@@ -316,24 +323,28 @@ button:hover {
 @media (max-width: 399px) {
   .registro-centrado {
     max-width: 100%;
-    padding-left: 30%;
+
   }
 }
 
 /* Teléfonos medianos: 400px a 599px */
 @media (min-width: 400px) and (max-width: 599px) {
   .registro-centrado {
+    max-width: 250%;
+    width: 110%;
+    margin-left: 1%;
+    margin-top: -6%;
 
- 
-    margin-left: 30%;
   }
 }
 
 /* Tablets verticales: 600px a 767px */
 @media (min-width: 600px) and (max-width: 767px) {
   .registro-centrado {
-
-    margin-left: 30%;
+    max-width: 250%;
+    width: 110%;
+    margin-left: 1%;
+    margin-top: -6%;
 
   }
 }
@@ -341,14 +352,20 @@ button:hover {
 /* Tablets horizontales / pantallas chicas: 768px a 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
   .registro-centrado {
+    max-width: 250%;
+    width: 140%;
+    margin-left: 4%;
+    margin-top: -6%;
 
-  
   }
 }
 
 /* Laptops: 1024px a 1279px */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .registro-centrado {
+    max-width: 250%;
+    width: 180%;
+    margin-left: 8%;
 
   }
 }
@@ -356,14 +373,19 @@ button:hover {
 /* Pantallas grandes: 1280px a 1535px */
 @media (min-width: 1280px) and (max-width: 1535px) {
   .registro-centrado {
-    margin-left: 25%;
+    max-width: 250%;
+    width: 180%;
+    margin-left: 8%;
+
   }
 }
 
-/* Ultra-wide: 1536px en adelante */
-@media (min-width: 1536px) {
+
+/* Escritorios grandes / pantallas Full HD */
+@media screen and (min-width: 1536px) and (max-width: 1920px) {
   .registro-centrado {
-    max-width: 100%;
+    max-width: 250%;
+    width: 180%;
+    margin-left: 8%;
   }
 }
-
