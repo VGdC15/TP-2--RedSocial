@@ -194,22 +194,35 @@
 
 
 .reactivar-btn {
-  background-color: #38bdf8; /* sky-400 */
+  background-color: #111;
   color: white;
+  padding: 0.5rem 1rem;
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 5px;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 4px;
-}
+  box-shadow: 0 0 5px #ff3399 inset;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 0.5rem;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  width: 100%;
 
+}
 .reactivar-btn:hover {
-  background-color: #0ea5e9; /* sky-500 */
+  background-color: #ff66b2;
+  color: white;
 }
 
 .reactivar-btn:active {
-  background-color: #0284c7; /* sky-600 */
+  background-color: #ff3399;
+  color: white;
 }
+
+
+
