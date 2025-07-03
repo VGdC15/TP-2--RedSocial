@@ -117,7 +117,7 @@ export class ServicesService {
         catchError((err) => throwError(() => err))
       );
   }
-
+ 
   getEstadisticasPublicaciones(fechaInicio: string, fechaFin: string): Observable<{ nombre: string; cantidad: number }[]> {
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No se encontró el token');
@@ -167,4 +167,4 @@ export class ServicesService {
     return peticion.pipe(this.manejarError401<{ pieDeFoto: string; cantidad: number }[]>());
   }
 
-}
+} 

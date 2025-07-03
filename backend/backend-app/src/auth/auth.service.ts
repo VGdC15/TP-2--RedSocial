@@ -76,16 +76,17 @@ export class AuthService {
             const payload: any = verify(token, ip + clave);
             const usuarioCompleto = await this.usuariosService.findOne(payload.id);
 
-            if (!usuarioCompleto || usuarioCompleto.rol !== 'admin') {
-            throw new UnauthorizedException('Acceso restringido a administradores');
+            if (!usuarioCompleto) {
+            throw new UnauthorizedException('Usuario no encontrado');
             }
 
-            return usuarioCompleto;
+            return usuarioCompleto; // Devuelve el usuario completo con su rol
         } catch (error) {
             console.error(error);
             throw new UnauthorizedException('Token inválido o expirado');
         }
     }
+
 
 
     crearToken(id, nombre, ip) {
@@ -115,5 +116,17 @@ export class AuthService {
             throw new Error('Token inválido o expirado');
         }
     }
+
+    async esAdmin(token: string, ip: string): Promise<boolean> {
+        const clave = process.env.CLAVE_TOKEN;
+        try {
+            const payload: any = verify(token, ip + clave);
+            const usuarioCompleto = await this.usuariosService.findOne(payload.id);
+            return usuarioCompleto?.rol === 'admin';
+        } catch {
+            return false;
+        }
+    }
+
 
 }

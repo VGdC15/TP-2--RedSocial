@@ -1,18 +1,20 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { EstadisticasService } from './estadisticas.service';
-import { AuthGuard } from 'src/auth/auth.guard'; 
+import { AdminGuard } from 'src/auth/guards/admin/admin.guard';
 
-@UseGuards(AuthGuard)
+
 @Controller('estadisticas')
 export class EstadisticasController {
   constructor(private readonly estadisticasService: EstadisticasService) {}
 
+  @UseGuards(AdminGuard)
   @Get('publicaciones')
   obtenerEstadisticasPublicaciones(@Query('fechaInicio') inicio: string, @Query('fechaFin') fin: string) {
     const resultado = this.estadisticasService.obtenerPublicacionesPorUsuario(inicio, fin);
     return resultado;
   }
 
+  @UseGuards(AdminGuard)
   @Get('comentarios')
   obtenerEstadisticasComentarios(
     @Query('fechaInicio') inicio: string,
@@ -21,6 +23,7 @@ export class EstadisticasController {
     return this.estadisticasService.obtenerCantidadComentarios(inicio, fin);
   }
 
+  @UseGuards(AdminGuard)
   @Get('comentarios-por-publicacion')
   obtenerEstadisticasPorPublicacion(@Query('fechaInicio') inicio: string, @Query('fechaFin') fin: string) {
     const resultado = this.estadisticasService.obtenerComentariosPorPublicacion(inicio, fin);
