@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 import { CardComponent } from '../../component/card/card.component';
+import { RegistroComponent } from '../registro/registro.component';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, CardComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, CardComponent, RegistroComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css',
 })
@@ -28,6 +29,8 @@ export class AdminDashboardComponent implements OnInit {
   offset = 0;
   limit = 2;
   hayMasInactivas = false;
+  mostrarRegistro = false;
+
 
   ngOnInit(): void {
     this.cargarUsuarios(); 

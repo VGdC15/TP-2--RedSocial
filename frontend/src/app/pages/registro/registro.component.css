@@ -208,6 +208,31 @@ input[type="date"] {
   box-shadow: 0px 10px 10px -10px #ff66b2;
 }
 
+.register-embed {
+  position: center;
+
+}
+
+.register-embed::before {
+  display: none;
+}
+
+.select-rol {
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: #111;
+  color: white;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 5px #ff3399 inset;
+  transition: 0.3s ease;
+  font-size: 1rem;
+  font-family: inherit;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+
 @keyframes glitch_4011 {
   0% {
     clip-path: var(--move1);

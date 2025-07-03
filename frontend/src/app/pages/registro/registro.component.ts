@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ServicesService } from '../../services/services.service';
@@ -20,6 +20,8 @@ export class RegistroComponent {
 
   showPassword = false;
   showRepetir = false;
+
+  @Input() esEmbed: boolean = false;
 
   constructor(
   private fb: FormBuilder,
@@ -59,6 +61,12 @@ export class RegistroComponent {
     );
   }
 
+  ngOnChanges() {
+    if (this.esEmbed && !this.registerForm.get('rol')) {
+      this.registerForm.addControl('rol', this.fb.control('usuario', Validators.required));
+    }
+  }
+
   private formatearFecha(fecha: Date): string {
     return fecha.toISOString().split('T')[0]; 
   }
@@ -86,6 +94,7 @@ export class RegistroComponent {
   get fechaNacimiento() { return this.registerForm.get('fechaNacimiento'); }
   get descripcion() { return this.registerForm.get('descripcion'); }
   get imagenPerfil() { return this.registerForm.get('imagenPerfil'); }
+  get rol() { return this.registerForm.get('rol'); }
 
   // Errores
   get showNombreRequired() { return this.nombre?.touched && this.nombre?.hasError('required'); }
@@ -101,7 +110,7 @@ export class RegistroComponent {
   get showFechaRequired() { return this.fechaNacimiento?.touched && this.fechaNacimiento?.hasError('required'); }
   get showDescripcionRequired() { return this.descripcion?.touched && this.descripcion?.hasError('required'); }
   get showImagenNoSeleccionada() {return this.registerForm.touched && !this.imagenSeleccionada;}
-
+  get showRolRequired() { return this.rol?.touched && this.rol?.hasError('required'); }
 
   soloLetras(event: KeyboardEvent): void {
     const key = event.key;

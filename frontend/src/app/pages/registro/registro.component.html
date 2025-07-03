@@ -1,10 +1,12 @@
+@if (!esEmbed) {
 <nav class="navbar">
   <div class="navbar-content">
     <a class="nav-link" routerLink="/login">Login</a>
   </div>
 </nav>
+}
 
-<div class="register-wrapper">
+<div [ngClass]="esEmbed ? 'register-embed' : 'register-wrapper'">
     <div class="register-container">
             <h3>Completá tus datos</h3>
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -68,6 +70,17 @@
             <label for="imagenPerfil">Imagen de perfil</label>
             <input id="imagenPerfil" type="file" (change)="onFileChange($event)" />
             <div [hidden]="!showImagenNoSeleccionada"><span>Debes seleccionar una imagen.</span></div>
+
+            @switch (esEmbed) {
+                @case (true) {
+                    <label for="rol">Rol del usuario</label>
+                    <select id="rol" formControlName="rol" class="select-rol">
+                    <option value="usuario">Usuario</option>
+                    <option value="admin">Administrador</option>
+                    </select>
+                    <div [hidden]="!showRolRequired"><span>Debes seleccionar un rol.</span></div>
+                }
+            }
 
             <button type="submit" [disabled]="registerForm.invalid">Registrate</button>
         </form>
