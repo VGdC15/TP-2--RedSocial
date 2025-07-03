@@ -1,13 +1,13 @@
 .estadisticas-wrapper {
-  padding-top: 100px; /* para no ser tapado por la nav */
+  padding-top: 100px;
   background-color: #000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem;
   box-sizing: border-box;
   min-height: 100vh;
+  
 }
 
 .estadisticas-wrapper h2 {
@@ -25,13 +25,14 @@
   border: 1px solid #ff3399;
   box-shadow: 0 0 12px #ff66b2;
   display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.2rem;
   justify-content: center;
   align-items: center;
   width: 100%;
   max-width: 900px;
   margin-bottom: 2rem;
+  box-sizing: border-box;
 }
 
 .filtro-fechas label {
@@ -40,6 +41,8 @@
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
+  width: 100%;
+  max-width: 300px;
 }
 
 .filtro-fechas input[type="date"] {
@@ -52,6 +55,8 @@
   font-family: inherit;
   font-size: 0.95rem;
   margin-top: 0.3rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .filtro-fechas button {
@@ -64,6 +69,9 @@
   box-shadow: 0 0 5px #ff3399 inset;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
 }
 
 .filtro-fechas button:hover {
@@ -84,23 +92,58 @@
   margin-bottom: 2rem;
   padding: 1rem;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+#graficoPublicaciones > div,
+#graficoComentarios > div,
+#graficoComentariosPorPub > div {
+  width: 100% !important;
+  height: 400px !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 
-/* Responsive */
+/* Extra pequeño (celulares muy chicos tipo iPhone SE) */
+@media screen and (max-width: 360px) {
+    .estadisticas-wrapper {
+        padding-top: 25%;
+    }
+}
+
+/* Celulares normales */
+@media screen and (max-width: 480px) {
+    .estadisticas-wrapper {
+        padding-top: 20%;
+    }
+}
+
+/* Tablets en vertical / celulares grandes (como iPhone Plus o Galaxy Note) */
 @media screen and (max-width: 768px) {
-  .filtro-fechas {
-    flex-direction: column;
-    align-items: center;
-  }
+    .estadisticas-wrapper {
+        padding-top: 25%;
+    }
+}
 
-  .filtro-fechas label {
-    width: 100%;
-    max-width: 300px;
-  }
+/* Tablets en horizontal o pantallas más chicas de laptop */
+@media screen and (max-width: 1024px) {
+    .estadisticas-wrapper {
+        padding-top: 18%;
+    }
+}
 
-  .filtro-fechas button {
-    width: 100%;
-    max-width: 300px;
-  }
+/* Laptops estándar */
+@media screen and (max-width: 1280px) {
+    .estadisticas-wrapper {
+        padding-top: 11%;
+    }
+}
+
+/* Escritorios grandes / pantallas Full HD */
+@media screen and (min-width: 1281px) and (max-width: 1920px) {
+    .estadisticas-wrapper {
+        padding-top: 8%;
+    }
 }
