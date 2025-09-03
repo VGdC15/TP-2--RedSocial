@@ -1,4 +1,4 @@
-# 🎵 Social de Fiestas Electrónicas — Angular · NestJS · MongoDB
+# 🎵 Red Social de Fiestas Electrónicas — Angular · NestJS · MongoDB
 Segundo examen de programación IV, de la tecnicatura de programación UTN.
 
 > Publicaciones · Perfiles · Likes · Comentarios (con edición) · Audio Player · Dashboard Admin · Roles · Moderación
