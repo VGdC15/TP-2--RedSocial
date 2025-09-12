@@ -5,7 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
 import { of, MonoTypeOperatorFunction } from 'rxjs';
 import Swal from 'sweetalert2';
-import { environment } from '../../enviroments/enviroment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
