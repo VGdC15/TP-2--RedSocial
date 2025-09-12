@@ -2,13 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist/frontend/browser" }
+      "config": { "distDir": "frontend/dist/frontend/browser" }
     }
   ],
   "routes": [
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }
-  ]
+  ],
+  "installCommand": "cd frontend && npm ci",
+  "buildCommand": "cd frontend && npm run build"
 }
