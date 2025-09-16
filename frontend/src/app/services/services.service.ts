@@ -58,6 +58,7 @@ export class ServicesService {
     formData.append('fechaNacimiento', datosRegistro.fechaNacimiento);
     formData.append('descripcion', datosRegistro.descripcion);
     formData.append('estado', 'true'); // forzar true en registro
+    formData.append('rol', 'usuario'); // forzar 'usuario' en registro
 
     if (imagen) {
       formData.append('imagenPerfil', imagen);
