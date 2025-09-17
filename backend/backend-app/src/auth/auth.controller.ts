@@ -46,6 +46,8 @@ export class AuthController {
         throw new BadRequestException('Solo se permiten archivos JPG y PNG');
     }
 
+    createUsuarioDto.rol = 'usuario';
+
     const resultado = await this.authService.register(createUsuarioDto, ip, imagen);
 
     return resultado;

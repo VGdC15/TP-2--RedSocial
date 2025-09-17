@@ -43,6 +43,6 @@ export class CreateUsuarioDto {
     @IsNotEmpty()
     @IsString()
     @IsIn(['usuario', 'admin'])
-    rol: 'usuario' | 'admin';
+    rol?: 'usuario' | 'admin';
     
 }
