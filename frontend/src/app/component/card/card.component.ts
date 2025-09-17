@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input} from '@angular/core';
 import { ComentariosComponent } from '../comentarios/comentarios.component';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-card',
@@ -12,6 +13,8 @@ import Swal from 'sweetalert2';
 })
 export class CardComponent {
   constructor(private http: HttpClient) {}
+
+  private api = environment.apiUrl;
 
   @Input() imagen: string = '';
   @Input() pieDeFoto: string = '';
@@ -31,7 +34,7 @@ export class CardComponent {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http.patch<{ like: number, yaDioLike: boolean }>(
-      `http://localhost:3000/publicaciones/${this.id}/like`,
+      `${this.api}/publicaciones/${this.id}/like`,
       {},
       { headers }
     ).subscribe({
@@ -59,7 +62,7 @@ export class CardComponent {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
         this.http.patch(
-          `http://localhost:3000/publicaciones/${this.id}/baja`,
+          `${this.api}/publicaciones/${this.id}/baja`,
           {},
           { headers }
         ).subscribe({
@@ -97,7 +100,7 @@ export class CardComponent {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
         this.http.patch(
-          `http://localhost:3000/publicaciones/${this.id}/alta`,
+          `${this.api}/publicaciones/${this.id}/alta`,
           {},
           { headers }
         ).subscribe({

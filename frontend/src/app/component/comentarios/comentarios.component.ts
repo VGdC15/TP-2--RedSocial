@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ServicesService } from '../../services/services.service';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-comentarios',
@@ -24,6 +25,8 @@ export class ComentariosComponent implements OnChanges {
 
   private http = inject(HttpClient);
   service = inject(ServicesService);
+
+  private api = environment.apiUrl;
 
   modoEdicion: { [idComentario: string]: boolean } = {};
   textoEditado: { [idComentario: string]: string } = {};
@@ -58,7 +61,7 @@ export class ComentariosComponent implements OnChanges {
 
   cargar() {
     this.http.get<{ comentarios: any[] }>(
-      `http://localhost:3000/comentarios/publicacion/${this.publicacionId}?offset=${this.offset}&limit=${this.limit}`,
+      `${this.api}/comentarios/publicacion/${this.publicacionId}?offset=${this.offset}&limit=${this.limit}`,
       { headers: this.headers }
     ).subscribe(res => {
       this.comentarios.push(...res.comentarios);
@@ -71,7 +74,7 @@ export class ComentariosComponent implements OnChanges {
   verMas() {
     if (!this.todosCargados) {
       this.http.get<{ comentarios: any[] }>(
-        `http://localhost:3000/comentarios/publicacion/${this.publicacionId}?offset=${this.offset}&limit=${this.limit}`,
+        `${this.api}/comentarios/publicacion/${this.publicacionId}?offset=${this.offset}&limit=${this.limit}`,
         { headers: this.headers }
       ).subscribe(res => {
         this.comentarios.push(...res.comentarios);
@@ -88,7 +91,7 @@ export class ComentariosComponent implements OnChanges {
 
   agregar() {
     const dto = { publicacionId: this.publicacionId, texto: this.textoCtrl.value! };
-    this.http.post(`http://localhost:3000/comentarios`, dto, { headers: this.headers })
+    this.http.post(`${this.api}/comentarios`, dto, { headers: this.headers })
       .subscribe(() => {
         this.textoCtrl.reset();
         this.offset = 0;
@@ -141,7 +144,7 @@ export class ComentariosComponent implements OnChanges {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.http.delete(`http://localhost:3000/comentarios/${id}`, { headers: this.headers })
+        this.http.delete(`${this.api}/comentarios/${id}`, { headers: this.headers })
           .subscribe({
             next: () => {
               this.comentarios = this.comentarios.filter(c => c._id !== id);

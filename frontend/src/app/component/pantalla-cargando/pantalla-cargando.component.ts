@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-pantalla-cargando',
@@ -11,6 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class PantallaCargandoComponent implements OnInit {
   private router = inject(Router);
   private http = inject(HttpClient);
+  private api = environment.apiUrl;
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -22,7 +24,7 @@ export class PantallaCargandoComponent implements OnInit {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-  this.http.post('http://localhost:3000/auth/autorizar', {}, { headers }).subscribe({
+  this.http.post(`${this.api}/auth/autorizar`, {}, { headers }).subscribe({
       next: () => {
         setTimeout(() => {
           import('sweetalert2').then(Swal => {

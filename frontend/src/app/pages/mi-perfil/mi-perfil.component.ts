@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../../component/card/card.component'; 
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -17,6 +18,8 @@ export class MiPerfilComponent implements OnInit {
   formularioPublicacion: FormGroup;
   imagenSeleccionada: File | null = null;
   publicaciones: any[] = [];
+
+  private api = environment.apiUrl;
 
   constructor(private servicesService: ServicesService, private fb: FormBuilder, private http: HttpClient) {
     this.formularioPublicacion = this.fb.group({
@@ -54,7 +57,7 @@ export class MiPerfilComponent implements OnInit {
     const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.post<any>('http://localhost:3000/publicaciones', formData, { headers })
+    this.http.post<any>(`${this.api}/publicaciones`, formData, { headers })
       .subscribe({
         next: (res) => {
           console.log('Publicación subida', res);
@@ -80,7 +83,7 @@ export class MiPerfilComponent implements OnInit {
     const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any[]>('http://localhost:3000/publicaciones/mias', { headers })
+    this.http.get<any[]>(`${this.api}/publicaciones/mias`, { headers })
       .subscribe({
         next: (res) => {
           console.log('🔍 Publicaciones recibidas:', res);

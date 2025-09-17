@@ -7,6 +7,7 @@ import { ServicesService } from '../../services/services.service';
 import { CardComponent } from '../../component/card/card.component';
 import { RegistroComponent } from '../registro/registro.component';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -18,6 +19,7 @@ import Swal from 'sweetalert2';
 export class AdminDashboardComponent implements OnInit {
   private http = inject(HttpClient);
   services = inject(ServicesService);
+  private api = environment.apiUrl;
 
   usuarios: any[] = [];
   usuarioFiltrado: any[] = [];
@@ -55,7 +57,7 @@ export class AdminDashboardComponent implements OnInit {
     const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any[]>('http://localhost:3000/usuarios', { headers }).subscribe({
+     this.http.get<any[]>(`${this.api}/usuarios`, { headers }).subscribe({
       next: (res) => {
         this.usuarios = res;
       },
@@ -78,7 +80,7 @@ export class AdminDashboardComponent implements OnInit {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         const body = { estado: false };
 
-        this.http.patch(`http://localhost:3000/usuarios/${usuarioId}`, body, { headers })
+        this.http.patch(`${this.api}/usuarios/${usuarioId}`, body, { headers })
           .subscribe({
             next: () => {
               const usuario = this.usuarioFiltrado.find(u => u._id === usuarioId);
@@ -123,7 +125,7 @@ export class AdminDashboardComponent implements OnInit {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         const body = { estado: true };
 
-        this.http.patch(`http://localhost:3000/usuarios/${usuarioId}`, body, { headers })
+        this.http.patch(`${this.api}/usuarios/${usuarioId}`, body, { headers })
           .subscribe({
             next: () => {
               const usuario = this.usuarioFiltrado.find(u => u._id === usuarioId);
@@ -157,7 +159,7 @@ export class AdminDashboardComponent implements OnInit {
     const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any[]>('http://localhost:3000/publicaciones?estado=false', { headers }).subscribe({
+    this.http.get<any[]>(`${this.api}/publicaciones?estado=false`, { headers }).subscribe({
       next: (res) => {
         this.publicacionesDadosDeBaja = res;
         this.mostrarPublicacionesDadosDeBaja = true; 

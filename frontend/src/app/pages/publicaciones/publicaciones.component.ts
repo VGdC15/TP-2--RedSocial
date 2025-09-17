@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CardComponent } from '../../component/card/card.component';
 import { RouterLink } from '@angular/router';
 import { ServicesService } from '../../services/services.service'; 
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-publicaciones',
@@ -16,6 +17,7 @@ export class PublicacionesComponent implements OnInit {
   @ViewChild('audioPlayer', { static: true }) audioPlayer!: ElementRef<HTMLAudioElement>;
   private http = inject(HttpClient);
   services = inject(ServicesService);
+  private api = environment.apiUrl;
 
   publicaciones: any[] = [];
   usuarios: any[] = [];
@@ -64,7 +66,7 @@ export class PublicacionesComponent implements OnInit {
     const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any[]>('http://localhost:3000/usuarios', { headers }).subscribe({
+    this.http.get<any[]>(`${this.api}/usuarios`, { headers }).subscribe({
       next: (res) => (this.usuarios = res),
       error: (err) => console.error('Error al cargar usuarios', err),
     });
