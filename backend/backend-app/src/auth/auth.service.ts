@@ -8,6 +8,7 @@ import { sign, verify } from 'jsonwebtoken/index';
 import * as fs from 'fs';
 import * as path from 'path';
 import { promisify } from 'util';
+import { join } from 'path';
 
 @Injectable()
 export class AuthService {
@@ -31,11 +32,12 @@ export class AuthService {
         createUsuarioDto.password = hashedPassword;
 
         if (imagen) {
-            const destino = path.join('./uploads', imagen.filename);
-            await rename(imagen.path, destino);
-            const baseUrl = process.env.BASE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
-            createUsuarioDto.imagenPerfil = `${baseUrl}/uploads/${imagen.filename}`;
-        }
+        const destino = join(__dirname, '..', 'uploads', imagen.filename);
+        await rename(imagen.path, destino);
+
+        const baseUrl = process.env.BASE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
+        createUsuarioDto.imagenPerfil = `${baseUrl}/uploads/${imagen.filename}`;
+}
 
         const nuevoUsuario = await this.usuariosService.create(createUsuarioDto);
         const token = this.crearToken(nuevoUsuario.id, nuevoUsuario.nombre, ip);

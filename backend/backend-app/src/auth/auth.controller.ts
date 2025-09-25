@@ -6,7 +6,7 @@ import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
 import { LoginUsuarioDto } from '../usuarios/dto/login-usuario.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage, File as MulterFile } from 'multer';
-import { extname } from 'path';
+import { extname, join } from 'path';
 import { AuthGuard } from './auth.guard';
 
 function imageFileFilter(req, file: MulterFile, cb: (error: Error | null, acceptFile: boolean) => void) {
@@ -23,9 +23,10 @@ export class AuthController {
 
     @Post('registro')
     @UseInterceptors(
-    FileInterceptor('imagenPerfil', {
+        FileInterceptor('imagenPerfil', {
         storage: diskStorage({
-        destination: './uploads-temp', 
+        // ANTES: destination: './uploads-temp',
+        destination: (req, file, cb) => cb(null, join(__dirname, '..', 'uploads-temp')),
         filename: (req, file: MulterFile, cb) => {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
             const ext = extname(file.originalname);

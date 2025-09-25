@@ -6,7 +6,7 @@ import { UpdatePublicacioneDto } from './dto/update-publicacione.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { extname, join  } from 'path';
 import { AuthService } from '../auth/auth.service';
 
 @UseGuards(AuthGuard)
@@ -19,29 +19,28 @@ export class PublicacionesController {
   @Post()
   @UseInterceptors(FileInterceptor('imagen', {
     storage: diskStorage({
-      destination: './uploads-publicaciones',
+      // ANTES: destination: './uploads-publicaciones',
+      destination: (req, file, cb) => cb(null, join(__dirname, '..', 'uploads-publicaciones')),
       filename: (req, file, cb) => {
         const ext = extname(file.originalname);
         cb(null, `${Date.now()}${ext}`);
       },
     }),
   }))
-  async crearPublicacion( 
+  async crearPublicacion(
     @UploadedFile() imagen,
     @Body('pieDeFoto') pieDeFoto: string,
     @Headers('Authorization') auth: string,
     @Ip() ip: string
-  ): Promise<any> {
+  ) {
     const token = auth?.split(' ')[1];
     const usuario = await this.authService.traerDatos(token, ip);
-    if (!usuario) {
-      throw new UnauthorizedException('Token inválido');
-    }
 
     const baseUrl = process.env.BASE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
+
     return this.publicacionesService.create({
       imagen: `${baseUrl}/uploads-publicaciones/${imagen.filename}`,
-      pieDeFoto: pieDeFoto,
+      pieDeFoto,
       usuarioId: usuario.id,
       fecha: new Date()
     });
