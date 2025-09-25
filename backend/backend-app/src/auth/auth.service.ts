@@ -33,7 +33,8 @@ export class AuthService {
         if (imagen) {
             const destino = path.join('./uploads', imagen.filename);
             await rename(imagen.path, destino);
-            createUsuarioDto.imagenPerfil = `http://localhost:3000/uploads/${imagen.filename}`;
+            const baseUrl = process.env.BASE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
+            createUsuarioDto.imagenPerfil = `${baseUrl}/uploads/${imagen.filename}`;
         }
 
         const nuevoUsuario = await this.usuariosService.create(createUsuarioDto);

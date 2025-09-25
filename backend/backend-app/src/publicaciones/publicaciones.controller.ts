@@ -26,7 +26,7 @@ export class PublicacionesController {
       },
     }),
   }))
-  async crearPublicacion(
+  async crearPublicacion( 
     @UploadedFile() imagen,
     @Body('pieDeFoto') pieDeFoto: string,
     @Headers('Authorization') auth: string,
@@ -38,8 +38,9 @@ export class PublicacionesController {
       throw new UnauthorizedException('Token inválido');
     }
 
+    const baseUrl = process.env.BASE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
     return this.publicacionesService.create({
-      imagen: `http://localhost:3000/uploads-publicaciones/${imagen.filename}`,
+      imagen: `${baseUrl}/uploads-publicaciones/${imagen.filename}`,
       pieDeFoto: pieDeFoto,
       usuarioId: usuario.id,
       fecha: new Date()
@@ -77,7 +78,7 @@ export class PublicacionesController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePublicacioneDto: UpdatePublicacioneDto) {
     return this.publicacionesService.update(+id, updatePublicacioneDto);
-  }
+  } 
 
   @Patch(':id/like')
   @UseGuards(AuthGuard)
