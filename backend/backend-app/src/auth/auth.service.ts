@@ -31,13 +31,16 @@ export class AuthService {
         const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10);
         createUsuarioDto.password = hashedPassword;
 
-        if (imagen) {
-        const destino = join(__dirname, '..', 'uploads', imagen.filename);
-        await rename(imagen.path, destino);
+       if (imagen) {
+            const finalDir = join(process.cwd(), 'uploads');
+            fs.mkdirSync(finalDir, { recursive: true });
 
-        const baseUrl = process.env.BASE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
-        createUsuarioDto.imagenPerfil = `${baseUrl}/uploads/${imagen.filename}`;
-}
+            const destino = join(finalDir, imagen.filename);
+            await rename(imagen.path, destino);
+
+            const baseUrl = process.env.BASE_URL ?? `http://localhost:${process.env.PORT ?? 3000}`;
+            createUsuarioDto.imagenPerfil = `${baseUrl}/uploads/${imagen.filename}`;
+        }
 
         const nuevoUsuario = await this.usuariosService.create(createUsuarioDto);
         const token = this.crearToken(nuevoUsuario.id, nuevoUsuario.nombre, ip);

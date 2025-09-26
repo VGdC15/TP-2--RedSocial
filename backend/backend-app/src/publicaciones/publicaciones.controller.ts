@@ -6,6 +6,7 @@ import { UpdatePublicacioneDto } from './dto/update-publicacione.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import * as fs from 'fs';
 import { extname, join  } from 'path';
 import { AuthService } from '../auth/auth.service';
 
@@ -19,14 +20,18 @@ export class PublicacionesController {
   @Post()
   @UseInterceptors(FileInterceptor('imagen', {
     storage: diskStorage({
-      // ANTES: destination: './uploads-publicaciones',
-      destination: (req, file, cb) => cb(null, join(__dirname, '..', 'uploads-publicaciones')),
+      destination: (req, file, cb) => {
+        const uploadDir = join(process.cwd(), 'uploads-publicaciones');
+        fs.mkdirSync(uploadDir, { recursive: true });
+        cb(null, uploadDir);
+      },
       filename: (req, file, cb) => {
         const ext = extname(file.originalname);
         cb(null, `${Date.now()}${ext}`);
       },
     }),
   }))
+
   async crearPublicacion(
     @UploadedFile() imagen,
     @Body('pieDeFoto') pieDeFoto: string,

@@ -10,9 +10,9 @@ async function bootstrap() {
 
   // 1) Asegurar que existan las carpetas de subida (Render no sube carpetas vacías)
   const uploadDirs = [
-    join(__dirname, '..', 'uploads'),
-    join(__dirname, '..', 'uploads-publicaciones'),
-    join(__dirname, '..', 'uploads-temp'),
+    join(process.cwd(), 'uploads'),
+    join(process.cwd(), 'uploads-publicaciones'),
+    join(process.cwd(), 'uploads-temp'),
   ];
   for (const dir of uploadDirs) {
     try {
@@ -23,10 +23,10 @@ async function bootstrap() {
   }
 
   // 2) Servir estáticos de perfil y publicaciones
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+  app.useStaticAssets(join(process.cwd(), 'uploads'), {
     prefix: '/uploads',
   });
-  app.useStaticAssets(join(__dirname, '..', 'uploads-publicaciones'), {
+  app.useStaticAssets(join(process.cwd(), 'uploads-publicaciones'), {
     prefix: '/uploads-publicaciones',
   });
 

@@ -6,6 +6,7 @@ import { CreateUsuarioDto } from '../usuarios/dto/create-usuario.dto';
 import { LoginUsuarioDto } from '../usuarios/dto/login-usuario.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage, File as MulterFile } from 'multer';
+import * as fs from 'fs';
 import { extname, join } from 'path';
 import { AuthGuard } from './auth.guard';
 
@@ -24,17 +25,21 @@ export class AuthController {
     @Post('registro')
     @UseInterceptors(
         FileInterceptor('imagenPerfil', {
-        storage: diskStorage({
-        // ANTES: destination: './uploads-temp',
-        destination: (req, file, cb) => cb(null, join(__dirname, '..', 'uploads-temp')),
-        filename: (req, file: MulterFile, cb) => {
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-            const ext = extname(file.originalname);
-            cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-        },
+            storage: diskStorage({
+                destination: (req, file, cb) => {
+                const tempDir = join(process.cwd(), 'uploads-temp');
+                fs.mkdirSync(tempDir, { recursive: true });
+                cb(null, tempDir);
+                },
+                filename: (req, file: MulterFile, cb) => {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+                const ext = extname(file.originalname);
+                cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+                },
+            }),
+            fileFilter: imageFileFilter,
         }),
-        fileFilter: imageFileFilter,
-    }),
+
     )
     async register(
     @Req() request: Request,
