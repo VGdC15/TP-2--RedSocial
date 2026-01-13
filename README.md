@@ -30,7 +30,7 @@ Segundo examen de programación IV, de la tecnicatura de programación UTN.
 
 | Vista                  | Imagen                                                     |
 | ---------------------- | ---------------------------------------------------------- |
-| Login                  | <img src="screenshots/login.jpg" width="300"/>             |
+| Login                  | <img src="screenshots/login.png" width="300"/>             |
 | Home                   | <img src="screenshots/home1.jpg" width="300"/>             |
 | Home                   | <img src="screenshots/home2.jpg" width="300"/>             |
 | Perfil de usuario      | <img src="screenshots/perfil.jpg" width="300"/>            |
