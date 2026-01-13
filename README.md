@@ -30,17 +30,17 @@ Segundo examen de programación IV, de la tecnicatura de programación UTN.
 
 | Vista                  | Imagen                                                     |
 | ---------------------- | ---------------------------------------------------------- |
-| Login                  | <img src="screenshots/login.png" width="300"/>             |
-| Home                   | <img src="screenshots/home1.png" width="300"/>             |
-| Home                   | <img src="screenshots/home2.png" width="300"/>             |
-| Perfil de usuario      | <img src="screenshots/perfil.png" width="300"/>            |
-| Post con comentarios   | <img src="screenshots/post-comentarios.png" width="300"/>  |
-| Edición de comentarios | <img src="screenshots/editar-comentario.png" width="300"/> |
-| Likes                  | <img src="screenshots/likes.png" width="300"/>             |
-| Estadísticas           | <img src="screenshots/est1.png" width="300"/>              |
-| Estadísticas           | <img src="screenshots/est2.png" width="300"/>              |
-| Dashboard Admin        | <img src="screenshots/dash.png" width="300"/>              |
-| Gestión de usuarios    | <img src="screenshots/admin-usuarios.png" width="300"/>    |
+| Login                  | <img src="screenshots/login.png" width="400"/>             |
+| Home                   | <img src="screenshots/home1.png" width="400"/>             |
+| Home                   | <img src="screenshots/home2.png" width="400"/>             |
+| Perfil de usuario      | <img src="screenshots/perfil.png" width="400"/>            |
+| Post con comentarios   | <img src="screenshots/post-comentarios.png" width="400"/>  |
+| Edición de comentarios | <img src="screenshots/editar-comentario.png" width="400"/> |
+| Likes                  | <img src="screenshots/likes.png" width="400"/>             |
+| Estadísticas           | <img src="screenshots/est1.png" width="400"/>              |
+| Estadísticas           | <img src="screenshots/est2.png" width="400"/>              |
+| Dashboard Admin        | <img src="screenshots/dash.png" width="400"/>              |
+| Gestión de usuarios    | <img src="screenshots/admin-usuarios.png" width="400"/>    |
 
 ---
 
