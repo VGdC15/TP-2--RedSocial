@@ -30,14 +30,16 @@ Segundo examen de programación IV, de la tecnicatura de programación UTN.
 
 | Vista                  | Imagen                                                     |
 | ---------------------- | ---------------------------------------------------------- |
-| Home / Feed            | <img src="screenshots/feed.jpg" width="300"/>              |
-| Reproductor            | <img src="screenshots/player.jpg" width="300"/>            |
+| Login                  | <img src="screenshots/login.jpg" width="300"/>             |
+| Home                   | <img src="screenshots/home1.jpg" width="300"/>             |
+| Home                   | <img src="screenshots/home2.jpg" width="300"/>             |
 | Perfil de usuario      | <img src="screenshots/perfil.jpg" width="300"/>            |
 | Post con comentarios   | <img src="screenshots/post-comentarios.jpg" width="300"/>  |
 | Edición de comentarios | <img src="screenshots/editar-comentario.jpg" width="300"/> |
 | Likes                  | <img src="screenshots/likes.jpg" width="300"/>             |
-| Crear publicación      | <img src="screenshots/nuevo-post.jpg" width="300"/>        |
-| Dashboard Admin        | <img src="screenshots/admin-dashboard.jpg" width="300"/>   |
+| Estadísticas           | <img src="screenshots/est1.jpg" width="300"/>              |
+| Estadísticas           | <img src="screenshots/est2.jpg" width="300"/>              |
+| Dashboard Admin        | <img src="screenshots/dash.jpg" width="300"/>              |
 | Gestión de usuarios    | <img src="screenshots/admin-usuarios.jpg" width="300"/>    |
 
 ---
